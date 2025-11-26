@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Folder, Code, Gamepad2, Database, Globe, Smartphone, Wrench } from 'lucide-react';
+import { ExternalLink, Github, Folder, Code, Gamepad2, Database, Globe, Smartphone, Wrench, ChevronDown } from 'lucide-react';
 
 type ProjectCategory = 'All' | 'Web Apps' | 'Game Dev' | 'ML & Data' | 'Scraping' | 'Backend' | 'Mobile' | 'Client Sites' | 'Utility';
 
@@ -231,10 +231,23 @@ const getIcon = (category: string) => {
 
 const Projects = () => {
     const [activeCategory, setActiveCategory] = useState<ProjectCategory>('All');
+    const [visibleCount, setVisibleCount] = useState(6);
 
     const filteredProjects = activeCategory === 'All'
         ? projects
         : projects.filter(p => p.category === activeCategory);
+
+    const visibleProjects = filteredProjects.slice(0, visibleCount);
+    const hasMore = visibleCount < filteredProjects.length;
+
+    const handleLoadMore = () => {
+        setVisibleCount(prev => prev + 6);
+    };
+
+    const handleCategoryChange = (category: ProjectCategory) => {
+        setActiveCategory(category);
+        setVisibleCount(6); // Reset visible count when changing category
+    };
 
     return (
         <section id="projects" className="py-24 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto">
@@ -258,7 +271,7 @@ const Projects = () => {
                         {categories.map((cat) => (
                             <button
                                 key={cat}
-                                onClick={() => setActiveCategory(cat)}
+                                onClick={() => handleCategoryChange(cat)}
                                 className={`px-4 py-2 rounded-full text-xs font-mono transition-all duration-300 border ${activeCategory === cat
                                         ? 'bg-teal/10 border-teal text-teal'
                                         : 'bg-transparent border-slate/20 text-slate hover:border-teal/50 hover:text-teal'
@@ -274,8 +287,8 @@ const Projects = () => {
                     layout
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
-                    <AnimatePresence>
-                        {filteredProjects.map((project, index) => (
+                    <AnimatePresence mode="popLayout">
+                        {visibleProjects.map((project, index) => (
                             <motion.div
                                 layout
                                 key={project.title}
@@ -319,6 +332,18 @@ const Projects = () => {
                         ))}
                     </AnimatePresence>
                 </motion.div>
+
+                {hasMore && (
+                    <div className="mt-12 text-center">
+                        <button
+                            onClick={handleLoadMore}
+                            className="px-8 py-4 border border-teal text-teal rounded hover:bg-teal-tint transition-all duration-300 inline-flex items-center gap-2 font-mono text-sm"
+                        >
+                            Load More
+                            <ChevronDown className="w-4 h-4" />
+                        </button>
+                    </div>
+                )}
             </motion.div>
         </section>
     );

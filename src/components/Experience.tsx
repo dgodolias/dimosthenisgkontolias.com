@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const experiences = [
@@ -52,6 +52,19 @@ const experiences = [
 
 const Experience = () => {
     const [activeTab, setActiveTab] = useState(0);
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 768);
+        };
+
+        // Initial check
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
         <section id="experience" className="py-24 px-6 sm:px-12 lg:px-24 max-w-4xl mx-auto">
@@ -87,18 +100,20 @@ const Experience = () => {
                             </button>
                         ))}
                         {/* Active Indicator */}
-                        <motion.div
-                            className="absolute bg-teal transition-all duration-300"
-                            layoutId="activeTabIndicator"
-                            initial={false}
-                            animate={{
-                                top: window.innerWidth >= 768 ? activeTab * 44 : 'auto',
-                                height: window.innerWidth >= 768 ? 44 : 2,
-                                left: window.innerWidth >= 768 ? -2 : activeTab * 120, // Approximate width for mobile
-                                width: window.innerWidth >= 768 ? 2 : 120, // Approximate width for mobile
-                                bottom: window.innerWidth >= 768 ? 'auto' : 0
-                            }}
-                        />
+                        {isDesktop !== null && (
+                            <motion.div
+                                className="absolute bg-teal transition-all duration-300"
+                                layoutId="activeTabIndicator"
+                                initial={false}
+                                animate={{
+                                    top: isDesktop ? activeTab * 44 : 'auto',
+                                    height: isDesktop ? 44 : 2,
+                                    left: isDesktop ? -2 : activeTab * 120, // Approximate width for mobile
+                                    width: isDesktop ? 2 : 120, // Approximate width for mobile
+                                    bottom: isDesktop ? 'auto' : 0
+                                }}
+                            />
+                        )}
                     </div>
 
                     {/* Tab Content */}
