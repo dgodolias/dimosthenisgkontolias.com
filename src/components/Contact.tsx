@@ -33,10 +33,10 @@ const Contact = () => {
 
                 <footer className="flex flex-col items-center gap-6">
                     <div className="flex gap-6">
-                        <a href="#" className="text-slate hover:text-teal hover:-translate-y-1 transition-all duration-300">
+                        <a href="https://github.com/dgodolias" target="_blank" rel="noopener noreferrer" className="text-slate hover:text-teal hover:-translate-y-1 transition-all duration-300">
                             <Github className="w-6 h-6" />
                         </a>
-                        <a href="#" className="text-slate hover:text-teal hover:-translate-y-1 transition-all duration-300">
+                        <a href="https://www.linkedin.com/in/dimosthenis-gkontolias-3024b9349/" target="_blank" rel="noopener noreferrer" className="text-slate hover:text-teal hover:-translate-y-1 transition-all duration-300">
                             <Linkedin className="w-6 h-6" />
                         </a>
                     </div>

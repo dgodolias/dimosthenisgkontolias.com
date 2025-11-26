@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const About = () => {
     return (
@@ -38,10 +39,12 @@ const About = () => {
 
                 <div className="md:w-1/3 relative group">
                     <div className="relative w-64 h-64 rounded-lg overflow-hidden z-10">
-                        {/* Placeholder for profile image */}
-                        <div className="w-full h-full bg-slate-light/20 flex items-center justify-center text-slate text-sm font-mono border-2 border-teal/50">
-                            Profile Photo
-                        </div>
+                        <Image
+                            src="/images/profile.png"
+                            alt="Dimosthenis Gkontolias"
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                        />
                         <div className="absolute inset-0 bg-teal/20 hover:bg-transparent transition-colors duration-300"></div>
                     </div>
                     <div className="absolute top-4 left-4 w-64 h-64 border-2 border-teal rounded-lg z-0 group-hover:top-3 group-hover:left-3 transition-all duration-300"></div>

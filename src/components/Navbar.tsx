@@ -51,7 +51,9 @@ const Navbar = () => {
                         ))}
                     </ul>
                     <a
-                        href="/resume.pdf"
+                        href="/assets/DIMOSTHENIS_GKONTOLIAS_CV.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="px-4 py-2 border border-teal text-teal rounded text-sm font-mono hover:bg-teal-tint transition-colors"
                     >
                         Resume
@@ -91,7 +93,9 @@ const Navbar = () => {
                                 ))}
                             </ul>
                             <a
-                                href="/resume.pdf"
+                                href="/assets/DIMOSTHENIS_GKONTOLIAS_CV.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="px-8 py-3 border border-teal text-teal rounded font-mono hover:bg-teal-tint transition-colors"
                             >
                                 Resume
