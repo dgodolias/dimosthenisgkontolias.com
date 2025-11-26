@@ -25,7 +25,9 @@ const Navbar = () => {
 
     return (
         <header
-            className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-obsidian/90 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'
+            className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled
+                    ? 'bg-obsidian/80 backdrop-blur-md shadow-lg py-4 border-b border-teal/10'
+                    : 'bg-transparent py-6'
                 }`}
         >
             <div className="px-6 sm:px-12 lg:px-24 flex justify-between items-center">

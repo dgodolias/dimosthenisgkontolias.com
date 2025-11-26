@@ -1,60 +1,213 @@
-You are an expert Senior Frontend Architect and UI/UX Designer specialized in creating award-winning, Awwwards-style portfolio websites.
 
-**Goal:**
-Create a stunning, high-performance personal portfolio website for **Dimosthenis Gkontolias**, a Software Engineer and Informatics student. The site must scream "Professional", "Modern", and "High-End".
+# 📂 Portfolio Projects Report
 
-**Design Requirements (Strict):**
-1.  **Aesthetics:**
-    * **Theme:** Dark Mode luxury.
-    * **Color Palette:** DO NOT use default purples. Use a sophisticated palette: **Deep Obsidian/Midnight Blue background** (`#0a192f` or `#020c1b`) with **Electric Teal/Cyan accents** (`#64ffda`) and **Slate Grey text** (`#8892b0`). Alternatively, a high-contrast Black/White with a bold Neon Orange accent.
-    * **Style:** Glassmorphism effects, subtle gradients, and "Bento Grid" layout for the projects section.
-2.  **Animations:**
-    * Use `framer-motion` for smooth reveal animations.
-    * Hero section should have a wow-factor (e.g., a particle effect, a 3D geometric shape, or a glitch-text effect on the name).
-3.  **Imagery:**
-    * Use high-quality placeholders (e.g., from Unsplash) for project thumbnails.
-    * Include a placeholder area for the user's profile photo with a stylized border/effect.
+## 🌐 Web Applications & Platforms
 
-**Content & Data Structure:**
+### **QuaR**
+🔗 [quar-beta.vercel.app](https://quar-beta.vercel.app)  
+**Technologies:** HTML, JavaScript, Python, CSS  
+Web application με modern frontend τεχνολογίες.  Deployed στο Vercel για production use.
 
-**1. Hero Section:**
-* Headline: "Dimosthenis Gkontolias"
-* Sub-headline: "Software Engineer | Problem Solver | Innovator"
-* Tagline: "Turning stubbornness into software solutions."
-* Call to Action (CTA) buttons: "View Projects" and "Contact Me".
+---
 
-**2. About Section:**
-* Content: "I’m a stubborn person in the best way possible. Whatever I set my mind to, I see it through. Currently in my final year at Athens University of Economics and Business (GPA 9.13/10), I love experimenting with new technologies. My goal is to build my own business and run it with my own vision."
+### **torantevoumou**
+**Technologies:** JavaScript, HTML, CSS, C#  
+Πλατφόρμα κρατήσεων ραντεβού που επιτρέπει στους χρήστες να κλείνουν γρήγορα και εύκολα ραντεβού με επαγγελματίες της επιλογής τους.
 
-**3. Experience (Timeline Layout):**
-* **Software Developer (Intern)** @ Dalia Labs FZE LLC, Dubai (July 2025 - Sept 2025)
-* **Backend Developer** @ VR-Game by Moptil, Athens (Aug 2025 - Oct 2025)
-* **Software/Website Developer** for Doctors (May 2024 - Present)
-* *Include previous non-tech roles (Factory Worker, Service) briefly to show work ethic.*
+---
 
-**4. Projects (The Highlight - Display as Interactive Cards):**
-Please use the following technical summaries for the projects:
-* **Tsipster.gr (AI & ML Platform):** A personalized betting platform leveraging Artificial Intelligence and Machine Learning algorithms to provide data-driven insights. Built to analyze patterns and offer tailored suggestions.
-* **TrailIt (AI Game Logic):** A strategic game implementing advanced game theory algorithms (Minimax/Alpha-Beta pruning) similar to Chess/Tic-Tac-Toe. Demonstrates deep understanding of algorithmic thinking and complexity.
-* **Torantevoumou.gr (SaaS Booking Platform):** A comprehensive appointment scheduling platform facilitating client-business connections. Features real-time slot management and user-friendly interfaces.
-* **AI Document Classification:** A machine learning project utilizing NLP (Natural Language Processing) to automatically classify and organize documents, streamlining data management workflows.
-* **Android Stickball Game:** A native Android mobile game showcasing mobile UI/UX principles, touch-event handling, and physics-based game loops.
-* **Recipe App:** A full-stack culinary application featuring complex state management, custom search filtering, and a responsive UI.
+### **Tsipster. gr**
+**Technologies:** HTML, Dart, Python  
+Web platform με hybrid τεχνολογίες. Διαθέτει 1 star και fork από άλλους χρήστες. 
 
-**5. Achievements & Skills (Marquee or Grid):**
-* **Stats:** GPA 9.13/10, Panhellenic Rank #1 (Informatics Dept admission), 19.3/20 High School Grade.
-* **Skills:** Problem Solving, Project Ownership, Adaptability, Customer Support.
-* **Languages:** German (B2), English (C2).
+---
 
-**6. Contact & Footer:**
-* Email: dgodolias18@gmail.com
-* Links: LinkedIn, GitHub (Placeholder links).
+### **efood_clone**
+**Technologies:** Java (100%)  
+Κλώνος της δημοφιλούς εφαρμογής efood. Android εφαρμογή για παραγγελίες φαγητού.
 
-**Tech Stack to Generate:**
-* React (Next.js App Router preferred)
-* Tailwind CSS (for styling)
-* Framer Motion (for animations)
-* Lucide React (for icons)
+---
 
-**Output:**
-Generate the complete code for the main page (page.tsx) and any necessary components so I can copy-paste it and see the result immediately. Ensure the design is responsive and mobile-friendly.
+## 🎮 Game Development
+
+### **AthensSecret_VR-MR_Game**
+**Technologies:** JavaScript, C#, HTML, Docker  
+VR/MR παιχνίδι με θέμα τα μυστικά της Αθήνας. Συνδυασμός web τεχνολογιών και Unity για immersive εμπειρίες. 
+
+---
+
+### **KitchenChaos**
+**Technologies:** C#, Mathematica  
+Unity παιχνίδι μαγειρικής τύπου Overcooked. 3D game development με physics και multiplayer mechanics.
+
+---
+
+### **TrailGame**
+**Technologies:** Java (100%)  
+Strategy board game implementation σε Java. Διαθέτει 1 fork. 
+
+---
+
+### **Stickyball**
+Empty repository - Αρχικοποιημένο project για game development. 
+
+---
+
+## 🤖 Machine Learning & Data Science
+
+### **Greek_Supreme_Court_Decisions_2024**
+**Technologies:** Jupyter Notebook, Python  
+Ανάλυση αποφάσεων του Ελληνικού Αρείου Πάγου για το 2024. Data analysis και NLP σε ελληνικά νομικά κείμενα. 
+
+---
+
+### **ML_GreekLegalDocs**
+**Technologies:** Python (100%)  
+Machine Learning pipeline για επεξεργασία ελληνικών νομικών εγγράφων. Text classification και NLP.
+
+---
+
+### **trading_pattern_recognition**
+**Technologies:** Python (100%)  
+Αναγνώριση μοτίβων trading με τεχνικές Machine Learning. Financial data analysis και pattern detection.
+
+---
+
+### **HotelCancellationsClustering**
+**Technologies:** Jupyter Notebook (100%)  
+Clustering analysis για ακυρώσεις ξενοδοχείων. Customer segmentation και predictive analytics. 
+
+---
+
+## 🔍 Web Scraping & Data Collection
+
+### **BFS_emailScrcaper**
+**Technologies:** Python (100%)  
+Email scraper με Breadth-First Search algorithm. Automated web crawling για εξαγωγή email διευθύνσεων. 
+
+---
+
+### **aegean_webscraper**
+**Technologies:** Python (100%)  
+Web scraper για το Πανεπιστήμιο Αιγαίου. Αυτοματοποιημένη εξαγωγή πληροφοριών από ακαδημαϊκές πηγές.
+
+---
+
+### **crawl4ai_startups_4internship**
+**Technologies:** Python (100%)  
+Web crawler για εύρεση startups για πρακτική άσκηση. Χρήση crawl4ai framework.
+
+---
+
+### **xo_webscraper**
+**Technologies:** Python (100%)  
+Web scraper project για εξαγωγή δεδομένων. 
+
+---
+
+### **prices_scrapper**
+**Technologies:** Python, HTML, Docker  
+Price monitoring scraper.  Αυτόματη παρακολούθηση τιμών προϊόντων με containerized deployment.
+
+---
+
+## 🔧 Backend & APIs
+
+### **ElasticSearch_custom_engine**
+**Technologies:** Python (100%)  
+Custom search engine βασισμένο στο ElasticSearch.  Full-text search implementation με advanced query capabilities.
+
+---
+
+### **MCP_server**
+**Technologies:** TypeScript, HTML, Handlebars, CSS, Docker  
+Model Context Protocol server implementation. Backend infrastructure για AI integrations.
+
+---
+
+### **SciPythia**
+**Technologies:** Java, HTML, CSS  
+Scientific computing platform.  Java backend με web interface.
+
+---
+
+## 📱 Mobile Applications
+
+### **JupiterTheaterApp-AI-integrated**
+**Technologies:** Java, Python  
+Android εφαρμογή θεάτρου με ενσωματωμένη τεχνητή νοημοσύνη. AI recommendations και booking system.
+
+---
+
+### **karteles_asthenwn**
+**Technologies:** Dart (Flutter), C++, CMake, Swift  
+Cross-platform mobile εφαρμογή για διαχείριση καρτελών ασθενών. Healthcare management system με Flutter.
+
+---
+
+## 💼 Client Websites
+
+### **gkonigeorgia**
+**Technologies:** HTML, CSS, SCSS, JavaScript, PHP  
+Professional website με GitHub Pages hosting. 
+
+---
+
+### **gkontoliasofthalmiatros**
+**Technologies:** CSS, SCSS, JavaScript, HTML, PHP  
+Ιστοσελίδα για οφθαλμίατρο.  Professional medical website με GitHub Pages.
+
+---
+
+### **lainakiswebsite**
+**Technologies:** HTML, CSS, SCSS, JavaScript, PHP  
+Business website με GitHub Pages hosting.
+
+---
+
+### **salon_de_mayas**
+**Technologies:** CSS, HTML, JavaScript  
+Ιστοσελίδα για κομμωτήριο/salon. Modern responsive design.
+
+---
+
+## 🎲 Party Games
+
+### **fatsakarta_Heads-Up-Game**
+**Technologies:** Python, JavaScript, CSS, HTML  
+Διαδικτυακό party game τύπου "Heads Up".  Real-time multiplayer gameplay.
+
+---
+
+## 🛠️ Utility Tools
+
+### **mouse_mover**
+**Technologies:** Python (100%)  
+Αυτόματο mouse movement script. Utility tool για system automation.
+
+---
+
+---
+
+## 📊 Στατιστικά Σύνοψη
+
+| Κατηγορία | Πλήθος |
+|-----------|--------|
+| Web Applications | 4 |
+| Game Development | 4 |
+| Machine Learning & Data Science | 4 |
+| Web Scraping | 5 |
+| Backend & APIs | 3 |
+| Mobile Applications | 2 |
+| Client Websites | 4 |
+| Utility Tools | 2 |
+
+**Κύριες Τεχνολογίες:**
+- **Python** - Data Science, ML, Web Scraping, Backend
+- **Java** - Android Development, Desktop Applications
+- **JavaScript/TypeScript** - Web Development, Full-stack
+- **C#** - Unity Game Development
+- **Dart (Flutter)** - Cross-platform Mobile
+- **HTML/CSS/SCSS** - Frontend Development
+
+---
