@@ -16,6 +16,10 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "Dimosthenis Gkontolias | Software Engineer",
   description: "Portfolio of Dimosthenis Gkontolias, a Software Engineer and Informatics student based in Athens.",
+  icons: {
+    icon: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
 };
 
 export default function RootLayout({
