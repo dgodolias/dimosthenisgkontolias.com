@@ -118,6 +118,11 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   expect(faviconResponse.headers()["content-type"]).toContain("image/x-icon");
   const faviconBytes = await faviconResponse.body();
   expect([...faviconBytes.slice(0, 4)]).toEqual([0, 0, 1, 0]);
+  const resumeResponse = await request.get("/assets/DIMOSTHENIS_GKONTOLIAS_CV.pdf");
+  expect(resumeResponse.ok()).toBe(true);
+  expect(resumeResponse.headers()["content-type"]).toContain("application/pdf");
+  const resumeBytes = await resumeResponse.body();
+  expect(resumeBytes.subarray(0, 4).toString()).toBe("%PDF");
 
   const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
   expect(canonical).toBe("https://dimosthenisgkontolias.com");
