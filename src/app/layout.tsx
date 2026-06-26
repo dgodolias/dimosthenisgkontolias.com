@@ -61,7 +61,14 @@ export const metadata: Metadata = {
       "Software engineer behind Quar.gr, TrackSights data work, DataViz, and the Greek AI creator channel Demos Vibes.",
     url: "https://dimosthenisgkontolias.com",
     siteName: "Dimosthenis Gkontolias",
-    images: ["/images/profile.png"],
+    images: [
+      {
+        url: "/images/og-card.png",
+        width: 1200,
+        height: 630,
+        alt: "Dimosthenis Gkontolias portfolio preview",
+      },
+    ],
     locale: "en_US",
     type: "website",
   },
@@ -71,7 +78,7 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Dimosthenis Gkontolias: Quar.gr, TrackSights data work, DataViz, Demos Vibes, and selected AI/data projects.",
     creator: "@demosvibes",
-    images: ["/images/profile.png"],
+    images: ["/images/og-card.png"],
   },
   icons: {
     icon: [

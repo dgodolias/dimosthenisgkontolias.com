@@ -112,6 +112,19 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     "content",
     "summary_large_image",
   );
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    "content",
+    "https://dimosthenisgkontolias.com/images/og-card.png",
+  );
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
+    "content",
+    "https://dimosthenisgkontolias.com/images/og-card.png",
+  );
+  const ogImageResponse = await request.get("/images/og-card.png");
+  expect(ogImageResponse.ok()).toBe(true);
+  expect(ogImageResponse.headers()["content-type"]).toContain("image/png");
+  const ogImageBytes = await ogImageResponse.body();
+  expect([...ogImageBytes.slice(0, 4)]).toEqual([137, 80, 78, 71]);
 
   const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText()) as {
     "@graph": Array<{
