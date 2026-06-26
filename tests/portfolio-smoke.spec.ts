@@ -25,6 +25,12 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   await expect(page.getByText("2x finalist")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Where I can be useful fastest." })).toBeVisible();
   await expect(page.getByText("TrackSights: OEM providers, GCP pipeline, BigQuery/Dataform.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "How I ship when things are messy." })).toBeVisible();
+  await expect(
+    page.getByText(
+      "Nero and this portfolio both carry Playwright coverage for SEO, assets, overflow, links, and motion preferences.",
+    ),
+  ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Projects that shipped beyond the repo." }),
   ).toBeVisible();

@@ -54,6 +54,12 @@ export interface FocusArea {
   evidence: string[];
 }
 
+export interface OperatingPrinciple {
+  title: string;
+  detail: string;
+  proof: string;
+}
+
 export const profile = {
   name: "Dimosthenis Gkontolias",
   shortName: "Dimosthenis",
@@ -120,6 +126,37 @@ export const focusAreas: FocusArea[] = [
       "Demos Vibes: Greek AI demos with reusable resource pages.",
       "Creator loop: build the tool, explain the workflow, improve the asset.",
     ],
+  },
+];
+
+export const operatingPrinciples: OperatingPrinciple[] = [
+  {
+    title: "Make the messy path usable",
+    detail:
+      "I turn unclear requirements into routes, schemas, admin flows, and QA paths that a real operator can trust.",
+    proof:
+      "Quar.gr moved from menu idea to cafe-ready admin editing, media, analytics, and support.",
+  },
+  {
+    title: "Design data before dashboards",
+    detail:
+      "I care about source quality, canonical schemas, assertions, and review labels before the chart layer gets pretty.",
+    proof:
+      "TrackSights used provider patterns, Pydantic schemas, BigQuery/Dataform, and model features at scale.",
+  },
+  {
+    title: "Ship with receipts",
+    detail:
+      "I prefer visible demos, public links, tests, structured metadata, and clean diffs over claims that cannot be inspected.",
+    proof:
+      "Nero and this portfolio both carry Playwright coverage for SEO, assets, overflow, links, and motion preferences.",
+  },
+  {
+    title: "Explain what I build",
+    detail:
+      "I can translate technical workflows into plain Greek content, which makes tools easier to adopt and improves feedback.",
+    proof:
+      "Demos Vibes turns short AI demos into reusable pages, not throwaway posts.",
   },
 ];
 

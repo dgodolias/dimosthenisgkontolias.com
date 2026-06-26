@@ -25,6 +25,7 @@ import {
   experiences,
   featuredProjects,
   focusAreas,
+  operatingPrinciples,
   profile,
   projectShelf,
   proofMetrics,
@@ -607,6 +608,48 @@ function FocusAreas() {
   );
 }
 
+function OperatingPrinciples() {
+  const icons = [BriefcaseBusiness, Sparkles, BadgeCheck, Radio];
+
+  return (
+    <section aria-label="Operating principles" className="border-y border-border/80 bg-paper/86">
+      <div className="container-shell grid gap-7 py-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+        <div>
+          <p className="mb-3 font-mono text-xs font-semibold uppercase text-leaf">
+            Operating mode
+          </p>
+          <h2 className="text-balance font-display text-5xl leading-none text-ink">
+            How I ship when things are messy.
+          </h2>
+          <p className="mt-5 max-w-xl text-sm leading-6 text-muted-foreground">
+            The pattern behind the projects: make the work legible, test what can break, and keep the loop close to real users.
+          </p>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2">
+          {operatingPrinciples.map((principle, index) => {
+            const Icon = icons[index] ?? BadgeCheck;
+
+            return (
+              <div key={principle.title} className="rounded-lg border border-border bg-white/82 p-5 shadow-sm">
+                <div className="mb-7 flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <Icon className="size-5" />
+                </div>
+                <h3 className="text-lg font-bold text-ink">{principle.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  {principle.detail}
+                </p>
+                <p className="mt-4 border-l-2 border-sun pl-3 text-sm leading-6 text-foreground">
+                  {principle.proof}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function WorkSection() {
   const [leadProject, ...restProjects] = featuredProjects;
 
@@ -871,6 +914,7 @@ export default function Home() {
       <RecruiterSnapshot />
       <AchievementSection />
       <FocusAreas />
+      <OperatingPrinciples />
       <WorkSection />
       <MoreProjectsSection />
       <ExperienceSection />
