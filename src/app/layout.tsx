@@ -28,6 +28,32 @@ export const metadata: Metadata = {
   description:
     "AUEB Informatics student, Quar.gr founder, TrackSights data intern, and Demos Vibes creator building web apps, AI/data pipelines, and Greek AI content.",
   metadataBase: new URL("https://dimosthenisgkontolias.com"),
+  alternates: {
+    canonical: "/",
+  },
+  keywords: [
+    "Dimosthenis Gkontolias",
+    "software engineer",
+    "AI engineer",
+    "data engineering",
+    "React developer",
+    "AUEB Informatics",
+    "Quar.gr",
+    "Demos Vibes",
+  ],
+  authors: [{ name: "Dimosthenis Gkontolias", url: "https://dimosthenisgkontolias.com" }],
+  creator: "Dimosthenis Gkontolias",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "Dimosthenis Gkontolias",
     description:
@@ -37,6 +63,14 @@ export const metadata: Metadata = {
     images: ["/images/profile.png"],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dimosthenis Gkontolias | Software Engineer, AI Builder & Creator",
+    description:
+      "Portfolio of Dimosthenis Gkontolias: Quar.gr, TrackSights data work, DataViz, Demos Vibes, and selected AI/data projects.",
+    creator: "@demosvibes",
+    images: ["/images/profile.png"],
   },
   icons: {
     icon: [

@@ -65,26 +65,75 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
+const siteUrl = "https://dimosthenisgkontolias.com";
+const allProjects = [...featuredProjects, ...projectShelf];
+
+function publicProjectUrl(project: Project) {
+  return project.links.find((link) => link.href.startsWith("http"))?.href ?? siteUrl;
+}
+
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: profile.name,
-  jobTitle: "Software Engineer",
-  email: `mailto:${profile.email}`,
-  url: "https://dimosthenisgkontolias.com",
-  sameAs: [
-    profile.githubHref,
-    profile.linkedinHref,
-    ...socialProfiles.map((social) => social.href),
-  ],
-  knowsAbout: [
-    "Software Engineering",
-    "AI Engineering",
-    "Data Engineering",
-    "React",
-    "TypeScript",
-    "Python",
-    "Content Creation",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: profile.name,
+      jobTitle: ["Software Engineer", "AI Builder", "Content Creator"],
+      email: `mailto:${profile.email}`,
+      url: siteUrl,
+      image: `${siteUrl}/images/profile.png`,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Athens",
+        addressCountry: "GR",
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Athens University of Economics and Business",
+      },
+      sameAs: [
+        profile.githubHref,
+        profile.linkedinHref,
+        ...socialProfiles.map((social) => social.href),
+      ],
+      knowsAbout: [
+        "Software Engineering",
+        "AI Engineering",
+        "Data Engineering",
+        "React",
+        "TypeScript",
+        "Python",
+        "RAG applications",
+        "Content Creation",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: "Dimosthenis Gkontolias Portfolio",
+      url: siteUrl,
+      inLanguage: "en",
+      description: profile.headline,
+      author: { "@id": `${siteUrl}/#person` },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${siteUrl}/#projects`,
+      name: "Selected software projects by Dimosthenis Gkontolias",
+      itemListElement: allProjects.map((project, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "CreativeWork",
+          name: project.title,
+          description: project.summary,
+          url: publicProjectUrl(project),
+          keywords: project.stack.join(", "),
+          creator: { "@id": `${siteUrl}/#person` },
+        },
+      })),
+    },
   ],
 };
 
