@@ -47,6 +47,14 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     "/assets/dimosthenis-gkontolias.vcf",
   );
   await expect(page.getByText("Let us build something")).toHaveCount(0);
+  const sunoMentions = await page.evaluate(() =>
+    Array.from(document.querySelectorAll<HTMLAnchorElement | HTMLElement>("a,main")).filter(
+      (element) =>
+        element.textContent?.toLowerCase().includes("suno") ||
+        (element instanceof HTMLAnchorElement && element.href.toLowerCase().includes("suno")),
+    ).length,
+  );
+  expect(sunoMentions).toBe(0);
 
   await page.keyboard.press("Tab");
   const skipLink = page.getByRole("link", { name: "Skip to work" });
