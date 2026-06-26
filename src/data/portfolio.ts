@@ -66,6 +66,7 @@ export const profile = {
   location: "Athens, Greece",
   email: "dgodolias18@gmail.com",
   resumeHref: "/assets/DIMOSTHENIS_GKONTOLIAS_CV.pdf",
+  vcardHref: "/assets/dimosthenis-gkontolias.vcf",
   githubHref: "https://github.com/dgodolias",
   linkedinHref: "https://www.linkedin.com/in/dimosthenis-gkontolias-3024b9349/",
   headline:

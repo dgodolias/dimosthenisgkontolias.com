@@ -42,6 +42,10 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   await expect(
     page.getByRole("heading", { name: "I am looking for a team where shipping matters." }),
   ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Save contact" })).toHaveAttribute(
+    "href",
+    "/assets/dimosthenis-gkontolias.vcf",
+  );
   await expect(page.getByText("Let us build something")).toHaveCount(0);
 
   await page.keyboard.press("Tab");
@@ -178,6 +182,11 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   expect(manifest.name).toBe("Dimosthenis Gkontolias Portfolio");
   expect(manifest.theme_color).toBe("#174332");
   expect(manifest.icons?.some((icon) => icon.src === "/icon.png?v=2")).toBe(true);
+  const vcardResponse = await request.get("/assets/dimosthenis-gkontolias.vcf");
+  expect(vcardResponse.ok()).toBe(true);
+  const vcard = await vcardResponse.text();
+  expect(vcard).toContain("BEGIN:VCARD");
+  expect(vcard).toContain("EMAIL;TYPE=INTERNET:dgodolias18@gmail.com");
 
   const unnamedInteractiveCount = await page.evaluate(
     () =>

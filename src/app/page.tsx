@@ -4,6 +4,7 @@ import {
   Award,
   BadgeCheck,
   BriefcaseBusiness,
+  Download,
   ExternalLink,
   Github,
   GraduationCap,
@@ -864,6 +865,14 @@ function ContactSection() {
             >
               <Linkedin className="size-4" />
               LinkedIn
+            </a>
+            <a
+              href={profile.vcardHref}
+              download
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-primary-foreground/25 px-4 font-bold transition hover:bg-primary-foreground/10 focus-ring"
+            >
+              <Download className="size-4" />
+              Save contact
             </a>
           </div>
         </div>
