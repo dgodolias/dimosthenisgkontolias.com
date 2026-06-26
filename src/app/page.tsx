@@ -261,6 +261,9 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
           <Badge variant="outline" className="rounded-md border-border/80 bg-white/70 font-mono">
             {project.year}
           </Badge>
+          <Badge variant="outline" className="rounded-md border-border/80 bg-white/70 font-mono text-muted-foreground">
+            {project.status}
+          </Badge>
         </div>
         <div>
           <h3 className="font-display text-3xl leading-none text-ink">
