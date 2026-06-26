@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dimosthenis Gkontolias Portfolio
 
-## Getting Started
+Personal portfolio for [dimosthenisgkontolias.com](https://dimosthenisgkontolias.com).
 
-First, run the development server:
+The site is built to be recruiter-readable first: strong project evidence, clear role fit, creator links, SEO metadata, structured data, favicon/manifest support, and smoke tests for the important user-facing paths.
+
+## Stack
+
+- Next.js App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- shadcn/ui components
+- Playwright smoke tests
+
+## Local Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quality Gates
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+npm run test:smoke
+```
 
-## Learn More
+The smoke suite checks the homepage content, navigation, favicon, social preview image, sitemap, manifest, structured data, image loading, external-link hygiene, mobile menu, and reduced-motion behavior.
 
-To learn more about Next.js, take a look at the following resources:
+## Content Model
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Main portfolio content lives in [`src/data/portfolio.ts`](src/data/portfolio.ts):
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- profile and proof metrics
+- recruiter role-fit evidence
+- achievements
+- featured projects and project shelf
+- experience
+- creator profiles
+- skill groups
 
-## Deploy on Vercel
+The homepage composition lives in [`src/app/page.tsx`](src/app/page.tsx).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Runtime Cost
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The portfolio is static-first and does not depend on paid media-generation APIs or runtime AI services.
