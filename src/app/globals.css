@@ -1,99 +1,142 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-obsidian: #0a192f;
-  --color-midnight: #020c1b;
-  --color-teal: #64ffda;
-  --color-teal-tint: rgba(100, 255, 218, 0.1);
-  --color-slate: #8892b0;
-  --color-slate-light: #a8b2d1;
-  --color-slate-lighter: #ccd6f6;
-  --color-white: #e6f1ff;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-display), Georgia, serif;
+  --font-mono: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-fira-code), ui-monospace, SFMono-Regular, monospace;
-}
-
-@layer base {
-  body {
-    background-color: var(--color-obsidian);
-    color: var(--color-slate);
-    font-family: var(--font-sans);
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  /* Noise Texture */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 50;
-    opacity: 0.4;
-  }
-
-  ::selection {
-    background-color: var(--color-teal-tint);
-    color: var(--color-teal);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: var(--color-slate-lighter);
-    font-weight: 600;
-  }
-}
-
-@layer utilities {
-  .glass-card {
-    background: rgba(10, 25, 47, 0.4);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(100, 255, 218, 0.05);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  }
-
-  .text-gradient {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(to right, var(--color-slate-lighter), var(--color-teal));
-  }
-
-  .glow-text {
-    text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
-  }
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ink: #17231c;
+  --color-forest: #174332;
+  --color-leaf: #3f8f64;
+  --color-sun: #f7c74a;
+  --color-coral: #ff765f;
+  --color-sky: #53bdd1;
+  --color-paper: #fffef8;
+  --color-mint: #eff9ec;
+  --color-lilac: #f0ecff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
+  --radius-3xl: var(--radius);
+  --radius-4xl: var(--radius);
+  --font-heading: var(--font-display), Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #fbfff7;
+  --foreground: #17231c;
+  --card: #fffef8;
+  --card-foreground: #17231c;
+  --popover: #fffef8;
+  --popover-foreground: #17231c;
+  --primary: #174332;
+  --primary-foreground: #fbfff7;
+  --secondary: #eaf7ff;
+  --secondary-foreground: #17231c;
+  --muted: #edf4ec;
+  --muted-foreground: #5c6b62;
+  --accent: #f7c74a;
+  --accent-foreground: #17231c;
+  --destructive: #c2412f;
+  --border: #d7e4d7;
+  --input: #d7e4d7;
+  --ring: #3f8f64;
+  --chart-1: #3f8f64;
+  --chart-2: #53bdd1;
+  --chart-3: #f7c74a;
+  --chart-4: #ff765f;
+  --chart-5: #7b61ff;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    color-scheme: light;
+    font-family: var(--font-sans);
+    scroll-padding-top: 96px;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+      linear-gradient(90deg, rgb(23 67 50 / 0.055) 1px, transparent 1px),
+      linear-gradient(180deg, rgb(23 67 50 / 0.055) 1px, transparent 1px),
+      linear-gradient(135deg, #fbfff7 0%, #ffffff 42%, #eff9ec 100%);
+    background-size: 34px 34px, 34px 34px, auto;
+    color: var(--foreground);
+  }
+
+  ::selection {
+    background: rgb(247 199 74 / 0.45);
+    color: var(--foreground);
+  }
+
+  a {
+    text-underline-offset: 4px;
+  }
+
+  img,
+  svg {
+    max-width: 100%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .container-shell {
+    width: min(100% - 32px, 1180px);
+    margin-inline: auto;
+  }
+
+  .section-y {
+    padding-block: 88px;
+  }
+
+  .font-display {
+    font-family: var(--font-serif);
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
 }
