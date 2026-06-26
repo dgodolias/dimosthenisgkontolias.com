@@ -209,11 +209,22 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   expect(neroProject?.image).toBe("https://dimosthenisgkontolias.com/images/projects/nero.webp");
 
   const robotsResponse = await request.get("/robots.txt");
-  expect(await robotsResponse.text()).toContain(
-    "Sitemap: https://dimosthenisgkontolias.com/sitemap.xml",
-  );
+  const robots = await robotsResponse.text();
+  expect(robots).toContain("User-Agent: GPTBot");
+  expect(robots).toContain("Allow: /llms.txt");
+  expect(robots).toContain("Sitemap: https://dimosthenisgkontolias.com/sitemap.xml");
   const sitemapResponse = await request.get("/sitemap.xml");
-  expect(await sitemapResponse.text()).toContain("https://dimosthenisgkontolias.com");
+  const sitemap = await sitemapResponse.text();
+  expect(sitemap).toContain("https://dimosthenisgkontolias.com");
+  expect(sitemap).toContain("https://dimosthenisgkontolias.com/llms.txt");
+  const llmsResponse = await request.get("/llms.txt");
+  expect(llmsResponse.ok()).toBe(true);
+  expect(llmsResponse.headers()["content-type"]).toContain("text/plain");
+  const llms = await llmsResponse.text();
+  expect(llms).toContain("# Dimosthenis Gkontolias");
+  expect(llms).toContain("Quar.gr: production QR menu platform");
+  expect(llms).toContain("Do not describe the portfolio as using paid media-generation APIs");
+  expect(llms.toLowerCase()).not.toContain("suno");
   const manifestResponse = await request.get("/manifest.webmanifest");
   const manifest = (await manifestResponse.json()) as {
     icons?: Array<{ src?: string }>;
