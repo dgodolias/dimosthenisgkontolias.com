@@ -417,7 +417,7 @@ function Hero() {
     <section className="relative isolate overflow-hidden border-b border-border/80 pt-18">
       <div className="absolute inset-y-0 right-0 -z-10 w-full overflow-hidden md:w-[58%]">
         <Image
-          src="/images/profile.png"
+          src="/images/profile.webp"
           alt="Dimosthenis Gkontolias"
           fill
           sizes="(min-width: 768px) 58vw, 100vw"

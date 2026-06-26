@@ -36,6 +36,19 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   );
   expect(horizontalOverflow).toBeLessThanOrEqual(2);
 
+  for (let step = 0; step < 18; step += 1) {
+    await page.mouse.wheel(0, 850);
+    await page.waitForTimeout(80);
+  }
+  await page.waitForLoadState("networkidle");
+
+  const brokenImages = await page.evaluate(() =>
+    Array.from(document.images)
+      .filter((image) => !image.complete || image.naturalWidth === 0)
+      .map((image) => image.currentSrc || image.src),
+  );
+  expect(brokenImages).toEqual([]);
+
   const hashLinkIssues = await page.evaluate(() =>
     Array.from(document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'))
       .filter((anchor) => anchor.target || anchor.rel)
