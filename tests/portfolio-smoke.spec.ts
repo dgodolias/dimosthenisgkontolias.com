@@ -38,6 +38,8 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   await expect(
     page.getByRole("heading", { name: "Projects that shipped beyond the repo." }),
   ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Quar.gr: GitHub" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Nero Website: Live" })).toBeVisible();
 
   const horizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth,

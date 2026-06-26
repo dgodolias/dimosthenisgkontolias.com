@@ -310,6 +310,7 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
                 href={link.href}
                 target={externalTarget(link.href)}
                 rel={externalRel(link.href)}
+                aria-label={`${project.title}: ${link.label}`}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-2 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary focus-ring"
               >
                 {link.label}
