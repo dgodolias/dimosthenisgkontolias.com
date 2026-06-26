@@ -23,6 +23,8 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   ).toBeVisible();
   await expect(page.getByText("19,150/20,000")).toBeVisible();
   await expect(page.getByText("2x finalist")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Where I can be useful fastest." })).toBeVisible();
+  await expect(page.getByText("TrackSights: OEM providers, GCP pipeline, BigQuery/Dataform.")).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Projects that shipped beyond the repo." }),
   ).toBeVisible();

@@ -576,6 +576,11 @@ function FocusAreas() {
   return (
     <section className="section-y">
       <div className="container-shell">
+        <SectionHeader
+          eyebrow="Role fit"
+          title="Where I can be useful fastest."
+          description="Three recruiter-readable paths, each backed by work already visible on the page."
+        />
         <div className="grid gap-4 md:grid-cols-3">
           {focusAreas.map((area, index) => (
             <div key={area.title} className="rounded-lg border border-border bg-paper p-6">
@@ -586,6 +591,14 @@ function FocusAreas() {
               </div>
               <h2 className="text-xl font-bold text-ink">{area.title}</h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">{area.detail}</p>
+              <ul className="mt-5 space-y-3">
+                {area.evidence.map((item) => (
+                  <li key={item} className="flex gap-3 text-sm leading-6 text-foreground">
+                    <BadgeCheck className="mt-0.5 size-4 shrink-0 text-leaf" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>

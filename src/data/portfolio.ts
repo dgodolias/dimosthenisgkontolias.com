@@ -48,6 +48,12 @@ export interface Achievement {
   detail: string;
 }
 
+export interface FocusArea {
+  title: string;
+  detail: string;
+  evidence: string[];
+}
+
 export const profile = {
   name: "Dimosthenis Gkontolias",
   shortName: "Dimosthenis",
@@ -87,21 +93,33 @@ export const proofMetrics: ProofMetric[] = [
   },
 ];
 
-export const focusAreas = [
+export const focusAreas: FocusArea[] = [
   {
     title: "Product engineering",
     detail:
-      "I like owning the parts people often skip: data model, deploys, edge cases, onboarding, and feedback.",
+      "Best fit when a team needs someone who can take a product surface from unclear requirements to something users can actually operate.",
+    evidence: [
+      "Quar.gr: product, admin UX, data model, deploys, support.",
+      "Nero Website: polished hospitality frontend with Playwright QA.",
+    ],
   },
   {
     title: "AI and data products",
     detail:
-      "RAG, LLM APIs, scraping pipelines, canonical schemas, model checks, and cloud data workflows.",
+      "Strongest when the work mixes messy data, model behavior, cloud jobs, and a frontend that makes the result understandable.",
+    evidence: [
+      "TrackSights: OEM providers, GCP pipeline, BigQuery/Dataform.",
+      "DataViz: RAG chatbot over 23,000 points and 207 metrics.",
+    ],
   },
   {
     title: "Distribution and education",
     detail:
-      "Demos Vibes makes me explain tools in Greek, publish companion files, and see what actually helps people.",
+      "Useful for teams that want engineering plus the ability to explain, publish, and learn from audience feedback.",
+    evidence: [
+      "Demos Vibes: Greek AI demos with reusable resource pages.",
+      "Creator loop: build the tool, explain the workflow, improve the asset.",
+    ],
   },
 ];
 
