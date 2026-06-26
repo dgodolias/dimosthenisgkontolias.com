@@ -247,20 +247,24 @@ export const projectShelf: Project[] = [
     accent: "sky",
   },
   {
-    title: "Findwork Avatar",
-    eyebrow: "Greek AI avatar",
+    title: "Nero Website",
+    eyebrow: "Hospitality frontend",
     year: "2026",
-    status: "Private prototype",
+    status: "Public GitHub Pages",
     summary:
-      "A real-time Greek AI avatar that helps people with employment discovery and job-search support.",
+      "A polished cafe/bar/restaurant website for Nero in Neo Irakleio, built around real venue photography, fast menu/map actions, and QuaR-backed menu paths.",
     role:
-      "Designed the WebRTC pipeline with STT, LLM reasoning, Greek TTS, avatar lip-sync, and cost modeling.",
+      "Designed and built the React/Vite/TypeScript experience, structured data, image gallery, language picker, motion layer, and Playwright QA around verified venue facts.",
     impact: [
-      "Uses Pipecat, Daily.co, Groq Whisper, Llama 3.3 70B, ElevenLabs, and Simli.",
-      "Cost target: roughly $300-350/month for 3,000 streaming minutes.",
+      "Published on GitHub Pages with direct QuaR menu, map, call, hours, and social paths.",
+      "Uses sourced and refined real Nero assets instead of generated imagery, with image preview and mobile swipe interactions.",
+      "Protected by Playwright checks for overflow, structured data, favicon, image loading, accessibility labels, and external-link rel hygiene.",
     ],
-    stack: ["Python", "Pipecat", "WebRTC", "Groq", "ElevenLabs", "Simli"],
-    links: [{ label: "Live", href: "https://findworkagents.vercel.app" }],
+    stack: ["React", "TypeScript", "Vite", "Playwright", "SEO", "GitHub Pages"],
+    links: [
+      { label: "Live", href: "https://dgodolias.github.io/NeroWebsite/" },
+      { label: "GitHub", href: "https://github.com/dgodolias/NeroWebsite" },
+    ],
     accent: "coral",
   },
   {

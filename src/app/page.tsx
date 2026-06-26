@@ -592,7 +592,7 @@ function MoreProjectsSection() {
         <SectionHeader
           eyebrow="Project shelf"
           title="More shipped experiments."
-          description="Smaller or less public, but useful for range: AI review tools, real-time avatars, game backends, and product experiments."
+          description="Smaller or less public, but useful for range: AI review tools, hospitality frontends, game backends, and product experiments."
         />
         <div className="grid gap-5 lg:grid-cols-3">
           {projectShelf.map((project) => (
