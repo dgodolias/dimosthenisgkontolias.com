@@ -53,7 +53,7 @@ export const profile = {
   headline:
     "I build software that gets past the demo: QR menus in cafes, GCP data pipelines, RAG dashboards, and the content that helps people use them.",
   intro:
-    "Final-year Informatics student at AUEB with a 9.1/10 GPA, founder of Quar.gr, Erasmus+ data intern at TrackSights, and creator behind Demos Vibes. My best work sits where code, product sense, data, and distribution meet.",
+    "EU citizen and final-year Informatics student at AUEB with a 9.1/10 GPA, founder of Quar.gr, Erasmus+ data intern at TrackSights, and creator behind Demos Vibes. My best work sits where code, product sense, data, and distribution meet.",
   availability:
     "Open to software engineering or AI/data engineering roles where I can ship, learn fast, and stay close to users.",
 };
@@ -77,7 +77,7 @@ export const proofMetrics: ProofMetric[] = [
   {
     value: "30+",
     label: "projects shipped",
-    detail: "Web apps, data pipelines, AI tools, mobile apps, and games.",
+    detail: "Web apps, data pipelines, AI tools, mobile apps, and games across 3+ years.",
   },
 ];
 
@@ -114,7 +114,7 @@ export const featuredProjects: Project[] = [
       alt: "Quar.gr product homepage showing a QR menu phone preview",
     },
     impact: [
-      "Serving 3+ cafes in production.",
+      "Serving 3+ cafes in production, with 276+ commits behind the product.",
       "Admin panel supports drag-and-drop menu editing, images, multilingual content, and GA4 analytics.",
       "Real business constraints: onboarding, reliability, content updates, and support for non-technical owners.",
     ],
@@ -387,7 +387,17 @@ export const skillGroups = [
   },
   {
     title: "AI and automation",
-    skills: ["RAG", "LLM APIs", "PyTorch", "scikit-learn", "Playwright", "Selenium", "AI coding agents"],
+    skills: [
+      "RAG",
+      "LLM APIs",
+      "PyTorch",
+      "scikit-learn",
+      "Playwright",
+      "Selenium",
+      "AI coding agents",
+      "Cursor",
+      "GitHub Copilot",
+    ],
   },
   {
     title: "Cloud and ops",

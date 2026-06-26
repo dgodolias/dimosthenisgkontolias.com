@@ -510,6 +510,10 @@ function RecruiterSnapshot() {
       title: "Why me",
       body: "I am still early, but I have already dealt with users, messy data, deploys, content, and the uncomfortable parts after a demo works.",
     },
+    {
+      title: "Work setup",
+      body: "EU citizen based in Athens; Greek native, English C2/ECPE, and German B2/OSD.",
+    },
   ];
 
   return (
@@ -526,7 +530,7 @@ function RecruiterSnapshot() {
             A quick read before the project cards.
           </p>
         </div>
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="grid gap-3 md:grid-cols-2">
           {items.map((item) => (
             <div key={item.title} className="rounded-lg border border-border bg-paper p-5">
               <p className="font-mono text-xs font-semibold uppercase text-leaf">
