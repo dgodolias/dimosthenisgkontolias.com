@@ -18,6 +18,24 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     page.getByRole("heading", { level: 1, name: "Dimosthenis Gkontolias" }),
   ).toBeVisible();
   await expect(page.getByText("What a recruiter can learn fast.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "What each project proves." })).toBeVisible();
+  if (testInfo.project.name === "mobile") {
+    const evidenceCard = page.getByRole("article").filter({ hasText: "Quar.gr" });
+    await expect(evidenceCard.getByText("Production ownership")).toBeVisible();
+    await expect(
+      evidenceCard.getByText(
+        "Can own a user-facing product after the demo, including the unglamorous operational parts.",
+      ),
+    ).toBeVisible();
+  } else {
+    const evidenceTable = page.getByRole("table");
+    await expect(evidenceTable.getByText("Production ownership")).toBeVisible();
+    await expect(
+      evidenceTable.getByText(
+        "Can own a user-facing product after the demo, including the unglamorous operational parts.",
+      ),
+    ).toBeVisible();
+  }
   await expect(
     page.getByRole("heading", { name: "Quiet proof that the work ethic is not new." }),
   ).toBeVisible();

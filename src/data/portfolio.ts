@@ -60,6 +60,13 @@ export interface OperatingPrinciple {
   proof: string;
 }
 
+export interface EvidenceMapItem {
+  project: string;
+  signal: string;
+  proof: string;
+  recruiterRead: string;
+}
+
 export const profile = {
   name: "Dimosthenis Gkontolias",
   shortName: "Dimosthenis",
@@ -176,6 +183,44 @@ export const achievements: Achievement[] = [
     title: "Hackathon finals",
     value: "2x finalist",
     detail: "Finalist at Hamburg ChefTreff Hackathon and Athens AceIn AI Hackathon.",
+  },
+];
+
+export const evidenceMap: EvidenceMapItem[] = [
+  {
+    project: "Quar.gr",
+    signal: "Production ownership",
+    proof: "3+ cafes use the product; admin editing, media, analytics, deploys, and support are already part of the loop.",
+    recruiterRead:
+      "Can own a user-facing product after the demo, including the unglamorous operational parts.",
+  },
+  {
+    project: "TrackSights",
+    signal: "Data engineering depth",
+    proof: "OEM providers, Pydantic schemas, GCS, BigQuery, Dataform, Terraform, assertions, and a 785k-listing model dataset.",
+    recruiterRead:
+      "Comfortable turning messy external data into warehouse-ready datasets and model features.",
+  },
+  {
+    project: "DataViz",
+    signal: "AI product UX",
+    proof: "RAG over 23,000 data points and 207 metrics with streaming answers and generated chart output.",
+    recruiterRead:
+      "Can wrap model behavior in a product surface that makes data exploration understandable.",
+  },
+  {
+    project: "Demos Vibes",
+    signal: "Distribution ability",
+    proof: "Short-form Greek AI demos backed by reusable resource pages, typed content objects, SEO, sitemap, and JSON-LD.",
+    recruiterRead:
+      "Can explain technical workflows clearly and turn content feedback into better product assets.",
+  },
+  {
+    project: "Nero Website",
+    signal: "Frontend polish + QA",
+    proof: "Real venue assets, QuaR menu path, structured data, image gallery, mobile interactions, and Playwright checks.",
+    recruiterRead:
+      "Can ship a small commercial frontend that looks real, loads assets, and survives basic regressions.",
   },
 ];
 

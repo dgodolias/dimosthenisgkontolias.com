@@ -23,6 +23,7 @@ import {
 import { MobileNavigation } from "@/components/MobileNavigation";
 import {
   achievements,
+  evidenceMap,
   experiences,
   featuredProjects,
   focusAreas,
@@ -546,6 +547,85 @@ function RecruiterSnapshot() {
   );
 }
 
+function EvidenceMapSection() {
+  return (
+    <section aria-label="Project evidence map" className="border-b border-border/80 bg-paper/86">
+      <div className="container-shell py-10">
+        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="mb-3 font-mono text-xs font-semibold uppercase text-leaf">
+              Evidence map
+            </p>
+            <h2 className="max-w-3xl font-display text-4xl leading-none text-ink sm:text-5xl">
+              What each project proves.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-muted-foreground">
+            A faster recruiter read: proof first, then the hiring signal behind it.
+          </p>
+        </div>
+        <div className="grid gap-3 md:hidden">
+          {evidenceMap.map((item) => (
+            <article key={item.project} className="rounded-lg border border-border bg-white/84 p-5 shadow-sm">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                <h3 className="text-xl font-bold text-ink">{item.project}</h3>
+                <Badge variant="secondary" className="rounded-md">
+                  {item.signal}
+                </Badge>
+              </div>
+              <p className="font-mono text-xs font-semibold uppercase text-leaf">Proof</p>
+              <p className="mt-2 text-sm leading-6 text-foreground">{item.proof}</p>
+              <p className="mt-5 font-mono text-xs font-semibold uppercase text-leaf">
+                Recruiter read
+              </p>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {item.recruiterRead}
+              </p>
+            </article>
+          ))}
+        </div>
+        <div className="hidden overflow-hidden rounded-lg border border-border bg-white/84 shadow-sm md:block">
+          <table className="w-full border-collapse text-left">
+            <thead className="border-b border-border bg-mint/70">
+              <tr>
+                {["Project", "Signal", "Proof", "Recruiter read"].map((header) => (
+                  <th
+                    key={header}
+                    scope="col"
+                    className="px-5 py-4 font-mono text-xs font-semibold uppercase text-leaf"
+                  >
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {evidenceMap.map((item) => (
+                <tr key={item.project} className="align-top">
+                  <th scope="row" className="w-[15%] px-5 py-5 text-base font-bold text-ink">
+                    {item.project}
+                  </th>
+                  <td className="w-[18%] px-5 py-5">
+                    <Badge variant="secondary" className="rounded-md">
+                      {item.signal}
+                    </Badge>
+                  </td>
+                  <td className="w-[37%] px-5 py-5 text-sm leading-6 text-foreground">
+                    {item.proof}
+                  </td>
+                  <td className="w-[30%] px-5 py-5 text-sm leading-6 text-muted-foreground">
+                    {item.recruiterRead}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AchievementSection() {
   const icons = [Trophy, GraduationCap, Award];
 
@@ -940,6 +1020,7 @@ export default function Home() {
       <Hero />
       <ProofStrip />
       <RecruiterSnapshot />
+      <EvidenceMapSection />
       <AchievementSection />
       <FocusAreas />
       <OperatingPrinciples />
