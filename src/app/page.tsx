@@ -1,10 +1,12 @@
 import Image from "next/image";
 import {
   ArrowUpRight,
+  Award,
   BadgeCheck,
   BriefcaseBusiness,
   ExternalLink,
   Github,
+  GraduationCap,
   Instagram,
   Linkedin,
   Mail,
@@ -13,11 +15,13 @@ import {
   Play,
   Radio,
   Sparkles,
+  Trophy,
   Twitter,
 } from "lucide-react";
 
 import { MobileNavigation } from "@/components/MobileNavigation";
 import {
+  achievements,
   experiences,
   featuredProjects,
   focusAreas,
@@ -88,6 +92,7 @@ const jsonLd = {
         "@type": "CollegeOrUniversity",
         name: "Athens University of Economics and Business",
       },
+      award: achievements.map((achievement) => `${achievement.title}: ${achievement.value}`),
       sameAs: [
         profile.githubHref,
         profile.linkedinHref,
@@ -517,6 +522,53 @@ function RecruiterSnapshot() {
   );
 }
 
+function AchievementSection() {
+  const icons = [Trophy, GraduationCap, Award];
+
+  return (
+    <section aria-label="Academic and competition signals" className="border-b border-border/80 bg-mint/55">
+      <div className="container-shell grid gap-5 py-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
+        <div className="rounded-lg border border-border bg-paper p-6">
+          <p className="font-mono text-xs font-semibold uppercase text-leaf">
+            Signal ledger
+          </p>
+          <h2 className="mt-5 max-w-xl font-display text-4xl leading-none text-ink">
+            Quiet proof that the work ethic is not new.
+          </h2>
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
+            A compact layer for the academic and competition signals that recruiters often scan for after the projects.
+          </p>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {achievements.map((achievement, index) => {
+            const Icon = icons[index] ?? Award;
+
+            return (
+              <div
+                key={achievement.title}
+                className="rounded-lg border border-border bg-white/80 p-5 shadow-sm"
+              >
+                <div className="mb-8 flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <Icon className="size-5" />
+                </div>
+                <p className="font-mono text-xs font-semibold uppercase text-leaf">
+                  {achievement.title}
+                </p>
+                <p className="mt-3 font-display text-4xl leading-none text-ink">
+                  {achievement.value}
+                </p>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  {achievement.detail}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FocusAreas() {
   return (
     <section className="section-y">
@@ -801,6 +853,7 @@ export default function Home() {
       <Hero />
       <ProofStrip />
       <RecruiterSnapshot />
+      <AchievementSection />
       <FocusAreas />
       <WorkSection />
       <MoreProjectsSection />

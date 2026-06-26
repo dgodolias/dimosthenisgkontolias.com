@@ -19,6 +19,11 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   ).toBeVisible();
   await expect(page.getByText("What a recruiter can learn fast.")).toBeVisible();
   await expect(
+    page.getByRole("heading", { name: "Quiet proof that the work ethic is not new." }),
+  ).toBeVisible();
+  await expect(page.getByText("19,150/20,000")).toBeVisible();
+  await expect(page.getByText("2x finalist")).toBeVisible();
+  await expect(
     page.getByRole("heading", { name: "Projects that shipped beyond the repo." }),
   ).toBeVisible();
   await expect(
@@ -111,6 +116,7 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText()) as {
     "@graph": Array<{
       "@type"?: string;
+      award?: string[];
       itemListElement?: Array<{
         item?: {
           image?: string;
@@ -124,6 +130,9 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   expect(schemaTypes).toEqual(expect.arrayContaining(["Person", "WebSite", "ItemList"]));
   const person = schema["@graph"].find((node) => node["@type"] === "Person");
   expect(person?.knowsLanguage).toEqual(expect.arrayContaining(["Greek", "English", "German"]));
+  expect(person?.award).toEqual(
+    expect.arrayContaining(["Panhellenic exams: 19,150/20,000", "Hackathon finals: 2x finalist"]),
+  );
   const itemList = schema["@graph"].find((node) => node["@type"] === "ItemList");
   expect(itemList?.itemListElement?.length).toBeGreaterThanOrEqual(9);
   const neroProject = itemList?.itemListElement

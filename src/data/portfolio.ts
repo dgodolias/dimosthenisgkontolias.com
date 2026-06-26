@@ -42,6 +42,12 @@ export interface SocialProfile {
   detail: string;
 }
 
+export interface Achievement {
+  title: string;
+  value: string;
+  detail: string;
+}
+
 export const profile = {
   name: "Dimosthenis Gkontolias",
   shortName: "Dimosthenis",
@@ -96,6 +102,24 @@ export const focusAreas = [
     title: "Distribution and education",
     detail:
       "Demos Vibes makes me explain tools in Greek, publish companion files, and see what actually helps people.",
+  },
+];
+
+export const achievements: Achievement[] = [
+  {
+    title: "Panhellenic exams",
+    value: "19,150/20,000",
+    detail: "National exam score in 2021-2022, before entering AUEB Informatics.",
+  },
+  {
+    title: "Model school finish",
+    value: "19.3/20",
+    detail: "Graduated from Anavrita Model Public High School with a 19.3/20 grade.",
+  },
+  {
+    title: "Hackathon finals",
+    value: "2x finalist",
+    detail: "Finalist at Hamburg ChefTreff Hackathon and Athens AceIn AI Hackathon.",
   },
 ];
 
