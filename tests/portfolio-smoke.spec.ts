@@ -31,6 +31,14 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   ).toBeVisible();
   await expect(page.getByText("Let us build something")).toHaveCount(0);
 
+  await page.keyboard.press("Tab");
+  const skipLink = page.getByRole("link", { name: "Skip to work" });
+  await expect(skipLink).toBeFocused();
+  await skipLink.press("Enter");
+  await expect(
+    page.getByRole("heading", { name: "Projects that shipped beyond the repo." }),
+  ).toBeVisible();
+
   const horizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth,
   );
@@ -142,7 +150,13 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
 
   if (testInfo.project.name === "mobile") {
     await page.getByLabel("Open navigation").click();
-    await expect(page.getByRole("link", { name: "Creator" }).last()).toBeVisible();
+    const creatorLink = page.getByRole("link", { name: "Creator" }).last();
+    await expect(creatorLink).toBeVisible();
+    await creatorLink.click();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(
+      page.getByRole("heading", { name: "I build the thing, then explain it in Greek." }),
+    ).toBeVisible();
   }
 
   expect(consoleErrors).toEqual([]);

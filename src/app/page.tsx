@@ -9,7 +9,6 @@ import {
   Linkedin,
   Mail,
   MapPin,
-  Menu,
   MessageCircle,
   Play,
   Radio,
@@ -17,6 +16,7 @@ import {
   Twitter,
 } from "lucide-react";
 
+import { MobileNavigation } from "@/components/MobileNavigation";
 import {
   experiences,
   featuredProjects,
@@ -37,13 +37,6 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import {
   Tabs,
   TabsContent,
@@ -337,6 +330,12 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
 function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/86 backdrop-blur-xl">
+      <a
+        href="#work"
+        className="fixed left-4 top-4 z-[60] -translate-y-20 rounded-lg bg-sun px-4 py-2 font-bold text-ink opacity-0 transition focus:translate-y-0 focus:opacity-100 focus-ring"
+      >
+        Skip to work
+      </a>
       <div className="container-shell flex h-18 items-center justify-between gap-4">
         <a href="#" className="flex items-center gap-3 focus-ring">
           <Image
@@ -378,41 +377,7 @@ function Header() {
             Contact
           </a>
         </div>
-        <Sheet>
-          <SheetTrigger
-            render={
-              <button
-                aria-label="Open navigation"
-                className="inline-flex size-10 items-center justify-center rounded-lg border border-border bg-paper text-ink md:hidden"
-              />
-            }
-          >
-            <Menu className="size-5" />
-          </SheetTrigger>
-          <SheetContent className="w-[min(88vw,360px)] bg-paper">
-            <SheetHeader>
-              <SheetTitle>Navigation</SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-col gap-2 px-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-lg border border-border bg-white px-4 py-3 font-semibold text-ink"
-                >
-                  {item.label}
-                </a>
-              ))}
-              <a
-                href={profile.resumeHref}
-                className="mt-3 inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground"
-              >
-                Download CV
-                <ExternalLink className="size-4" />
-              </a>
-            </div>
-          </SheetContent>
-        </Sheet>
+        <MobileNavigation items={navItems} resumeHref={profile.resumeHref} />
       </div>
     </header>
   );
