@@ -42,12 +42,21 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   }
   await page.waitForLoadState("networkidle");
 
-  const brokenImages = await page.evaluate(() =>
-    Array.from(document.images)
-      .filter((image) => !image.complete || image.naturalWidth === 0)
-      .map((image) => image.currentSrc || image.src),
-  );
-  expect(brokenImages).toEqual([]);
+  const imageCount = await page.locator("img").count();
+  for (let index = 0; index < imageCount; index += 1) {
+    const image = page.locator("img").nth(index);
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(
+        () =>
+          image.evaluate((element) => {
+            const img = element as HTMLImageElement;
+            return img.complete && img.naturalWidth > 0 ? "" : img.currentSrc || img.src;
+          }),
+        { timeout: 10_000 },
+      )
+      .toBe("");
+  }
 
   const hashLinkIssues = await page.evaluate(() =>
     Array.from(document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'))

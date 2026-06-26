@@ -255,6 +255,10 @@ export const projectShelf: Project[] = [
       "A polished cafe/bar/restaurant website for Nero in Neo Irakleio, built around real venue photography, fast menu/map actions, and QuaR-backed menu paths.",
     role:
       "Designed and built the React/Vite/TypeScript experience, structured data, image gallery, language picker, motion layer, and Playwright QA around verified venue facts.",
+    image: {
+      src: "/images/projects/nero.webp",
+      alt: "Nero Website hero section with real daytime lounge photography",
+    },
     impact: [
       "Published on GitHub Pages with direct QuaR menu, map, call, hours, and social paths.",
       "Uses sourced and refined real Nero assets instead of generated imagery, with image preview and mobile swipe interactions.",
