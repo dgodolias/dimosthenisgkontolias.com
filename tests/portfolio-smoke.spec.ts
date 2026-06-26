@@ -219,3 +219,19 @@ test("reduced motion does not initialize smooth scrolling", async ({ page }) => 
     smoothScroll: undefined,
   });
 });
+
+test("not found page stays branded", async ({ page }) => {
+  await page.goto("/missing-portfolio-route");
+
+  await expect(page.getByRole("heading", { name: "Page not found." })).toBeVisible();
+  await expect(page.getByAltText("DG logo")).toBeVisible();
+  await expect(page.getByText("The strongest project evidence is on the main page.")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Back to work" })).toHaveAttribute(
+    "href",
+    "/#work",
+  );
+  await expect(page.getByRole("link", { name: "Email Dimosthenis" })).toHaveAttribute(
+    "href",
+    "mailto:dgodolias18@gmail.com",
+  );
+});
