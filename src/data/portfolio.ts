@@ -110,7 +110,7 @@ export const featuredProjects: Project[] = [
     role:
       "Designed and built the product end-to-end: React/TypeScript frontend, Fastify backend, Firebase data layer, admin flows, deployments, and customer-facing UX.",
     image: {
-      src: "/images/projects/quar.png",
+      src: "/images/projects/quar.webp",
       alt: "Quar.gr product homepage showing a QR menu phone preview",
     },
     impact: [
@@ -153,7 +153,7 @@ export const featuredProjects: Project[] = [
     role:
       "Built the FastAPI + React/TypeScript application, connected Gemini 2.5 Pro, and designed the data-to-chart interaction model.",
     image: {
-      src: "/images/projects/dataviz.png",
+      src: "/images/projects/dataviz.webp",
       alt: "DataViz Talk To Greek Data landing screen",
     },
     impact: [
@@ -175,7 +175,7 @@ export const featuredProjects: Project[] = [
     role:
       "Created the content architecture, the demosvibes.gr site, searchable resource pages, SEO metadata, JSON-LD, and the short-form education loop around it.",
     image: {
-      src: "/images/projects/demosvibes.png",
+      src: "/images/projects/demosvibes.webp",
       alt: "Demos Vibes resource hub with Greek AI workflow pages",
     },
     impact: [
