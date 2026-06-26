@@ -97,11 +97,15 @@ const accentStyles: Record<Project["accent"], string> = {
 };
 
 function externalRel(href: string) {
-  return href.startsWith("mailto:") || href.startsWith("/") ? undefined : "noreferrer";
+  return href.startsWith("mailto:") || href.startsWith("/") || href.startsWith("#")
+    ? undefined
+    : "noreferrer";
 }
 
 function externalTarget(href: string) {
-  return href.startsWith("mailto:") || href.startsWith("/") ? undefined : "_blank";
+  return href.startsWith("mailto:") || href.startsWith("/") || href.startsWith("#")
+    ? undefined
+    : "_blank";
 }
 
 function SectionHeader({
@@ -115,7 +119,7 @@ function SectionHeader({
 }) {
   return (
     <div className="mx-auto mb-10 max-w-3xl text-center">
-      <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-leaf">
+      <p className="mb-3 font-mono text-xs font-semibold uppercase text-leaf">
         {eyebrow}
       </p>
       <h2 className="text-balance font-display text-4xl leading-none text-ink sm:text-5xl">
@@ -232,7 +236,7 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <div>
-          <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <p className="mb-3 font-mono text-xs font-semibold uppercase text-muted-foreground">
             Why it matters
           </p>
           <ul className="space-y-3">
@@ -444,6 +448,51 @@ function ProofStrip() {
   );
 }
 
+function RecruiterSnapshot() {
+  const items = [
+    {
+      title: "Best fit",
+      body: "Product-focused engineering roles, especially React/Next, backend/data work, and AI features that need a clean path from prototype to production.",
+    },
+    {
+      title: "Proof",
+      body: "Quar.gr is used by cafes, TrackSights work touched real cloud data pipelines, and Demos Vibes makes me explain tools in plain Greek.",
+    },
+    {
+      title: "Why me",
+      body: "I am still early, but I have already dealt with users, messy data, deploys, content, and the uncomfortable parts after a demo works.",
+    },
+  ];
+
+  return (
+    <section className="border-b border-border/80 bg-white/72">
+      <div className="container-shell grid gap-5 py-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch">
+        <div className="rounded-lg border border-primary/15 bg-primary p-6 text-primary-foreground">
+          <p className="font-mono text-xs font-semibold uppercase text-sun">
+            Recruiter snapshot
+          </p>
+          <h2 className="mt-5 font-display text-4xl leading-none">
+            What a recruiter can learn fast.
+          </h2>
+          <p className="mt-4 text-sm leading-6 text-primary-foreground/78">
+            A quick read before the project cards.
+          </p>
+        </div>
+        <div className="grid gap-3 md:grid-cols-3">
+          {items.map((item) => (
+            <div key={item.title} className="rounded-lg border border-border bg-paper p-5">
+              <p className="font-mono text-xs font-semibold uppercase text-leaf">
+                {item.title}
+              </p>
+              <p className="mt-4 text-sm leading-6 text-foreground">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FocusAreas() {
   return (
     <section className="section-y">
@@ -474,8 +523,8 @@ function WorkSection() {
       <div className="container-shell">
         <SectionHeader
           eyebrow="Selected work"
-          title="Projects with a reason to exist."
-          description="Recruiters should not have to decode a repo list. These are the projects that best show product judgment, engineering range, data/AI depth, and shipping discipline."
+          title="Projects that shipped beyond the repo."
+          description="A recruiter should be able to see the role, stack, constraint, and result quickly. These are the clearest examples."
         />
         <ProjectCard project={leadProject} featured />
         <div className="mt-5 grid gap-5 lg:grid-cols-2">
@@ -494,8 +543,8 @@ function MoreProjectsSection() {
       <div className="container-shell">
         <SectionHeader
           eyebrow="Project shelf"
-          title="A few more signals."
-          description="These are smaller or less public projects, but they show taste for systems, AI tooling, games, and real-time product experiments."
+          title="More shipped experiments."
+          description="Smaller or less public, but useful for range: AI review tools, real-time avatars, game backends, and product experiments."
         />
         <div className="grid gap-5 lg:grid-cols-3">
           {projectShelf.map((project) => (
@@ -513,8 +562,8 @@ function ExperienceSection() {
       <div className="container-shell">
         <SectionHeader
           eyebrow="Experience"
-          title="From internships to founder work."
-          description="The through-line is ownership: reverse-engineering APIs, shipping customer-facing product, writing maintainable UI, and communicating with people who are not engineers."
+          title="Where the habits came from."
+          description="Across internships, Quar.gr, and freelance work, the pattern is the same: own the unclear part, make it reliable, and keep the product understandable."
         />
         <Tabs defaultValue={experiences[0].company} className="mx-auto max-w-5xl">
           <TabsList className="mb-6 h-auto w-full flex-wrap justify-start rounded-lg bg-white/85 p-2">
@@ -538,7 +587,7 @@ function ExperienceSection() {
                         {experience.role}
                       </CardTitle>
                       <CardDescription className="mt-2 text-base">
-                        {experience.company} · {experience.location}
+                        {experience.company} | {experience.location}
                       </CardDescription>
                     </div>
                     <Badge className="rounded-md bg-primary text-primary-foreground">
@@ -575,14 +624,14 @@ function CreatorSection() {
     <section id="creator" className="section-y">
       <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
-          <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-leaf">
+          <p className="mb-3 font-mono text-xs font-semibold uppercase text-leaf">
             Creator layer
           </p>
           <h2 className="text-balance font-display text-5xl leading-none text-ink">
-            I do not just build tools. I make them understandable.
+            I build the thing, then explain it in Greek.
           </h2>
           <p className="mt-5 text-base leading-7 text-muted-foreground">
-            Demos Vibes is where I publish Greek AI tools, prompts, and workflows with practical demos and companion files. It is part content channel, part product-distribution lab, and part forcing function for clearer thinking.
+            Demos Vibes is my public lab for AI tools, workflows, and reusable resources. Every short demo points back to a resource page, so the content is not just a clip; it becomes something people can use again.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <LinkButton href="https://demosvibes.gr/" variant="outline">
@@ -626,8 +675,8 @@ function SkillsSection() {
       <div className="container-shell">
         <SectionHeader
           eyebrow="Stack"
-          title="A practical, wide stack."
-          description="I am not trying to look like every keyword at once. These are the tools I have actually used across shipped apps, internships, coursework, and experiments."
+          title="The stack I actually use."
+          description="This is not keyword stuffing. It is the stack behind the projects above: product UI, APIs, scraping, ML/data work, cloud jobs, and the pieces needed to ship."
         />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
           {skillGroups.map((group) => (
@@ -654,11 +703,11 @@ function ContactSection() {
       <div className="container-shell">
         <div className="grid gap-8 rounded-lg border border-border bg-primary p-6 text-primary-foreground sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.24em] text-sun">
-              Open to the right team
+            <p className="font-mono text-xs font-semibold uppercase text-sun">
+              Next role
             </p>
             <h2 className="mt-4 max-w-3xl font-display text-5xl leading-none">
-              Let us build something that graduates from demo to real use.
+              I am looking for a team where shipping matters.
             </h2>
             <p className="mt-5 max-w-2xl leading-7 text-primary-foreground/78">
               {profile.availability}
@@ -695,7 +744,7 @@ function Footer() {
         <div>
           <p className="font-bold text-ink">{profile.name}</p>
           <p className="text-sm text-muted-foreground">
-            Software engineer · AI builder · Content creator
+            Software engineer | AI builder | Content creator
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -727,6 +776,7 @@ export default function Home() {
       <Header />
       <Hero />
       <ProofStrip />
+      <RecruiterSnapshot />
       <FocusAreas />
       <WorkSection />
       <MoreProjectsSection />

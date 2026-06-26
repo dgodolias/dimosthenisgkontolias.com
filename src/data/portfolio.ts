@@ -51,33 +51,33 @@ export const profile = {
   githubHref: "https://github.com/dgodolias",
   linkedinHref: "https://www.linkedin.com/in/dimosthenis-gkontolias-3024b9349/",
   headline:
-    "Software engineer building production web apps, AI/data systems, and the distribution loops around them.",
+    "I build software that gets past the demo: QR menus in cafes, GCP data pipelines, RAG dashboards, and the content that helps people use them.",
   intro:
-    "Final-year Informatics student at AUEB with a 9.1/10 GPA, founder of Quar.gr, Erasmus+ data intern at TrackSights, and creator behind Demos Vibes. I like projects that move from scrappy prototype to real users, real data, and real operational constraints.",
+    "Final-year Informatics student at AUEB with a 9.1/10 GPA, founder of Quar.gr, Erasmus+ data intern at TrackSights, and creator behind Demos Vibes. My best work sits where code, product sense, data, and distribution meet.",
   availability:
-    "Open to software engineering, AI/data engineering, product-minded internships, and early-stage teams.",
+    "Open to software engineering or AI/data engineering roles where I can ship, learn fast, and stay close to users.",
 };
 
 export const proofMetrics: ProofMetric[] = [
   {
     value: "9.1/10",
     label: "AUEB GPA",
-    detail: "Final-year BSc Informatics student; top of department signal.",
+    detail: "Final-year BSc Informatics student at AUEB.",
   },
   {
     value: "3+",
     label: "cafes in production",
-    detail: "Quar.gr serves live QR menus with admin editing and analytics.",
+    detail: "Quar.gr is live with QR menus, admin editing, and analytics.",
   },
   {
     value: "785k",
     label: "training listings",
-    detail: "TrackSights depreciation model work over 71 automotive features.",
+    detail: "TrackSights model work used 71 automotive features.",
   },
   {
     value: "30+",
     label: "projects shipped",
-    detail: "Web apps, AI tools, scraping systems, mobile apps, and games.",
+    detail: "Web apps, data pipelines, AI tools, mobile apps, and games.",
   },
 ];
 
@@ -85,17 +85,17 @@ export const focusAreas = [
   {
     title: "Product engineering",
     detail:
-      "I care about the whole loop: user need, interface, backend, deployment, analytics, and iteration.",
+      "I like owning the parts people often skip: data model, deploys, edge cases, onboarding, and feedback.",
   },
   {
-    title: "AI and data systems",
+    title: "AI and data products",
     detail:
-      "RAG, LLM APIs, scraping pipelines, canonical schemas, model evaluation, and cloud data workflows.",
+      "RAG, LLM APIs, scraping pipelines, canonical schemas, model checks, and cloud data workflows.",
   },
   {
     title: "Distribution and education",
     detail:
-      "Through Demos Vibes I turn tools, prompts, and workflows into short demos and SEO-ready resources.",
+      "Demos Vibes makes me explain tools in Greek, publish companion files, and see what actually helps people.",
   },
 ];
 
@@ -126,7 +126,7 @@ export const featuredProjects: Project[] = [
     accent: "leaf",
   },
   {
-    title: "TrackSights OEM data system",
+    title: "TrackSights OEM data pipeline",
     eyebrow: "Erasmus+ data internship",
     year: "Feb - Jun 2026",
     status: "Cloud data pipeline",
@@ -171,19 +171,19 @@ export const featuredProjects: Project[] = [
     year: "2026",
     status: "Active channel",
     summary:
-      "A Greek AI tools, prompts, and workflows channel paired with a static resource hub for every video.",
+      "A Greek AI tools and workflows channel paired with a static resource hub for every video.",
     role:
-      "Created the content system, the demosvibes.gr site, searchable resource pages, SEO metadata, JSON-LD, and the short-form education loop around it.",
+      "Created the content architecture, the demosvibes.gr site, searchable resource pages, SEO metadata, JSON-LD, and the short-form education loop around it.",
     image: {
       src: "/images/projects/demosvibes.png",
-      alt: "Demos Vibes resource hub with Greek AI prompt pages",
+      alt: "Demos Vibes resource hub with Greek AI workflow pages",
     },
     impact: [
       "25 recent Instagram reels and 21 TikTok videos around practical AI tools and workflows.",
       "Companion hub is data-driven: one typed resource object powers routes, cards, SEO, sitemap, and JSON-LD.",
       "Shows an ability recruiters rarely see in junior engineers: build the product and explain why it matters.",
     ],
-    stack: ["React", "TypeScript", "Vite SSG", "SEO", "JSON-LD", "Content systems"],
+    stack: ["React", "TypeScript", "Vite SSG", "SEO", "JSON-LD", "Content architecture"],
     links: [
       { label: "Hub", href: "https://demosvibes.gr/" },
       { label: "GitHub", href: "https://github.com/dgodolias/demosvibes.gr" },
@@ -342,13 +342,13 @@ export const socialProfiles: SocialProfile[] = [
     platform: "Instagram",
     handle: "@demos.vibes",
     href: "https://www.instagram.com/demos.vibes/",
-    detail: "Greek AI tools, prompts, and workflow demos; 25 recent reels.",
+    detail: "Greek AI tool and workflow demos; 25 recent reels.",
   },
   {
     platform: "TikTok",
     handle: "@demos.vibes",
     href: "https://www.tiktok.com/@demos.vibes",
-    detail: "Short-form AI demos paired with resources and prompts.",
+    detail: "Short-form AI demos paired with reusable resources.",
   },
   {
     platform: "X",
@@ -379,7 +379,7 @@ export const skillGroups = [
   },
   {
     title: "AI and automation",
-    skills: ["RAG", "LLM APIs", "PyTorch", "scikit-learn", "Playwright", "Selenium", "Claude Code"],
+    skills: ["RAG", "LLM APIs", "PyTorch", "scikit-learn", "Playwright", "Selenium", "AI coding agents"],
   },
   {
     title: "Cloud and ops",

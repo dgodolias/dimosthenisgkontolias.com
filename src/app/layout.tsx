@@ -26,12 +26,12 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Dimosthenis Gkontolias | Software Engineer, AI Builder & Creator",
   description:
-    "Software engineer and final-year AUEB Informatics student building production web apps, AI/data systems, and Greek AI education content.",
+    "AUEB Informatics student, Quar.gr founder, TrackSights data intern, and Demos Vibes creator building web apps, AI/data pipelines, and Greek AI content.",
   metadataBase: new URL("https://dimosthenisgkontolias.com"),
   openGraph: {
     title: "Dimosthenis Gkontolias",
     description:
-      "Production-minded software engineer, AI builder, founder of Quar.gr, and creator behind Demos Vibes.",
+      "Software engineer behind Quar.gr, TrackSights data work, DataViz, and the Greek AI creator channel Demos Vibes.",
     url: "https://dimosthenisgkontolias.com",
     siteName: "Dimosthenis Gkontolias",
     images: ["/images/profile.png"],
@@ -39,8 +39,11 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/images/logo.png",
-    apple: "/images/logo.png",
+    icon: [
+      { url: "/favicon.ico?v=2", type: "image/x-icon" },
+      { url: "/icon.png?v=2", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/icon.png?v=2",
   },
 };
 
