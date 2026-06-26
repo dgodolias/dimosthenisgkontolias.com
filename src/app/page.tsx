@@ -36,7 +36,6 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   Sheet,
@@ -260,9 +259,9 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
           </Badge>
         </div>
         <div>
-          <CardTitle className="font-display text-3xl leading-none text-ink">
+          <h3 className="font-display text-3xl leading-none text-ink">
             {project.title}
-          </CardTitle>
+          </h3>
           <CardDescription className="mt-3 text-base leading-7">
             {project.summary}
           </CardDescription>
@@ -632,9 +631,9 @@ function ExperienceSection() {
                 <CardHeader>
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
-                      <CardTitle className="font-display text-3xl text-ink">
+                      <h3 className="font-display text-3xl text-ink">
                         {experience.role}
-                      </CardTitle>
+                      </h3>
                       <CardDescription className="mt-2 text-base">
                         {experience.company} | {experience.location}
                       </CardDescription>
