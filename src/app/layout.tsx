@@ -31,6 +31,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.webmanifest",
   keywords: [
     "Dimosthenis Gkontolias",
     "software engineer",

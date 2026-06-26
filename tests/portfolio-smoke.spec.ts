@@ -137,6 +137,15 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   );
   const sitemapResponse = await request.get("/sitemap.xml");
   expect(await sitemapResponse.text()).toContain("https://dimosthenisgkontolias.com");
+  const manifestResponse = await request.get("/manifest.webmanifest");
+  const manifest = (await manifestResponse.json()) as {
+    icons?: Array<{ src?: string }>;
+    name?: string;
+    theme_color?: string;
+  };
+  expect(manifest.name).toBe("Dimosthenis Gkontolias Portfolio");
+  expect(manifest.theme_color).toBe("#174332");
+  expect(manifest.icons?.some((icon) => icon.src === "/icon.png?v=2")).toBe(true);
 
   const unnamedInteractiveCount = await page.evaluate(
     () =>
