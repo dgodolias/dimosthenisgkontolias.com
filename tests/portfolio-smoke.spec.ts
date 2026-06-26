@@ -198,3 +198,18 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
 
   expect(consoleErrors).toEqual([]);
 });
+
+test("reduced motion does not initialize smooth scrolling", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const motionState = await page.evaluate(() => ({
+    scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
+    smoothScroll: document.documentElement.dataset.smoothScroll,
+  }));
+
+  expect(motionState).toEqual({
+    scrollBehavior: "auto",
+    smoothScroll: undefined,
+  });
+});
