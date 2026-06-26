@@ -147,7 +147,7 @@ const accentStyles: Record<Project["accent"], string> = {
 function externalRel(href: string) {
   return href.startsWith("mailto:") || href.startsWith("/") || href.startsWith("#")
     ? undefined
-    : "noreferrer";
+    : "noopener noreferrer";
 }
 
 function externalTarget(href: string) {
@@ -222,8 +222,8 @@ function IconLink({
         render={
           <a
             href={href}
-            target="_blank"
-            rel="noreferrer"
+            target={externalTarget(href)}
+            rel={externalRel(href)}
             aria-label={label}
             className="inline-flex size-10 items-center justify-center rounded-lg border border-border bg-paper text-ink transition hover:-translate-y-0.5 hover:border-primary hover:text-primary focus-ring"
           />
@@ -697,8 +697,8 @@ function CreatorSection() {
             <a
               key={social.platform}
               href={social.href}
-              target="_blank"
-              rel="noreferrer"
+              target={externalTarget(social.href)}
+              rel={externalRel(social.href)}
               className="rounded-lg border border-border bg-paper p-5 transition hover:-translate-y-1 hover:border-primary focus-ring"
             >
               <div className="mb-10 flex items-center justify-between">
@@ -771,8 +771,8 @@ function ContactSection() {
             </a>
             <a
               href={profile.linkedinHref}
-              target="_blank"
-              rel="noreferrer"
+              target={externalTarget(profile.linkedinHref)}
+              rel={externalRel(profile.linkedinHref)}
               className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-primary-foreground/25 px-4 font-bold transition hover:bg-primary-foreground/10 focus-ring"
             >
               <Linkedin className="size-4" />

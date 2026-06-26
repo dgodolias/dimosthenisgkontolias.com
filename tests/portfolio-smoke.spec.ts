@@ -69,6 +69,13 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   );
   expect(hashLinkIssues).toEqual([]);
 
+  const externalRelIssues = await page.evaluate(() =>
+    Array.from(document.querySelectorAll<HTMLAnchorElement>('a[target="_blank"]'))
+      .filter((anchor) => !anchor.relList.contains("noopener") || !anchor.relList.contains("noreferrer"))
+      .map((anchor) => anchor.href),
+  );
+  expect(externalRelIssues).toEqual([]);
+
   const faviconLinks = await page.evaluate(() =>
     Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel*="icon"]')).map((link) =>
       link.getAttribute("href"),
