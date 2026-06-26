@@ -218,6 +218,17 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
           <span className="font-semibold text-ink">Role: </span>
           {project.role}
         </p>
+        {project.image ? (
+          <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-border bg-muted">
+            <Image
+              src={project.image.src}
+              alt={project.image.alt}
+              fill
+              sizes={featured ? "(min-width: 1024px) 42vw, 100vw" : "(min-width: 1024px) 48vw, 100vw"}
+              className="object-cover object-top"
+            />
+          </div>
+        ) : null}
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <div>

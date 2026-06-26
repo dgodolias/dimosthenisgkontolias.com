@@ -16,6 +16,10 @@ export interface Project {
   status: string;
   summary: string;
   role: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
   impact: string[];
   stack: string[];
   links: LinkItem[];
@@ -105,6 +109,10 @@ export const featuredProjects: Project[] = [
       "A QR menu platform for cafes with admin editing, media management, multilingual menus, and analytics.",
     role:
       "Designed and built the product end-to-end: React/TypeScript frontend, Fastify backend, Firebase data layer, admin flows, deployments, and customer-facing UX.",
+    image: {
+      src: "/images/projects/quar.png",
+      alt: "Quar.gr product homepage showing a QR menu phone preview",
+    },
     impact: [
       "Serving 3+ cafes in production.",
       "Admin panel supports drag-and-drop menu editing, images, multilingual content, and GA4 analytics.",
@@ -144,6 +152,10 @@ export const featuredProjects: Project[] = [
       "A full-stack RAG chatbot for economic data exploration with streaming answers and chart generation.",
     role:
       "Built the FastAPI + React/TypeScript application, connected Gemini 2.5 Pro, and designed the data-to-chart interaction model.",
+    image: {
+      src: "/images/projects/dataviz.png",
+      alt: "DataViz Talk To Greek Data landing screen",
+    },
     impact: [
       "Works over 23,000 data points and 207 metrics.",
       "Streams responses with SSE and can render 12 chart types.",
@@ -162,6 +174,10 @@ export const featuredProjects: Project[] = [
       "A Greek AI tools, prompts, and workflows channel paired with a static resource hub for every video.",
     role:
       "Created the content system, the demosvibes.gr site, searchable resource pages, SEO metadata, JSON-LD, and the short-form education loop around it.",
+    image: {
+      src: "/images/projects/demosvibes.png",
+      alt: "Demos Vibes resource hub with Greek AI prompt pages",
+    },
     impact: [
       "25 recent Instagram reels and 21 TikTok videos around practical AI tools and workflows.",
       "Companion hub is data-driven: one typed resource object powers routes, cards, SEO, sitemap, and JSON-LD.",

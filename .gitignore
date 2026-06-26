@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/.codex-qa/
 
 # next.js
 /.next/
@@ -29,6 +30,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+.codex-dev-server*.log
+.codex-dev-server.pid
 
 # env files (can opt-in for committing if needed)
 .env*
