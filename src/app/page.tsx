@@ -265,8 +265,9 @@ function IconLink({
 function ProjectCard({ project, featured = false }: { project: Project; featured?: boolean }) {
   return (
     <Card
+      id={project.id}
       className={cn(
-        "h-full rounded-lg border bg-paper/95 shadow-[0_20px_80px_rgb(23_35_28/0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_90px_rgb(23_35_28/0.12)]",
+        "h-full scroll-mt-28 rounded-lg border bg-paper/95 shadow-[0_20px_80px_rgb(23_35_28/0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_90px_rgb(23_35_28/0.12)]",
         featured && "lg:grid lg:grid-cols-[0.88fr_1.12fr]",
       )}
     >
@@ -581,6 +582,14 @@ function EvidenceMapSection() {
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
                 {item.recruiterRead}
               </p>
+              <a
+                href={item.href}
+                aria-label={`${item.project} project details`}
+                className="mt-5 inline-flex items-center gap-1.5 rounded-lg border border-border bg-paper px-3 py-2 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary focus-ring"
+              >
+                View project
+                <ArrowUpRight className="size-4" />
+              </a>
             </article>
           ))}
         </div>
@@ -603,7 +612,14 @@ function EvidenceMapSection() {
               {evidenceMap.map((item) => (
                 <tr key={item.project} className="align-top">
                   <th scope="row" className="w-[15%] px-5 py-5 text-base font-bold text-ink">
-                    {item.project}
+                    <a
+                      href={item.href}
+                      aria-label={`${item.project} project details`}
+                      className="inline-flex items-center gap-1.5 transition hover:text-primary focus-ring"
+                    >
+                      {item.project}
+                      <ArrowUpRight className="size-4" />
+                    </a>
                   </th>
                   <td className="w-[18%] px-5 py-5">
                     <Badge variant="secondary" className="rounded-md">

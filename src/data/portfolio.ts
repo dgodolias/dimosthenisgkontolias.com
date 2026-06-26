@@ -10,6 +10,7 @@ export interface ProofMetric {
 }
 
 export interface Project {
+  id: string;
   title: string;
   eyebrow: string;
   year: string;
@@ -61,6 +62,7 @@ export interface OperatingPrinciple {
 }
 
 export interface EvidenceMapItem {
+  href: string;
   project: string;
   signal: string;
   proof: string;
@@ -188,6 +190,7 @@ export const achievements: Achievement[] = [
 
 export const evidenceMap: EvidenceMapItem[] = [
   {
+    href: "#project-quar",
     project: "Quar.gr",
     signal: "Production ownership",
     proof: "3+ cafes use the product; admin editing, media, analytics, deploys, and support are already part of the loop.",
@@ -195,6 +198,7 @@ export const evidenceMap: EvidenceMapItem[] = [
       "Can own a user-facing product after the demo, including the unglamorous operational parts.",
   },
   {
+    href: "#project-tracksights",
     project: "TrackSights",
     signal: "Data engineering depth",
     proof: "OEM providers, Pydantic schemas, GCS, BigQuery, Dataform, Terraform, assertions, and a 785k-listing model dataset.",
@@ -202,6 +206,7 @@ export const evidenceMap: EvidenceMapItem[] = [
       "Comfortable turning messy external data into warehouse-ready datasets and model features.",
   },
   {
+    href: "#project-dataviz",
     project: "DataViz",
     signal: "AI product UX",
     proof: "RAG over 23,000 data points and 207 metrics with streaming answers and generated chart output.",
@@ -209,6 +214,7 @@ export const evidenceMap: EvidenceMapItem[] = [
       "Can wrap model behavior in a product surface that makes data exploration understandable.",
   },
   {
+    href: "#project-demos-vibes",
     project: "Demos Vibes",
     signal: "Distribution ability",
     proof: "Short-form Greek AI demos backed by reusable resource pages, typed content objects, SEO, sitemap, and JSON-LD.",
@@ -216,6 +222,7 @@ export const evidenceMap: EvidenceMapItem[] = [
       "Can explain technical workflows clearly and turn content feedback into better product assets.",
   },
   {
+    href: "#project-nero",
     project: "Nero Website",
     signal: "Frontend polish + QA",
     proof: "Real venue assets, QuaR menu path, structured data, image gallery, mobile interactions, and Playwright checks.",
@@ -226,6 +233,7 @@ export const evidenceMap: EvidenceMapItem[] = [
 
 export const featuredProjects: Project[] = [
   {
+    id: "project-quar",
     title: "Quar.gr",
     eyebrow: "Founder / production SaaS",
     year: "2025 - Present",
@@ -251,6 +259,7 @@ export const featuredProjects: Project[] = [
     accent: "leaf",
   },
   {
+    id: "project-tracksights",
     title: "TrackSights OEM data pipeline",
     eyebrow: "Erasmus+ data internship",
     year: "Feb - Jun 2026",
@@ -269,6 +278,7 @@ export const featuredProjects: Project[] = [
     accent: "sky",
   },
   {
+    id: "project-dataviz",
     title: "DataViz",
     eyebrow: "Gen AI economic insight platform",
     year: "2026",
@@ -291,6 +301,7 @@ export const featuredProjects: Project[] = [
     accent: "sun",
   },
   {
+    id: "project-demos-vibes",
     title: "Demos Vibes",
     eyebrow: "Content creator + resource hub",
     year: "2026",
@@ -316,6 +327,7 @@ export const featuredProjects: Project[] = [
     accent: "coral",
   },
   {
+    id: "project-cseventfinder",
     title: "CSEventFinder",
     eyebrow: "AI/event discovery engine",
     year: "2026",
@@ -334,6 +346,7 @@ export const featuredProjects: Project[] = [
     accent: "lilac",
   },
   {
+    id: "project-qr-style-studio",
     title: "QR Style Studio",
     eyebrow: "Privacy-first browser tool",
     year: "2026",
@@ -355,6 +368,7 @@ export const featuredProjects: Project[] = [
 
 export const projectShelf: Project[] = [
   {
+    id: "project-boomai",
     title: "BoomAI",
     eyebrow: "AI code review CLI",
     year: "2026",
@@ -372,6 +386,7 @@ export const projectShelf: Project[] = [
     accent: "sky",
   },
   {
+    id: "project-nero",
     title: "Nero Website",
     eyebrow: "Hospitality frontend",
     year: "2026",
@@ -397,6 +412,7 @@ export const projectShelf: Project[] = [
     accent: "coral",
   },
   {
+    id: "project-athenssecret",
     title: "AthensSecret VR/MR backend",
     eyebrow: "Game backend",
     year: "2025",

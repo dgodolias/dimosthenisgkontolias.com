@@ -270,6 +270,40 @@ test("reduced motion does not initialize smooth scrolling", async ({ page }) => 
   });
 });
 
+test("evidence map links target project cards", async ({ page }, testInfo) => {
+  await page.goto("/");
+
+  const quarLink =
+    testInfo.project.name === "mobile"
+      ? page
+          .getByRole("article")
+          .filter({ hasText: "Quar.gr" })
+          .getByRole("link", { name: "Quar.gr project details" })
+      : page.getByRole("table").getByRole("link", { name: "Quar.gr project details" });
+
+  await expect(quarLink).toHaveAttribute("href", "#project-quar");
+  await quarLink.click();
+  await expect(page).toHaveURL(/#project-quar$/);
+  await expect(
+    page.locator("#project-quar").getByRole("heading", { name: "Quar.gr" }),
+  ).toBeVisible();
+
+  const neroLink =
+    testInfo.project.name === "mobile"
+      ? page
+          .getByRole("article")
+          .filter({ hasText: "Nero Website" })
+          .getByRole("link", { name: "Nero Website project details" })
+      : page.getByRole("table").getByRole("link", { name: "Nero Website project details" });
+
+  await expect(neroLink).toHaveAttribute("href", "#project-nero");
+  await neroLink.click();
+  await expect(page).toHaveURL(/#project-nero$/);
+  await expect(
+    page.locator("#project-nero").getByRole("heading", { name: "Nero Website" }),
+  ).toBeVisible();
+});
+
 test("not found page stays branded", async ({ page }) => {
   await page.goto("/missing-portfolio-route");
 
