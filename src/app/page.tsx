@@ -67,6 +67,10 @@ const navItems = [
 const siteUrl = "https://dimosthenisgkontolias.com";
 const allProjects = [...featuredProjects, ...projectShelf];
 
+function absoluteUrl(href: string) {
+  return href.startsWith("http") ? href : `${siteUrl}${href}`;
+}
+
 function publicProjectUrl(project: Project) {
   return project.links.find((link) => link.href.startsWith("http"))?.href ?? siteUrl;
 }
@@ -106,6 +110,7 @@ const jsonLd = {
         "RAG applications",
         "Content Creation",
       ],
+      knowsLanguage: ["Greek", "English", "German"],
     },
     {
       "@type": "WebSite",
@@ -128,6 +133,7 @@ const jsonLd = {
           name: project.title,
           description: project.summary,
           url: publicProjectUrl(project),
+          image: project.image ? absoluteUrl(project.image.src) : undefined,
           keywords: project.stack.join(", "),
           creator: { "@id": `${siteUrl}/#person` },
         },

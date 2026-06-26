@@ -98,13 +98,28 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     "summary_large_image",
   );
 
-  const schema = JSON.parse(
-    await page.locator('script[type="application/ld+json"]').innerText(),
-  ) as { "@graph": Array<{ "@type"?: string; itemListElement?: unknown[] }> };
+  const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText()) as {
+    "@graph": Array<{
+      "@type"?: string;
+      itemListElement?: Array<{
+        item?: {
+          image?: string;
+          name?: string;
+        };
+      }>;
+      knowsLanguage?: string[];
+    }>;
+  };
   const schemaTypes = schema["@graph"].map((node) => node["@type"]);
   expect(schemaTypes).toEqual(expect.arrayContaining(["Person", "WebSite", "ItemList"]));
+  const person = schema["@graph"].find((node) => node["@type"] === "Person");
+  expect(person?.knowsLanguage).toEqual(expect.arrayContaining(["Greek", "English", "German"]));
   const itemList = schema["@graph"].find((node) => node["@type"] === "ItemList");
   expect(itemList?.itemListElement?.length).toBeGreaterThanOrEqual(9);
+  const neroProject = itemList?.itemListElement
+    ?.map((entry) => entry.item)
+    .find((item) => item?.name === "Nero Website");
+  expect(neroProject?.image).toBe("https://dimosthenisgkontolias.com/images/projects/nero.webp");
 
   const robotsResponse = await request.get("/robots.txt");
   expect(await robotsResponse.text()).toContain(
