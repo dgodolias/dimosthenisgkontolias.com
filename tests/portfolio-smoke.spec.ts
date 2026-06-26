@@ -157,6 +157,10 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     "@graph": Array<{
       "@type"?: string;
       award?: string[];
+      contactPoint?: Array<{
+        contactType?: string;
+        email?: string;
+      }>;
       itemListElement?: Array<{
         item?: {
           image?: string;
@@ -167,9 +171,15 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     }>;
   };
   const schemaTypes = schema["@graph"].map((node) => node["@type"]);
-  expect(schemaTypes).toEqual(expect.arrayContaining(["Person", "WebSite", "ItemList"]));
+  expect(schemaTypes).toEqual(expect.arrayContaining(["Person", "WebSite", "ProfilePage", "ItemList"]));
   const person = schema["@graph"].find((node) => node["@type"] === "Person");
   expect(person?.knowsLanguage).toEqual(expect.arrayContaining(["Greek", "English", "German"]));
+  expect(person?.contactPoint?.[0]).toEqual(
+    expect.objectContaining({
+      contactType: "recruiting",
+      email: "dgodolias18@gmail.com",
+    }),
+  );
   expect(person?.award).toEqual(
     expect.arrayContaining(["Panhellenic exams: 19,150/20,000", "Hackathon finals: 2x finalist"]),
   );

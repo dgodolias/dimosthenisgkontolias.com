@@ -83,6 +83,15 @@ const jsonLd = {
       name: profile.name,
       jobTitle: ["Software Engineer", "AI Builder", "Content Creator"],
       email: `mailto:${profile.email}`,
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          email: profile.email,
+          contactType: "recruiting",
+          areaServed: "Europe",
+          availableLanguage: ["Greek", "English", "German"],
+        },
+      ],
       url: siteUrl,
       image: `${siteUrl}/images/profile.png`,
       address: {
@@ -120,6 +129,16 @@ const jsonLd = {
       inLanguage: "en",
       description: profile.headline,
       author: { "@id": `${siteUrl}/#person` },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${siteUrl}/#profile-page`,
+      name: `${profile.name} Portfolio`,
+      url: siteUrl,
+      inLanguage: "en",
+      isPartOf: { "@id": `${siteUrl}/#website` },
+      mainEntity: { "@id": `${siteUrl}/#person` },
+      about: profile.headline,
     },
     {
       "@type": "ItemList",
