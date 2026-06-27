@@ -20,7 +20,9 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   await expect(page.getByText("What a recruiter can learn fast.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "What each project proves." })).toBeVisible();
   if (testInfo.project.name === "mobile") {
-    const evidenceCard = page.getByRole("article").filter({ hasText: "Quar.gr" });
+    const evidenceCard = page
+      .getByRole("article")
+      .filter({ has: page.getByRole("link", { name: "Quar.gr project details" }) });
     await expect(evidenceCard.getByText("Production ownership")).toBeVisible();
     await expect(
       evidenceCard.getByText(
@@ -60,6 +62,9 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   await expect(
     page.getByRole("heading", { name: "I am looking for a team where shipping matters." }),
   ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Quick answers without the scroll hunt." })).toBeVisible();
+  await expect(page.getByText("Which projects should a recruiter inspect first?")).toBeVisible();
+  await expect(page.getByText("The fastest path is email at dgodolias18@gmail.com or LinkedIn.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Save contact" })).toHaveAttribute(
     "href",
     "/assets/dimosthenis-gkontolias.vcf",
@@ -73,6 +78,14 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     ).length,
   );
   expect(sunoMentions).toBe(0);
+  const magicEffects = await page.evaluate(() => ({
+    ambient: document.querySelectorAll(".magic-ambient, .magic-grid-shine").length,
+    animatedBorders: document.querySelectorAll(".magic-border").length,
+    shimmerActions: document.querySelectorAll(".magic-shimmer").length,
+  }));
+  expect(magicEffects.ambient).toBe(2);
+  expect(magicEffects.animatedBorders).toBeGreaterThanOrEqual(20);
+  expect(magicEffects.shimmerActions).toBeGreaterThanOrEqual(3);
 
   await page.keyboard.press("Tab");
   const skipLink = page.getByRole("link", { name: "Skip to work" });
@@ -108,7 +121,7 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
             const img = element as HTMLImageElement;
             return img.complete && img.naturalWidth > 0 ? "" : img.currentSrc || img.src;
           }),
-        { timeout: 10_000 },
+        { timeout: 20_000 },
       )
       .toBe("");
   }
@@ -179,6 +192,12 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
         contactType?: string;
         email?: string;
       }>;
+      mainEntity?: Array<{
+        acceptedAnswer?: {
+          text?: string;
+        };
+        name?: string;
+      }>;
       itemListElement?: Array<{
         item?: {
           image?: string;
@@ -189,7 +208,9 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     }>;
   };
   const schemaTypes = schema["@graph"].map((node) => node["@type"]);
-  expect(schemaTypes).toEqual(expect.arrayContaining(["Person", "WebSite", "ProfilePage", "ItemList"]));
+  expect(schemaTypes).toEqual(
+    expect.arrayContaining(["Person", "WebSite", "ProfilePage", "FAQPage", "ItemList"]),
+  );
   const person = schema["@graph"].find((node) => node["@type"] === "Person");
   expect(person?.knowsLanguage).toEqual(expect.arrayContaining(["Greek", "English", "German"]));
   expect(person?.contactPoint?.[0]).toEqual(
@@ -200,6 +221,14 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   );
   expect(person?.award).toEqual(
     expect.arrayContaining(["Panhellenic exams: 19,150/20,000", "Hackathon finals: 2x finalist"]),
+  );
+  const faqPage = schema["@graph"].find((node) => node["@type"] === "FAQPage");
+  expect(faqPage?.mainEntity?.length).toBeGreaterThanOrEqual(5);
+  expect(faqPage?.mainEntity?.map((item) => item.name)).toEqual(
+    expect.arrayContaining(["Which projects should a recruiter inspect first?"]),
+  );
+  expect(faqPage?.mainEntity?.[0].acceptedAnswer?.text).toContain(
+    "Product-focused software engineering",
   );
   const itemList = schema["@graph"].find((node) => node["@type"] === "ItemList");
   expect(itemList?.itemListElement?.length).toBeGreaterThanOrEqual(9);

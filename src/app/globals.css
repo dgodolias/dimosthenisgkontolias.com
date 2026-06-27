@@ -121,6 +121,15 @@
     html {
       scroll-behavior: auto !important;
     }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
@@ -144,5 +153,148 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  .magic-ambient {
+    position: absolute;
+    inset: -22% -18% auto auto;
+    width: min(58vw, 760px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 32% 28%, rgb(247 199 74 / 0.34), transparent 34%),
+      radial-gradient(circle at 68% 48%, rgb(83 189 209 / 0.26), transparent 38%),
+      radial-gradient(circle at 52% 72%, rgb(255 118 95 / 0.16), transparent 42%);
+    filter: blur(24px);
+    opacity: 0.9;
+    animation: magic-float 12s ease-in-out infinite alternate;
+  }
+
+  .magic-grid-shine {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(115deg, transparent 0 38%, rgb(255 255 255 / 0.48) 46%, transparent 55%),
+      radial-gradient(circle at 20% 20%, rgb(247 199 74 / 0.18), transparent 26%),
+      radial-gradient(circle at 82% 64%, rgb(83 189 209 / 0.14), transparent 28%);
+    background-size: 220% 100%, auto, auto;
+    mix-blend-mode: soft-light;
+    opacity: 0.65;
+    animation: magic-shimmer 10s linear infinite;
+  }
+
+  .magic-border {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .magic-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      135deg,
+      rgb(247 199 74 / 0),
+      rgb(247 199 74 / 0.82),
+      rgb(83 189 209 / 0.72),
+      rgb(255 118 95 / 0.58),
+      rgb(247 199 74 / 0)
+    );
+    background-size: 220% 220%;
+    opacity: 0;
+    transition: opacity 220ms ease;
+    animation: magic-border-shift 6s ease-in-out infinite alternate;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+  }
+
+  .magic-border:hover::before,
+  .magic-border:focus-within::before {
+    opacity: 1;
+  }
+
+  .magic-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .magic-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      115deg,
+      transparent 0 38%,
+      rgb(255 255 255 / 0.55) 47%,
+      transparent 56% 100%
+    );
+    translate: -120% 0;
+    animation: magic-sweep 3.8s ease-in-out infinite;
+  }
+
+  .magic-reveal {
+    animation: magic-rise 780ms cubic-bezier(0.2, 0.85, 0.25, 1) both;
+  }
+
+  @keyframes magic-border-shift {
+    from {
+      background-position: 0% 50%;
+    }
+
+    to {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes magic-sweep {
+    0%,
+    42% {
+      translate: -120% 0;
+    }
+
+    72%,
+    100% {
+      translate: 120% 0;
+    }
+  }
+
+  @keyframes magic-shimmer {
+    to {
+      background-position: -220% 0, 0 0, 0 0;
+    }
+  }
+
+  @keyframes magic-float {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+      transform: translate3d(-6%, 5%, 0) scale(1.06);
+    }
+  }
+
+  @keyframes magic-rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

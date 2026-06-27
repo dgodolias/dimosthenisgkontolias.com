@@ -25,6 +25,7 @@ import {
   achievements,
   evidenceMap,
   experiences,
+  faqs,
   featuredProjects,
   focusAreas,
   operatingPrinciples,
@@ -142,6 +143,18 @@ const jsonLd = {
       about: profile.headline,
     },
     {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}/#faq`,
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+    {
       "@type": "ItemList",
       "@id": `${siteUrl}/#projects`,
       name: "Selected software projects by Dimosthenis Gkontolias",
@@ -225,6 +238,7 @@ function LinkButton({
       className={cn(
         buttonVariants({ variant, size: "lg" }),
         "h-11 rounded-lg px-4",
+        variant === "default" && "magic-shimmer",
         className,
       )}
     >
@@ -267,7 +281,7 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
     <Card
       id={project.id}
       className={cn(
-        "h-full scroll-mt-28 rounded-lg border bg-paper/95 shadow-[0_20px_80px_rgb(23_35_28/0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_90px_rgb(23_35_28/0.12)]",
+        "magic-border h-full scroll-mt-28 rounded-lg border bg-paper/95 shadow-[0_20px_80px_rgb(23_35_28/0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_90px_rgb(23_35_28/0.12)]",
         featured && "lg:grid lg:grid-cols-[0.88fr_1.12fr]",
       )}
     >
@@ -306,7 +320,12 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
               src={project.image.src}
               alt={project.image.alt}
               fill
-              sizes={featured ? "(min-width: 1024px) 42vw, 100vw" : "(min-width: 1024px) 48vw, 100vw"}
+              sizes={
+                featured
+                  ? "(min-width: 1024px) 42vw, (min-width: 640px) 92vw, 92vw"
+                  : "(min-width: 1024px) 48vw, (min-width: 640px) 92vw, 92vw"
+              }
+              loading={featured ? "eager" : "lazy"}
               className="object-cover object-top"
             />
           </div>
@@ -403,7 +422,7 @@ function Header() {
           </a>
           <a
             href={`mailto:${profile.email}`}
-            className={cn(buttonVariants({ size: "lg" }), "h-10 rounded-lg bg-primary px-4")}
+            className={cn(buttonVariants({ size: "lg" }), "magic-shimmer h-10 rounded-lg bg-primary px-4")}
           >
             <Mail className="size-4" />
             Contact
@@ -429,8 +448,10 @@ function Hero() {
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#fbfff7_0%,rgb(251_255_247/0.92)_30%,rgb(251_255_247/0.28)_72%,rgb(251_255_247/0.05)_100%)]" />
       </div>
+      <div aria-hidden="true" className="magic-ambient -z-10" />
+      <div aria-hidden="true" className="magic-grid-shine -z-10" />
       <div className="container-shell grid min-h-[82svh] content-center pb-16 pt-20">
-        <div className="max-w-4xl">
+        <div className="magic-reveal max-w-4xl">
           <div className="mb-6 flex flex-wrap items-center gap-2">
             <Badge className="rounded-md bg-sun/30 text-ink hover:bg-sun/30">
               <Sparkles className="size-3.5" />
@@ -487,7 +508,7 @@ function ProofStrip() {
         {proofMetrics.map((metric) => (
           <div
             key={metric.label}
-            className="rounded-lg border border-border bg-white/80 p-4 shadow-sm"
+            className="magic-border rounded-lg border border-border bg-white/80 p-4 shadow-sm"
           >
             <p className="font-display text-4xl leading-none text-ink">{metric.value}</p>
             <p className="mt-2 text-sm font-bold text-ink">{metric.label}</p>
@@ -522,7 +543,7 @@ function RecruiterSnapshot() {
   return (
     <section className="border-b border-border/80 bg-white/72">
       <div className="container-shell grid gap-5 py-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch">
-        <div className="rounded-lg border border-primary/15 bg-primary p-6 text-primary-foreground">
+        <div className="magic-border rounded-lg border border-primary/15 bg-primary p-6 text-primary-foreground">
           <p className="font-mono text-xs font-semibold uppercase text-sun">
             Recruiter snapshot
           </p>
@@ -535,7 +556,7 @@ function RecruiterSnapshot() {
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           {items.map((item) => (
-            <div key={item.title} className="rounded-lg border border-border bg-paper p-5">
+            <div key={item.title} className="magic-border rounded-lg border border-border bg-paper p-5">
               <p className="font-mono text-xs font-semibold uppercase text-leaf">
                 {item.title}
               </p>
@@ -567,7 +588,7 @@ function EvidenceMapSection() {
         </div>
         <div className="grid gap-3 md:hidden">
           {evidenceMap.map((item) => (
-            <article key={item.project} className="rounded-lg border border-border bg-white/84 p-5 shadow-sm">
+            <article key={item.project} className="magic-border rounded-lg border border-border bg-white/84 p-5 shadow-sm">
               <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                 <h3 className="text-xl font-bold text-ink">{item.project}</h3>
                 <Badge variant="secondary" className="rounded-md">
@@ -593,7 +614,7 @@ function EvidenceMapSection() {
             </article>
           ))}
         </div>
-        <div className="hidden overflow-hidden rounded-lg border border-border bg-white/84 shadow-sm md:block">
+        <div className="magic-border hidden overflow-hidden rounded-lg border border-border bg-white/84 shadow-sm md:block">
           <table className="w-full border-collapse text-left">
             <thead className="border-b border-border bg-mint/70">
               <tr>
@@ -648,7 +669,7 @@ function AchievementSection() {
   return (
     <section aria-label="Academic and competition signals" className="border-b border-border/80 bg-mint/55">
       <div className="container-shell grid gap-5 py-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
-        <div className="rounded-lg border border-border bg-paper p-6">
+        <div className="magic-border rounded-lg border border-border bg-paper p-6">
           <p className="font-mono text-xs font-semibold uppercase text-leaf">
             Signal ledger
           </p>
@@ -666,7 +687,7 @@ function AchievementSection() {
             return (
               <div
                 key={achievement.title}
-                className="rounded-lg border border-border bg-white/80 p-5 shadow-sm"
+                className="magic-border rounded-lg border border-border bg-white/80 p-5 shadow-sm"
               >
                 <div className="mb-8 flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                   <Icon className="size-5" />
@@ -700,7 +721,7 @@ function FocusAreas() {
         />
         <div className="grid gap-4 md:grid-cols-3">
           {focusAreas.map((area, index) => (
-            <div key={area.title} className="rounded-lg border border-border bg-paper p-6">
+            <div key={area.title} className="magic-border rounded-lg border border-border bg-paper p-6">
               <div className="mb-8 flex size-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 {index === 0 && <BriefcaseBusiness className="size-5" />}
                 {index === 1 && <Sparkles className="size-5" />}
@@ -746,7 +767,7 @@ function OperatingPrinciples() {
             const Icon = icons[index] ?? BadgeCheck;
 
             return (
-              <div key={principle.title} className="rounded-lg border border-border bg-white/82 p-5 shadow-sm">
+              <div key={principle.title} className="magic-border rounded-lg border border-border bg-white/82 p-5 shadow-sm">
                 <div className="mb-7 flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                   <Icon className="size-5" />
                 </div>
@@ -830,7 +851,7 @@ function ExperienceSection() {
           </TabsList>
           {experiences.map((experience) => (
             <TabsContent key={experience.company} value={experience.company}>
-              <Card className="rounded-lg bg-paper">
+              <Card className="magic-border rounded-lg bg-paper">
                 <CardHeader>
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
@@ -854,7 +875,7 @@ function ExperienceSection() {
                     {experience.bullets.map((bullet) => (
                       <li
                         key={bullet}
-                        className="rounded-lg border border-border bg-white/75 p-4 text-sm leading-6 text-foreground"
+                        className="magic-border rounded-lg border border-border bg-white/75 p-4 text-sm leading-6 text-foreground"
                       >
                         {bullet}
                       </li>
@@ -902,7 +923,7 @@ function CreatorSection() {
               href={social.href}
               target={externalTarget(social.href)}
               rel={externalRel(social.href)}
-              className="rounded-lg border border-border bg-paper p-5 transition hover:-translate-y-1 hover:border-primary focus-ring"
+              className="magic-border rounded-lg border border-border bg-paper p-5 transition hover:-translate-y-1 hover:border-primary focus-ring"
             >
               <div className="mb-10 flex items-center justify-between">
                 <Badge variant="outline" className="rounded-md bg-white">
@@ -931,7 +952,7 @@ function SkillsSection() {
         />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
           {skillGroups.map((group) => (
-            <div key={group.title} className="rounded-lg border border-border bg-paper p-5">
+            <div key={group.title} className="magic-border rounded-lg border border-border bg-paper p-5">
               <h3 className="mb-4 font-bold text-ink">{group.title}</h3>
               <div className="flex flex-wrap gap-2">
                 {group.skills.map((skill) => (
@@ -948,11 +969,33 @@ function SkillsSection() {
   );
 }
 
+function FaqSection() {
+  return (
+    <section id="faq" className="section-y border-y border-border/80 bg-mint/55">
+      <div className="container-shell">
+        <SectionHeader
+          eyebrow="Recruiter FAQ"
+          title="Quick answers without the scroll hunt."
+          description="The questions I would expect someone to ask after scanning the projects, answered directly."
+        />
+        <div className="mx-auto grid max-w-5xl gap-3 md:grid-cols-2">
+          {faqs.map((faq) => (
+            <article key={faq.question} className="magic-border rounded-lg border border-border bg-paper p-5 shadow-sm">
+              <h3 className="text-lg font-bold leading-6 text-ink">{faq.question}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{faq.answer}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ContactSection() {
   return (
     <section id="contact" className="section-y">
       <div className="container-shell">
-        <div className="grid gap-8 rounded-lg border border-border bg-primary p-6 text-primary-foreground sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div className="magic-border grid gap-8 rounded-lg border border-border bg-primary p-6 text-primary-foreground sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             <p className="font-mono text-xs font-semibold uppercase text-sun">
               Next role
@@ -967,7 +1010,7 @@ function ContactSection() {
           <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
             <a
               href={`mailto:${profile.email}`}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-sun px-4 font-bold text-ink transition hover:bg-sun/90 focus-ring"
+              className="magic-shimmer inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-sun px-4 font-bold text-ink transition hover:bg-sun/90 focus-ring"
             >
               <Mail className="size-4" />
               Email me
@@ -1045,6 +1088,7 @@ export default function Home() {
       <ExperienceSection />
       <CreatorSection />
       <SkillsSection />
+      <FaqSection />
       <ContactSection />
       <Footer />
     </main>

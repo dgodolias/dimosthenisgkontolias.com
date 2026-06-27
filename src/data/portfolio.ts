@@ -69,6 +69,11 @@ export interface EvidenceMapItem {
   recruiterRead: string;
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export const profile = {
   name: "Dimosthenis Gkontolias",
   shortName: "Dimosthenis",
@@ -228,6 +233,34 @@ export const evidenceMap: EvidenceMapItem[] = [
     proof: "Real venue assets, QuaR menu path, structured data, image gallery, mobile interactions, and Playwright checks.",
     recruiterRead:
       "Can ship a small commercial frontend that looks real, loads assets, and survives basic regressions.",
+  },
+];
+
+export const faqs: FaqItem[] = [
+  {
+    question: "What roles is Dimosthenis Gkontolias strongest for?",
+    answer:
+      "Product-focused software engineering, AI/data engineering, and frontend-heavy roles where React, TypeScript, Python, FastAPI, GCP data work, and practical AI features meet real users.",
+  },
+  {
+    question: "Which projects should a recruiter inspect first?",
+    answer:
+      "Start with Quar.gr for production ownership, TrackSights for data engineering depth, DataViz for AI product UX, Demos Vibes for distribution ability, and Nero Website for frontend polish with QA.",
+  },
+  {
+    question: "Is Dimosthenis also a content creator?",
+    answer:
+      "Yes. Demos Vibes is his Greek AI tools and workflows channel, with Instagram, TikTok, X, and Threads handles plus a reusable resource hub at demosvibes.gr.",
+  },
+  {
+    question: "Where is he based and what languages does he work in?",
+    answer:
+      "He is an EU citizen based in Athens. He is a native Greek speaker, has English C2/ECPE, and German B2/OSD.",
+  },
+  {
+    question: "How can recruiters contact him?",
+    answer:
+      "The fastest path is email at dgodolias18@gmail.com or LinkedIn. The portfolio also includes a downloadable CV and a vCard contact file.",
   },
 ];
 
