@@ -82,10 +82,35 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     ambient: document.querySelectorAll(".magic-ambient, .magic-grid-shine").length,
     animatedBorders: document.querySelectorAll(".magic-border").length,
     shimmerActions: document.querySelectorAll(".magic-shimmer").length,
+    globalFxLayers: document.querySelectorAll(".site-effects, .fx-progress-line, .hero-prism, .hero-scanline")
+      .length,
   }));
   expect(magicEffects.ambient).toBe(2);
   expect(magicEffects.animatedBorders).toBeGreaterThanOrEqual(20);
   expect(magicEffects.shimmerActions).toBeGreaterThanOrEqual(3);
+  expect(magicEffects.globalFxLayers).toBe(0);
+  const lightweightEffects = await page.evaluate(() => {
+    const firstAnimatedCard = document.querySelector(".magic-border");
+    const firstShimmerAction = document.querySelector(".magic-shimmer");
+    const workSection = document.querySelector("#work");
+
+    return {
+      borderAnimation: firstAnimatedCard
+        ? getComputedStyle(firstAnimatedCard, "::before").animationName
+        : "",
+      shimmerAnimation: firstShimmerAction
+        ? getComputedStyle(firstShimmerAction, "::after").animationName
+        : "",
+      contentVisibility: workSection ? getComputedStyle(workSection).contentVisibility : "",
+      smoothScroll: document.documentElement.dataset.smoothScroll,
+    };
+  });
+  expect(lightweightEffects).toEqual({
+    borderAnimation: "none",
+    shimmerAnimation: "none",
+    contentVisibility: "auto",
+    smoothScroll: undefined,
+  });
 
   await page.keyboard.press("Tab");
   const skipLink = page.getByRole("link", { name: "Skip to work" });
@@ -295,16 +320,19 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   expect(consoleErrors).toEqual([]);
 });
 
-test("reduced motion does not initialize smooth scrolling", async ({ page }) => {
+test("reduced motion keeps effects and scrolling lightweight", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
   const motionState = await page.evaluate(() => ({
+    globalFxLayers: document.querySelectorAll(".site-effects, .fx-progress-line, .hero-prism, .hero-scanline")
+      .length,
     scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
     smoothScroll: document.documentElement.dataset.smoothScroll,
   }));
 
   expect(motionState).toEqual({
+    globalFxLayers: 0,
     scrollBehavior: "auto",
     smoothScroll: undefined,
   });

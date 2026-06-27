@@ -143,6 +143,11 @@
     padding-block: 88px;
   }
 
+  main > section:nth-of-type(n + 4) {
+    content-visibility: auto;
+    contain-intrinsic-size: 720px;
+  }
+
   .font-display {
     font-family: var(--font-serif);
   }
@@ -166,8 +171,7 @@
       radial-gradient(circle at 68% 48%, rgb(83 189 209 / 0.26), transparent 38%),
       radial-gradient(circle at 52% 72%, rgb(255 118 95 / 0.16), transparent 42%);
     filter: blur(24px);
-    opacity: 0.9;
-    animation: magic-float 12s ease-in-out infinite alternate;
+    opacity: 0.62;
   }
 
   .magic-grid-shine {
@@ -180,20 +184,20 @@
       radial-gradient(circle at 82% 64%, rgb(83 189 209 / 0.14), transparent 28%);
     background-size: 220% 100%, auto, auto;
     mix-blend-mode: soft-light;
-    opacity: 0.65;
-    animation: magic-shimmer 10s linear infinite;
+    opacity: 0.36;
   }
 
   .magic-border {
     position: relative;
     isolation: isolate;
+    transform: translateZ(0);
   }
 
   .magic-border::before {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 3;
     border-radius: inherit;
     padding: 1px;
     pointer-events: none;
@@ -208,7 +212,7 @@
     background-size: 220% 220%;
     opacity: 0;
     transition: opacity 220ms ease;
-    animation: magic-border-shift 6s ease-in-out infinite alternate;
+    animation: none;
     mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -222,6 +226,12 @@
   .magic-border:hover::before,
   .magic-border:focus-within::before {
     opacity: 1;
+    animation: magic-border-shift 6s ease-in-out infinite alternate;
+  }
+
+  .magic-border > * {
+    position: relative;
+    z-index: 2;
   }
 
   .magic-shimmer {
@@ -241,7 +251,13 @@
       transparent 56% 100%
     );
     translate: -120% 0;
-    animation: magic-sweep 3.8s ease-in-out infinite;
+    opacity: 0;
+  }
+
+  .magic-shimmer:hover::after,
+  .magic-shimmer:focus-visible::after {
+    opacity: 1;
+    animation: magic-sweep 1.4s ease-in-out 1;
   }
 
   .magic-reveal {
@@ -270,22 +286,6 @@
     }
   }
 
-  @keyframes magic-shimmer {
-    to {
-      background-position: -220% 0, 0 0, 0 0;
-    }
-  }
-
-  @keyframes magic-float {
-    from {
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-
-    to {
-      transform: translate3d(-6%, 5%, 0) scale(1.06);
-    }
-  }
-
   @keyframes magic-rise {
     from {
       opacity: 0;
@@ -295,6 +295,12 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 767px) {
+    main > section:nth-of-type(n + 4) {
+      contain-intrinsic-size: 860px;
     }
   }
 }

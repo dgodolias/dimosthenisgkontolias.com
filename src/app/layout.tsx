@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, JetBrains_Mono, Manrope } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const manrope = Manrope({
@@ -102,7 +101,6 @@ export default function RootLayout({
       <body
         className="min-h-screen bg-background text-foreground antialiased"
       >
-        <SmoothScroll />
         <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
