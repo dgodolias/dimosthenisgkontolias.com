@@ -79,7 +79,7 @@ export const profile = {
   shortName: "Dimosthenis",
   location: "Athens, Greece",
   email: "dgodolias18@gmail.com",
-  resumeHref: "/assets/DIMOSTHENIS_GKONTOLIAS_CV.pdf",
+  resumeHref: "/cv",
   vcardHref: "/assets/dimosthenis-gkontolias.vcf",
   githubHref: "https://github.com/dgodolias",
   linkedinHref: "https://www.linkedin.com/in/dimosthenis-gkontolias-3024b9349/",
