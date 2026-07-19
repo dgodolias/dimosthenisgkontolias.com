@@ -1,0 +1,93 @@
+name: "DIMOSTHENIS GKONTOLIAS"
+headline: "Full-Stack Engineer | AI & Data Engineering | Python, TypeScript, Google Cloud"
+location: "Athens, Greece (EU Citizen - no visa required)"
+email: "dgodolias18@gmail.com"
+phone: ""
+links:
+  - "linkedin.com/in/dimosthenis-gkontolias-3024b9349"
+  - "github.com/dgodolias"
+  - "dimosthenisgkontolias.com"
+
+summary:
+  - "Computer Science graduate (9.15/10) building full-stack products, cloud data pipelines, and Gen AI features in Python, TypeScript, React, FastAPI, and Google Cloud."
+  - "Founded Quar.gr, live in 10+ cafes. Built GCP pipelines and a depreciation model over 785,000 listings (R2 = 0.946)."
+
+skills:
+  Languages: ["Python", "TypeScript", "JavaScript", "C#", "Structured Query Language (SQL)", "R"]
+  "AI & Machine Learning": ["Retrieval-Augmented Generation (RAG)", "LLM APIs (Gemini, Claude)", "PyTorch", "scikit-learn"]
+  "Data & Cloud": ["Google Cloud Platform (GCP)", "BigQuery", "Dataform", "Cloud Run", "Cloud Storage", "PostgreSQL", "Firebase", "Redis"]
+  Backend: ["FastAPI", "ASP.NET Core", "Node.js", "Fastify", "REST APIs", "JWT authentication", "Server-Sent Events (SSE)"]
+  Frontend: ["React", "Next.js", "Tailwind CSS", "Flutter"]
+  "DevOps & Testing": ["Docker", "Terraform", "GitHub Actions (CI/CD)", "pytest", "Playwright", "k6", "Git", "Claude Code", "Cursor"]
+
+experience:
+  - company: "Quar.gr (self-founded SaaS)"
+    title: "Founder & Full-Stack Engineer"
+    location: "Athens, Greece"
+    start: "Jun 2025"
+    end: "Present"
+    bullets:
+      - "Build a QR-menu SaaS on React, TypeScript, Fastify, and Firebase; 10+ cafes in production, 300+ commits."
+      - "Ship admin tooling for drag-and-drop editing, multilingual menus, media handling, and GA4 analytics for cafes."
+      - "Own data model, deployments, onboarding, and production support end to end. Live at quar.gr"
+
+  - company: "TrackSights ApS (automotive data)"
+    title: "Data Analyst Intern (Data Engineering & ML)"
+    location: "Denmark"
+    start: "Feb 2026"
+    end: "Jun 2026"
+    bullets:
+      - "Modeled depreciation over 785,000 listings and 71 features with a CatBoost/LightGBM ensemble; R2 = 0.946."
+      - "Reverse-engineered undocumented OEM configurator APIs for Audi, Hyundai, and Mercedes-Benz across 24 brand-market combinations, unifying them in a canonical Pydantic 2 schema."
+      - "Deployed scrapers as Cloud Run Jobs moving JSON via Cloud Storage to BigQuery; Terraform, GitHub Actions CI."
+      - "Authored the Dataform layer: 40 SQLX actions, 7 staging entities, plus assertions on duplicate and broken keys."
+
+  - company: "Dalia Labs FZE LLC"
+    title: "Software Developer Intern"
+    location: "Dubai, UAE"
+    start: "Jul 2025"
+    end: "Oct 2025"
+    bullets:
+      - "Implemented frontend components and dashboard UI features, shipping reviewed code in a fast-moving team."
+
+  - company: "Freelance (Medical sector)"
+    title: "Web & Mobile Developer"
+    location: "Remote"
+    start: "May 2024"
+    end: "May 2025"
+    bullets:
+      - "Delivered client websites for healthcare practitioners and a Flutter app for patient medical records."
+
+projects_note: "60+ projects on github.com/dgodolias - two highlights below."
+
+projects:
+  - name: "TalkToGreekData.gr"
+    role: "Gen AI Economic Insight Platform"
+    dates: "Jan 2026 - Jun 2026"
+    bullets:
+      - "Built Retrieval-Augmented Generation (RAG) assistant over 23,000 data points, 207 metrics, Gemini 2.5 Pro."
+      - "Streamed answers over SSE and generated 12 chart types. Demo: data-viz-one-kappa.vercel.app"
+
+  - name: "BoomAI"
+    role: "AI Code-Review CLI - github.com/dgodolias/BoomAI"
+    dates: "Feb 2026 - Apr 2026"
+    bullets:
+      - "Built a CLI pairing Semgrep, DevSkim, Roslyn, and Gitleaks with Gemini 3.1 Pro to auto-fix C#/Unity defects."
+      - "Chunked a 214-file, 2.9M-char codebase into 13 batches; surfaced 99 issues, applied 93 fixes."
+
+education:
+  - institution: "Athens University of Economics and Business (AUEB)"
+    degree: "BSc Informatics"
+    location: ""
+    dates: "Sep 2022 - Jun 2026"
+    details:
+      - "GPA 9.15/10 - **valedictorian**, top of department."
+      - "Ranked **1st nationally** in the 2022 Panhellenic Exams (19,150/20,000)."
+      - "Finalist, ChefTreff Hamburg and AceIn AI Athens hackathons."
+
+custom_sections:
+  - heading: "Languages"
+    items:
+      - title: "Greek (native), English (C2 / ECPE), German (B2 / ÖSD)"
+        meta: ""
+        bullets: []
