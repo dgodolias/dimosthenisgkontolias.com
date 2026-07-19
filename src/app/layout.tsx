@@ -25,7 +25,7 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Dimosthenis Gkontolias | Software Engineer, AI Builder & Creator",
   description:
-    "AUEB Informatics student, Quar.gr founder, TrackSights data intern, and Demos Vibes creator building web apps, AI/data pipelines, and Greek AI content.",
+    "AUEB Computer Science graduate, Quar.gr founder, former TrackSights data intern, and Demos Vibes creator building web apps, AI/data pipelines, and Greek AI content.",
   metadataBase: new URL("https://dimosthenisgkontolias.com"),
   alternates: {
     canonical: "/",

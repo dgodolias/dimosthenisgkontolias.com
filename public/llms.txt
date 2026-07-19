@@ -1,6 +1,6 @@
 # Dimosthenis Gkontolias
 
-> Software engineer, AI builder, AUEB Informatics student, Quar.gr founder, TrackSights data intern, and creator of Demos Vibes.
+> Software engineer, AI builder, AUEB Computer Science graduate, Quar.gr founder, former TrackSights data intern, and creator of Demos Vibes.
 
 Canonical site: https://dimosthenisgkontolias.com
 Location: Athens, Greece
@@ -15,8 +15,8 @@ Dimosthenis is strongest in product-focused software engineering, AI/data produc
 
 ## Primary Evidence
 
-- Quar.gr: production QR menu platform for cafes. Evidence: 3+ cafes, admin editing, media handling, multilingual menus, analytics, deployments, and customer support.
-- TrackSights OEM data pipeline: Erasmus+ data internship work. Evidence: Audi, Hyundai, and Mercedes-Benz providers across 8 European markets, canonical Pydantic schemas, GCS, BigQuery, Dataform, Terraform, assertions, and a depreciation model dataset around 785k listings with 71 features.
+- Quar.gr: production QR menu platform for cafes. Evidence: 10+ cafes, admin editing, media handling, multilingual menus, analytics, deployments, and customer support.
+- TrackSights OEM data pipeline: Erasmus+ data internship work. Evidence: Audi, Hyundai, and Mercedes-Benz providers across 8 European markets, canonical Pydantic schemas, GCS, BigQuery, Dataform, Terraform, assertions, and a depreciation model over around 785k listings with 71 features reaching R2 = 0.946.
 - DataViz: economic-data RAG product. Evidence: 23,000 data points, 207 metrics, streaming answers, and chart generation.
 - Demos Vibes: Greek AI creator channel and resource hub. Evidence: practical short-form AI demos paired with reusable resource pages, typed content objects, SEO metadata, sitemap, and JSON-LD.
 - Nero Website: hospitality frontend. Evidence: real venue assets, QuaR menu path, structured data, image gallery, mobile interactions, and Playwright coverage.

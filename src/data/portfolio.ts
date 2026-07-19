@@ -86,29 +86,29 @@ export const profile = {
   headline:
     "I build software that gets past the demo: QR menus in cafes, GCP data pipelines, RAG dashboards, and the content that helps people use them.",
   intro:
-    "EU citizen and final-year Informatics student at AUEB with a 9.1/10 GPA, founder of Quar.gr, Erasmus+ data intern at TrackSights, and creator behind Demos Vibes. My best work sits where code, product sense, data, and distribution meet.",
+    "EU citizen and Computer Science graduate from AUEB (9.15/10, valedictorian), founder of Quar.gr, former Erasmus+ data intern at TrackSights, and creator behind Demos Vibes. My best work sits where code, product sense, data, and distribution meet.",
   availability:
     "Open to software engineering or AI/data engineering roles where I can ship, learn fast, and stay close to users.",
 };
 
 export const proofMetrics: ProofMetric[] = [
   {
-    value: "9.1/10",
+    value: "9.15/10",
     label: "AUEB GPA",
-    detail: "Final-year BSc Informatics student at AUEB.",
+    detail: "BSc Informatics, valedictorian and top of department.",
   },
   {
-    value: "3+",
+    value: "10+",
     label: "cafes in production",
     detail: "Quar.gr is live with QR menus, admin editing, and analytics.",
   },
   {
     value: "785k",
     label: "training listings",
-    detail: "TrackSights model work used 71 automotive features.",
+    detail: "TrackSights depreciation model over 71 features, R² = 0.946.",
   },
   {
-    value: "30+",
+    value: "60+",
     label: "projects shipped",
     detail: "Web apps, data pipelines, AI tools, mobile apps, and games across 3+ years.",
   },
@@ -198,7 +198,7 @@ export const evidenceMap: EvidenceMapItem[] = [
     href: "#project-quar",
     project: "Quar.gr",
     signal: "Production ownership",
-    proof: "3+ cafes use the product; admin editing, media, analytics, deploys, and support are already part of the loop.",
+    proof: "10+ cafes use the product; admin editing, media, analytics, deploys, and support are already part of the loop.",
     recruiterRead:
       "Can own a user-facing product after the demo, including the unglamorous operational parts.",
   },
@@ -280,7 +280,7 @@ export const featuredProjects: Project[] = [
       alt: "Quar.gr product homepage showing a QR menu phone preview",
     },
     impact: [
-      "Serving 3+ cafes in production, with 276+ commits behind the product.",
+      "Serving 10+ cafes in production, with 300+ commits behind the product.",
       "Admin panel supports drag-and-drop menu editing, images, multilingual content, and GA4 analytics.",
       "Real business constraints: onboarding, reliability, content updates, and support for non-technical owners.",
     ],
@@ -304,7 +304,7 @@ export const featuredProjects: Project[] = [
     impact: [
       "Covered Audi, Hyundai, and Mercedes-Benz across 8 European markets.",
       "Pipeline used Cloud Run Jobs, Docker, GCS, BigQuery, Dataform, Secret Manager, Terraform, and data-quality assertions.",
-      "Modeled depreciation on roughly 785k listings with 71 features using CatBoost, LightGBM, and Optuna.",
+      "Modeled depreciation on roughly 785k listings with 71 features using CatBoost, LightGBM, and Optuna, reaching R² = 0.946 on held-out data.",
     ],
     stack: ["Python", "Pydantic", "GCP", "BigQuery", "Dataform", "Terraform", "CatBoost"],
     links: [],
@@ -475,7 +475,7 @@ export const experiences: Experience[] = [
     bullets: [
       "Reverse-engineered configurator data for Audi, Hyundai, and Mercedes-Benz across BE, DE, DK, ES, FR, IT, NL, and SE.",
       "Built provider-pattern scrapers and canonical Pydantic schemas, then moved JSON through GCS, BigQuery, and Dataform.",
-      "Added warehouse assertions and worked on a depreciation model trained over roughly 785k listings and 71 features.",
+      "Added warehouse assertions and worked on a depreciation model trained over roughly 785k listings and 71 features, reaching R² = 0.946.",
     ],
   },
   {
