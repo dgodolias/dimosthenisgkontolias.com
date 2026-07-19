@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/cv",
-        destination: "/assets/DIMOSTHENIS_GKONTOLIAS_CV.pdf",
+        destination: "/assets/Dimosthenis-Gkontolias-Resume.pdf",
       },
     ];
   },

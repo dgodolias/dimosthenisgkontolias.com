@@ -5,6 +5,14 @@
 # status = 200 keeps the URL as /cv instead of redirecting to the asset path.
 [[redirects]]
   from = "/cv"
-  to = "/assets/DIMOSTHENIS_GKONTOLIAS_CV.pdf"
+  to = "/assets/Dimosthenis-Gkontolias-Resume.pdf"
   status = 200
   force = true
+
+# Because /cv is a rewrite, the browser would otherwise name the saved file
+# after the URL ("cv"). Content-Disposition sets the filename explicitly;
+# `inline` keeps it previewable in the browser instead of forcing a download.
+[[headers]]
+  for = "/cv"
+  [headers.values]
+    Content-Disposition = 'inline; filename="Dimosthenis-Gkontolias-Resume.pdf"'
