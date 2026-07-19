@@ -1,0 +1,10 @@
+# Serve the CV PDF at /cv.
+# The equivalent Next.js rewrite in next.config.ts works with `next start`
+# but is not applied by Netlify's Next.js runtime when the destination is a
+# static file in public/, so the rule is declared here as well.
+# status = 200 keeps the URL as /cv instead of redirecting to the asset path.
+[[redirects]]
+  from = "/cv"
+  to = "/assets/DIMOSTHENIS_GKONTOLIAS_CV.pdf"
+  status = 200
+  force = true
