@@ -821,7 +821,7 @@ export function ProjectOrbit({ projects }: { projects: OrbitProject[] }) {
         <div className="orbit-fallback-stack" data-orbit-fallback>
           <div className="orbit-fallback-card orbit-fallback-talk">
             <Image
-              src="/images/projects/dataviz.webp"
+              src="/images/projects/dataviz-en.webp"
               alt=""
               fill
               sizes="(max-width: 767px) 78vw, 40vw"
@@ -830,7 +830,7 @@ export function ProjectOrbit({ projects }: { projects: OrbitProject[] }) {
           </div>
           <div className="orbit-fallback-card orbit-fallback-quar">
             <Image
-              src="/images/projects/quar.webp"
+              src="/images/projects/quar-en.webp"
               alt=""
               fill
               sizes="(max-width: 767px) 68vw, 34vw"

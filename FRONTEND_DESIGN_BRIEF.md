@@ -90,12 +90,12 @@ The scene uses four canonical recruiter-proof project bodies:
 1. **TalkToGreekData.gr**
    - Signal: AI product engineering.
    - Proof: RAG over 23,000 data points and 207 metrics, streaming answers, 12 chart types.
-   - Interface visual source: `/images/projects/dataviz.webp`.
+   - Interface visual source: `/images/projects/dataviz-en.webp`.
    - Background source: the real `AmbientWaves.tsx` implementation from `PROJECTS/DataViz`, including its two Catmull-Rom gradient ribbons, breathing width, blurred indigo/cyan material, orbit reversals, light-theme orbs, and dot grid.
 2. **Quar.gr**
    - Signal: Founder ownership and production product work.
    - Proof: 10+ cafes in production, 300+ commits, admin editing, multilingual content, analytics, support.
-   - Interface visual source: `/images/projects/quar.webp`.
+   - Interface visual source: `/images/projects/quar-en.webp`.
    - Background source: the real `InteractiveSquares.tsx` implementation from `PROJECTS/QuaR`, including its 16-item size ladder, four-column spawn, 100 px/s rise, rotation, respawn, depth parallax, amber proximity glow, pointer spotlight, and click ripple.
 3. **TrackSights**
    - Signal: Data engineering and modeling depth.

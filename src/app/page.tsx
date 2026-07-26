@@ -78,7 +78,7 @@ const orbitProjects: OrbitProject[] = [
     href: "#project-talktogreekdata",
     action: "Inspect AI proof",
     accent: "#78d8e8",
-    texture: "/images/projects/dataviz.webp",
+    texture: "/images/projects/dataviz-en.webp",
     kind: "screen",
   },
   {
@@ -91,7 +91,7 @@ const orbitProjects: OrbitProject[] = [
     href: "#project-quar",
     action: "Inspect product proof",
     accent: "#f0a123",
-    texture: "/images/projects/quar.webp",
+    texture: "/images/projects/quar-en.webp",
     kind: "screen",
   },
   {
@@ -608,7 +608,7 @@ function FlagshipStory({
                 alt={project.image.alt}
                 fill
                 sizes="(min-width: 1024px) 48vw, 92vw"
-                className="object-cover object-top"
+                className="object-cover object-left-top"
               />
             </div>
           ) : null}

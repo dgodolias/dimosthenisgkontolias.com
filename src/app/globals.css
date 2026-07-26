@@ -2348,7 +2348,7 @@
 
 .orbit-fallback-card img {
   object-fit: cover;
-  object-position: top;
+  object-position: left top;
 }
 
 .orbit-fallback-talk {

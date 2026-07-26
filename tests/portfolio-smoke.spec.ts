@@ -97,6 +97,13 @@ test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", asyn
     page.locator("#project-quar").getByRole("heading", { name: "Quar.gr" }),
   ).toBeVisible();
   await expect(
+    page.locator("#project-talktogreekdata img").first(),
+  ).toHaveAttribute("src", /dataviz-en\.webp/);
+  await expect(page.locator("#project-quar img").first()).toHaveAttribute(
+    "src",
+    /quar-en\.webp/,
+  );
+  await expect(
     page.getByText("Works over 23,000 data points and 207 metrics."),
   ).toBeVisible();
   await expect(

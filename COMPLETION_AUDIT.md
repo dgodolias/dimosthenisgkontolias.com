@@ -25,6 +25,7 @@ Redesign the existing English portfolio for recruiters and hiring managers evalu
 | Responsive and motion-safe experience | Pass | Desktop full 3D, low-capability reduced tier, under-768 art-directed CSS fallback with no Three.js download, reduced-motion static mode, forced-colors path, offscreen/visibility suspension, and no horizontal overflow |
 | Flagship animation performance | Pass | Effects are deferred into a 9.6 KB raw async chunk, activate only near/inside their section, cache dimensions outside hot loops, cap canvas pixel density, use adaptive 24/30/60fps budgets, preserve wall-clock motion through delta time, and release compositor layers offscreen |
 | English-only interface | Pass | User-facing portfolio, navigation, metadata, error page, and project proof remain English |
+| Real English flagship screenshots | Pass | User-captured translated TalkToGreekData and QuaR interfaces are delivered as cache-safe `dataviz-en.webp` (55,954 bytes) and `quar-en.webp` (63,848 bytes), used by the Project Orbit textures, static fallback, and flagship browser frames; focal-point QA preserves the real logos and primary UI |
 | Accessibility baseline | Pass | Semantic controls and fallback, keyboard-visible selection, skip link, named controls, motion pause, reduced-motion mode, target sizing, contrast corrections; Lighthouse Accessibility 100 |
 | Search/social/AI discovery | Pass | Canonical, Open Graph, Twitter, Person/ProfilePage/FAQ/ItemList JSON-LD, robots, sitemap, manifest, `profile.json`, and `llms.txt`; Lighthouse SEO 100 |
 | Security and production dependency health | Pass | Next.js updated to 16.2.12; secure Sharp/PostCSS overrides; unused runtime shadcn CLI removed; `npm audit --omit=dev` reports 0 vulnerabilities |
@@ -75,6 +76,8 @@ Redesign the existing English portfolio for recruiters and hiring managers evalu
   - `.codex-qa/orbit-mobile-quar-case.png`
   - `.codex-qa/orbit-desktop-evidence-rail.png`
   - `.codex-qa/orbit-desktop-contact.png`
+  - `.codex-qa/orbit-desktop-talk-case-optimized.png`
+  - `.codex-qa/orbit-desktop-quar-case-optimized.png`
 
 ## External follow-up, not an implementation blocker
 
