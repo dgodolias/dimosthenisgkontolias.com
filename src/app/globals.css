@@ -2712,6 +2712,12 @@
   transform: translateZ(0);
 }
 
+.flagship-effect-sentinel {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
 .talk-data-background {
   background: #f8fafc;
 }
@@ -2744,8 +2750,14 @@
   border-radius: 50%;
   opacity: 0.08;
   filter: blur(80px);
-  will-change: transform;
+  will-change: auto;
   animation: talk-data-float 20s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.talk-data-background[data-motion-state="running"] .talk-data-orb {
+  will-change: transform;
+  animation-play-state: running;
 }
 
 .talk-data-orb-1 {
@@ -2809,7 +2821,7 @@
     5px 0 10px rgb(0 0 0 / 0.3),
     -5px 0 10px rgb(0 0 0 / 0.3);
   backface-visibility: hidden;
-  will-change: transform;
+  will-change: auto;
 }
 
 .quar-background-scrap-glow {
@@ -2836,6 +2848,10 @@
     transparent 70%
   );
   opacity: 0;
+  will-change: auto;
+}
+
+.quar-background[data-motion-state="running"] .quar-background-spot {
   will-change: transform, opacity;
 }
 

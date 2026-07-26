@@ -18,10 +18,7 @@ import {
   ProjectOrbit,
   type OrbitProject,
 } from "@/components/ProjectOrbit";
-import {
-  QuarBackground,
-  TalkToGreekDataBackground,
-} from "@/components/FlagshipBackgrounds";
+import { LazyFlagshipBackground } from "@/components/LazyFlagshipBackground";
 import {
   Tooltip,
   TooltipContent,
@@ -556,11 +553,13 @@ function FlagshipStory({
       )}
       data-reveal={reverse ? "right" : "left"}
     >
-      {project.id === "project-talktogreekdata" ? (
-        <TalkToGreekDataBackground />
-      ) : (
-        <QuarBackground />
-      )}
+      <LazyFlagshipBackground
+        project={
+          project.id === "project-talktogreekdata"
+            ? "talktogreekdata"
+            : "quar"
+        }
+      />
 
       <div className="flagship-copy">
         <div className="flagship-meta-line">

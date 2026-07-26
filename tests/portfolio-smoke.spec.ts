@@ -38,6 +38,29 @@ test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", asyn
     .poll(() => orbit.getAttribute("data-orbit-mode"))
     .toMatch(/^(full|reduced|static)$/);
 
+  const talkBackground = page.locator(
+    '[data-source-effect="dataviz-ambient-waves"]',
+  );
+  const quarBackground = page.locator(
+    '[data-source-effect="quar-interactive-squares"]',
+  );
+  const talkBackgroundLoader = page.locator(
+    '[data-effect-loader="talktogreekdata"]',
+  );
+  const quarBackgroundLoader = page.locator(
+    '[data-effect-loader="quar"]',
+  );
+  await expect(talkBackgroundLoader).toHaveAttribute(
+    "data-load-state",
+    "deferred",
+  );
+  await expect(quarBackgroundLoader).toHaveAttribute(
+    "data-load-state",
+    "deferred",
+  );
+  await expect(talkBackground).toHaveCount(0);
+  await expect(quarBackground).toHaveCount(0);
+
   const selectors = orbit.locator("[data-orbit-project]");
   await expect(selectors).toHaveCount(4);
   expect((await selectors.allTextContents()).join(" ")).not.toContain(
@@ -82,18 +105,42 @@ test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", asyn
     ),
   ).toBeVisible();
 
-  const talkBackground = page.locator(
-    '[data-source-effect="dataviz-ambient-waves"]',
-  );
-  const quarBackground = page.locator(
-    '[data-source-effect="quar-interactive-squares"]',
+  await page.locator("#project-talktogreekdata").scrollIntoViewIfNeeded();
+  await expect(talkBackgroundLoader).toHaveAttribute(
+    "data-load-state",
+    "loaded",
   );
   await expect(talkBackground).toBeVisible();
-  await expect(quarBackground).toBeVisible();
   await expect(talkBackground.locator("canvas")).toHaveCount(1);
-  await expect(quarBackground.locator(".quar-background-scrap")).toHaveCount(16);
+  await expect(talkBackground).toHaveAttribute(
+    "data-motion-state",
+    "running",
+  );
+  await expect(talkBackground).toHaveAttribute("data-target-fps", "24");
+  const talkCanvasScale = await talkBackground
+    .locator("canvas")
+    .evaluate((canvas) => {
+      const element = canvas as HTMLCanvasElement;
+      const bounds = element.getBoundingClientRect();
 
-  await talkBackground.scrollIntoViewIfNeeded();
+      return {
+        x: element.width / bounds.width,
+        y: element.height / bounds.height,
+      };
+    });
+  const talkDprCap = Number.parseFloat(
+    (await talkBackground.getAttribute("data-dpr-cap")) || "0",
+  );
+  const talkRenderScale = Number.parseFloat(
+    (await talkBackground.getAttribute("data-render-scale")) || "0",
+  );
+  const devicePixelRatio = await page.evaluate(() => window.devicePixelRatio);
+  const expectedCanvasScale = Math.max(
+    0.65,
+    Math.min(devicePixelRatio, talkDprCap) * talkRenderScale,
+  );
+  expect(talkCanvasScale.x).toBeCloseTo(expectedCanvasScale, 2);
+  expect(talkCanvasScale.y).toBeCloseTo(expectedCanvasScale, 2);
   await page.waitForTimeout(150);
   const talkFrameBefore = await talkBackground
     .locator("canvas")
@@ -104,7 +151,21 @@ test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", asyn
     .evaluate((canvas) => (canvas as HTMLCanvasElement).toDataURL());
   expect(talkFrameAfter).not.toBe(talkFrameBefore);
 
-  await quarBackground.scrollIntoViewIfNeeded();
+  await page.locator("#project-quar").scrollIntoViewIfNeeded();
+  await expect(quarBackgroundLoader).toHaveAttribute(
+    "data-load-state",
+    "loaded",
+  );
+  await expect(quarBackground).toBeVisible();
+  await expect(quarBackground.locator(".quar-background-scrap")).toHaveCount(16);
+  await expect(quarBackground).toHaveAttribute(
+    "data-motion-state",
+    "running",
+  );
+  await expect(quarBackground).toHaveAttribute(
+    "data-target-fps",
+    /^30(?:-idle\/60-interactive)?$/,
+  );
   await page.waitForTimeout(150);
   const quarTransformBefore = await quarBackground
     .locator(".quar-background-scrap")
@@ -165,6 +226,17 @@ test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", asyn
     .getByText("What roles is Dimosthenis Gkontolias strongest for?")
     .click();
   await expect(firstFaq).toHaveAttribute("open", "");
+  await expect(talkBackground).toHaveAttribute(
+    "data-motion-state",
+    "paused",
+  );
+  await expect(quarBackground).toHaveAttribute(
+    "data-motion-state",
+    "paused",
+  );
+  await expect(
+    quarBackground.locator(".quar-background-scrap").first(),
+  ).toHaveCSS("will-change", "auto");
 
   const horizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth,
@@ -365,11 +437,22 @@ test("reduced motion uses the complete static Project Orbit", async ({ page }) =
   const quarBackground = page.locator(
     '[data-source-effect="quar-interactive-squares"]',
   );
-  await talkBackground.scrollIntoViewIfNeeded();
+  await page.locator("#project-talktogreekdata").scrollIntoViewIfNeeded();
+  await expect(talkBackground).toBeVisible();
+  await expect(talkBackground).toHaveAttribute(
+    "data-motion-state",
+    "static",
+  );
   await page.waitForTimeout(250);
   const talkFrameBefore = await talkBackground
     .locator("canvas")
     .evaluate((canvas) => (canvas as HTMLCanvasElement).toDataURL());
+  await page.locator("#project-quar").scrollIntoViewIfNeeded();
+  await expect(quarBackground).toBeVisible();
+  await expect(quarBackground).toHaveAttribute(
+    "data-motion-state",
+    "static",
+  );
   const quarTransformBefore = await quarBackground
     .locator(".quar-background-scrap")
     .first()

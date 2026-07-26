@@ -251,6 +251,7 @@ It must not look like an error state or a pile of ordinary cards.
 - Light/cool data field using the source project’s actual `AmbientWaves` canvas.
 - Two blurred indigo/cyan Catmull-Rom ribbons retain the source breathing, orbit, random direction reversal, and timing logic.
 - The source light-theme orbs and 24 px dot grid complete the background layer.
+- The canvas is dynamically loaded below the fold, sampled at 24fps, and internally rendered at 0.75 desktop / 0.70 constrained scale; delta-time correction preserves the source motion speed.
 - Screenshot transitions from orbit angle to a stable inspection plane.
 - Recruiter signal, role, verified metrics, architecture, and live action appear around the interface.
 - The source canvas is decorative, section-scoped, visibility-suspended, and static under reduced motion; it is not presented as live product output.
@@ -260,6 +261,7 @@ It must not look like an error state or a pile of ordinary cards.
 - Warm paper/orange material field.
 - The source project’s actual `InteractiveSquares` implementation supplies the rising “ice” squares: the 16 production sizes, four-column distribution, 100 px/s ascent, 0.5-degree frame-normalized rotation, and below-fold respawn are preserved.
 - Fine pointers retain the source depth parallax, proximity glow, warm spotlight, and radiating pointer-down pulse.
+- Idle ascent uses a 30fps update budget; capable fine-pointer interaction temporarily promotes the loop to 60fps. Cached section dimensions remove layout reads from the frame loop.
 - Screenshot resolves into a dimensional phone/menu composition.
 - Founder responsibilities, production usage, admin capabilities, and live/GitHub actions remain inspectable.
 - The animation pauses offscreen/when the tab is hidden; reduced motion uses the source deterministic calm scatter with no spotlight.
@@ -281,6 +283,7 @@ Recommended stable hooks:
 - `[data-orbit-project]`
 - `[data-source-effect="dataviz-ambient-waves"]`
 - `[data-source-effect="quar-interactive-squares"]`
+- `[data-effect-loader="talktogreekdata|quar"]`
 - `[data-orbit-selector]`
 - `[data-orbit-pause]`
 - `[data-orbit-fallback]`

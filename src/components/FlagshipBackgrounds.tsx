@@ -37,6 +37,26 @@ const QUAR_COLUMNS = 4;
 const QUAR_RISE_SPEED = 100;
 const QUAR_ROTATION_SPEED = 0.5;
 const QUAR_SPOT_SIZE = 520;
+const BASE_FRAME_DURATION = 1000 / 60;
+
+type NavigatorWithPerformanceHints = Navigator & {
+  deviceMemory?: number;
+  connection?: {
+    saveData?: boolean;
+  };
+};
+
+function isConstrainedDevice(width: number) {
+  const performanceNavigator =
+    navigator as NavigatorWithPerformanceHints;
+
+  return (
+    width < 768 ||
+    (navigator.hardwareConcurrency || 8) <= 4 ||
+    (performanceNavigator.deviceMemory || 8) <= 4 ||
+    performanceNavigator.connection?.saveData === true
+  );
+}
 
 function catmullRom(
   p0: Point,
@@ -85,9 +105,13 @@ function catmullRomNormal(
   return [-dy / length, dx / length];
 }
 
-function buildSpine(points: Point[], width: number, height: number) {
+function buildSpine(
+  points: Point[],
+  width: number,
+  height: number,
+  stepsPerSegment: number,
+) {
   const segments = points.length - 1;
-  const stepsPerSegment = 30;
   const spine: SpinePoint[] = [];
 
   for (let index = 0; index < segments; index += 1) {
@@ -131,8 +155,17 @@ export function TalkToGreekDataBackground() {
     }
 
     let animationFrame = 0;
+    let lastDrawTime = 0;
     let time = 0;
     let isVisible = false;
+    let hasInitialised = false;
+    let width = 1;
+    let height = 1;
+    let dprCap = 1.5;
+    let renderScale = 0.75;
+    let spineSteps = 24;
+    const targetFrameRate = 24;
+    const frameInterval = 1000 / targetFrameRate;
     let reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -170,9 +203,31 @@ export function TalkToGreekDataBackground() {
     const midpointPhases = [Math.random() * tau, Math.random() * tau];
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = Math.max(1, Math.round(canvas.offsetWidth * dpr));
-      canvas.height = Math.max(1, Math.round(canvas.offsetHeight * dpr));
+      width = Math.max(1, Math.round(root.clientWidth));
+      height = Math.max(1, Math.round(root.clientHeight));
+      const constrained = isConstrainedDevice(width);
+      dprCap = constrained ? 1.25 : 1.5;
+      renderScale = constrained ? 0.7 : 0.75;
+      spineSteps = constrained ? 18 : 24;
+      const dpr = Math.max(
+        0.65,
+        Math.min(window.devicePixelRatio || 1, dprCap) * renderScale,
+      );
+      const pixelWidth = Math.max(1, Math.round(width * dpr));
+      const pixelHeight = Math.max(1, Math.round(height * dpr));
+
+      root.dataset.dprCap = String(dprCap);
+      root.dataset.renderScale = String(renderScale);
+      root.dataset.targetFps = String(targetFrameRate);
+
+      if (
+        canvas.width !== pixelWidth ||
+        canvas.height !== pixelHeight
+      ) {
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
+      }
+
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
@@ -301,31 +356,26 @@ export function TalkToGreekDataBackground() {
       context.restore();
     };
 
-    const updateOrbits = () => {
+    const updateOrbits = (stepScale: number) => {
       orbits.forEach((orbit) => {
         if (time > orbit.nextFlip) {
           orbit.targetDir *= -1;
           orbit.nextFlip = time + 15 + Math.random() * 30;
         }
 
-        orbit.dir += (orbit.targetDir - orbit.dir) * 0.008;
-        orbit.angle += orbit.speed * orbit.dir * 0.015;
+        orbit.dir +=
+          (orbit.targetDir - orbit.dir) * 0.008 * stepScale;
+        orbit.angle +=
+          orbit.speed * orbit.dir * 0.015 * stepScale;
       });
     };
 
-    const draw = (advance: boolean) => {
-      const width = canvas.offsetWidth;
-      const height = canvas.offsetHeight;
-
+    const draw = () => {
       if (!width || !height) {
         return;
       }
 
       context.clearRect(0, 0, width, height);
-
-      if (advance) {
-        updateOrbits();
-      }
 
       const now = performance.now() / 1000;
       ribbonConfigs.forEach((config, ribbonIndex) => {
@@ -334,6 +384,7 @@ export function TalkToGreekDataBackground() {
           pointsFor(ribbonIndex, midpoint),
           width,
           height,
+          spineSteps,
         );
         drawRibbon(spine, config, now);
       });
@@ -344,21 +395,58 @@ export function TalkToGreekDataBackground() {
         cancelAnimationFrame(animationFrame);
         animationFrame = 0;
       }
+
+      lastDrawTime = 0;
     };
 
-    const animate = () => {
-      draw(true);
-      time += 0.015;
+    const animate = (now: number) => {
       animationFrame = requestAnimationFrame(animate);
+
+      const elapsed = lastDrawTime
+        ? now - lastDrawTime
+        : frameInterval;
+
+      if (elapsed < frameInterval) {
+        return;
+      }
+
+      const deltaTime = Math.min(elapsed, 50);
+      const stepScale = deltaTime / BASE_FRAME_DURATION;
+      lastDrawTime =
+        now - (elapsed % frameInterval);
+      updateOrbits(stepScale);
+      draw();
+      time += 0.015 * stepScale;
     };
 
     const syncAnimation = () => {
+      if (isVisible && !hasInitialised) {
+        resize();
+        draw();
+        hasInitialised = true;
+      }
+
       const shouldAnimate =
-        isVisible && !reducedMotion && document.visibilityState === "visible";
+        hasInitialised &&
+        isVisible &&
+        !reducedMotion &&
+        document.visibilityState === "visible";
+
+      root.dataset.motionState = shouldAnimate
+        ? "running"
+        : reducedMotion && hasInitialised
+          ? "static"
+          : hasInitialised
+            ? "paused"
+            : "idle";
 
       if (!shouldAnimate) {
         stop();
-        draw(false);
+
+        if (hasInitialised && isVisible) {
+          draw();
+        }
+
         return;
       }
 
@@ -367,12 +455,13 @@ export function TalkToGreekDataBackground() {
       }
     };
 
-    resize();
-    draw(false);
-
     const resizeObserver = new ResizeObserver(() => {
+      if (!hasInitialised) {
+        return;
+      }
+
       resize();
-      draw(false);
+      draw();
     });
     resizeObserver.observe(root);
 
@@ -381,7 +470,7 @@ export function TalkToGreekDataBackground() {
         isVisible = entry.isIntersecting;
         syncAnimation();
       },
-      { rootMargin: "180px 0px" },
+      { rootMargin: "0px" },
     );
     intersectionObserver.observe(root);
 
@@ -411,6 +500,10 @@ export function TalkToGreekDataBackground() {
       ref={rootRef}
       className="flagship-backdrop talk-data-background"
       data-source-effect="dataviz-ambient-waves"
+      data-motion-state="idle"
+      data-target-fps="24"
+      data-dpr-cap="1.5"
+      data-render-scale="0.75"
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="talk-data-waves" />
@@ -453,16 +546,22 @@ export function QuarBackground() {
     const finePointerQuery = window.matchMedia(
       "(hover: hover) and (pointer: fine)",
     );
+    const finePointer = finePointerQuery.matches;
     let reducedMotion = reducedMotionQuery.matches;
     let isVisible = false;
+    let hasInitialised = false;
     let animationFrame = 0;
     let lastTime = 0;
+    let lastRenderedAt = 0;
+    let width = 1;
+    let height = 1;
+    let interactiveFrameRate = 60;
     let states: ScrapState[] = [];
     let scraps: HTMLDivElement[] = [];
     let glows: Array<HTMLDivElement | null> = [];
     let columnWidth = 100 / QUAR_COLUMNS;
-    let targetX = root.clientWidth / 2;
-    let targetY = root.clientHeight / 2;
+    let targetX = 0;
+    let targetY = 0;
     let currentX = targetX;
     let currentY = targetY;
     let spotX = targetX;
@@ -471,9 +570,17 @@ export function QuarBackground() {
     let spotTarget = 0;
     let spotPulse = 0;
 
+    const updateDimensions = () => {
+      width = Math.max(1, Math.round(root.clientWidth));
+      height = Math.max(1, Math.round(root.clientHeight));
+      interactiveFrameRate = isConstrainedDevice(width) ? 30 : 60;
+      root.dataset.targetFps =
+        interactiveFrameRate === 60
+          ? "30-idle/60-interactive"
+          : "30";
+    };
+
     const placeStatic = () => {
-      const width = root.clientWidth;
-      const height = root.clientHeight;
       const count = width < 768 ? 4 : 6;
 
       allScraps.forEach((scrap, index) => {
@@ -495,8 +602,6 @@ export function QuarBackground() {
     };
 
     const initialise = () => {
-      const width = root.clientWidth;
-      const height = root.clientHeight;
       const count = width < 768 ? 12 : 16;
 
       allScraps.forEach((scrap, index) => {
@@ -526,8 +631,6 @@ export function QuarBackground() {
           row * rowHeight -
           height * 0.5 +
           (Math.random() - 0.5) * rowHeight * 0.5;
-
-        scrap.style.willChange = "transform";
 
         return {
           x,
@@ -569,6 +672,10 @@ export function QuarBackground() {
     });
 
     const onPointerMove = (event: PointerEvent) => {
+      if (!isVisible || reducedMotion) {
+        return;
+      }
+
       const pointer = pointerPosition(event);
       spotTarget = pointer.inside ? 1 : 0;
 
@@ -579,6 +686,10 @@ export function QuarBackground() {
     };
 
     const onPointerDown = (event: PointerEvent) => {
+      if (!isVisible || reducedMotion || !states.length) {
+        return;
+      }
+
       const pointer = pointerPosition(event);
 
       if (!pointer.inside) {
@@ -586,7 +697,6 @@ export function QuarBackground() {
       }
 
       const now = performance.now();
-      const width = root.clientWidth;
       states.forEach((state, index) => {
         const center = centerOf(
           state,
@@ -608,21 +718,66 @@ export function QuarBackground() {
         cancelAnimationFrame(animationFrame);
         animationFrame = 0;
       }
+
+      lastTime = 0;
+      lastRenderedAt = 0;
+      spotTarget = 0;
+      spotOn = 0;
+      spotPulse = 0;
+      scraps.forEach((scrap) => {
+        scrap.style.willChange = "auto";
+      });
+      glows.forEach((glow) => {
+        if (glow) {
+          glow.style.opacity = "0";
+        }
+      });
+      states.forEach((state) => {
+        state.glow = 0;
+      });
+
+      if (spotRef.current) {
+        spotRef.current.style.opacity = "0";
+      }
     };
 
     const tick = (now: number) => {
-      const deltaTime = Math.min(lastTime ? now - lastTime : 16.67, 50);
+      animationFrame = requestAnimationFrame(tick);
+
+      const targetFrameRate =
+        finePointer && spotTarget > 0.01
+          ? interactiveFrameRate
+          : 30;
+      const frameInterval = 1000 / targetFrameRate;
+      const elapsed = lastRenderedAt
+        ? now - lastRenderedAt
+        : frameInterval;
+
+      if (elapsed < frameInterval) {
+        return;
+      }
+
+      const deltaTime = Math.min(
+        lastTime ? now - lastTime : BASE_FRAME_DURATION,
+        50,
+      );
+      const stepScale = deltaTime / BASE_FRAME_DURATION;
       lastTime = now;
+      lastRenderedAt =
+        now - (elapsed % frameInterval);
 
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-      spotX += (targetX - spotX) * 0.05;
-      spotY += (targetY - spotY) * 0.05;
-      spotOn += (spotTarget - spotOn) * 0.04;
-      spotPulse *= 0.94;
+      const pointerLerp = 1 - Math.pow(1 - 0.08, stepScale);
+      const spotlightLerp = 1 - Math.pow(1 - 0.05, stepScale);
+      const opacityLerp = 1 - Math.pow(1 - 0.04, stepScale);
+      const glowLerp = 1 - Math.pow(1 - 0.12, stepScale);
 
-      const width = root.clientWidth || 1;
-      const height = root.clientHeight || 1;
+      currentX += (targetX - currentX) * pointerLerp;
+      currentY += (targetY - currentY) * pointerLerp;
+      spotX += (targetX - spotX) * spotlightLerp;
+      spotY += (targetY - spotY) * spotlightLerp;
+      spotOn += (spotTarget - spotOn) * opacityLerp;
+      spotPulse *= Math.pow(0.94, stepScale);
+
       const normalisedX = (currentX / width) * 2 - 1;
       const normalisedY = (currentY / height) * 2 - 1;
 
@@ -652,10 +807,10 @@ export function QuarBackground() {
           center.x - currentX,
           center.y - currentY,
         );
-        const glowTarget = finePointerQuery.matches
+        const glowTarget = finePointer
           ? Math.max(0, 1 - distance / 200)
           : 0;
-        state.glow += (glowTarget - state.glow) * 0.12;
+        state.glow += (glowTarget - state.glow) * glowLerp;
 
         let pulse = 0;
 
@@ -700,19 +855,39 @@ export function QuarBackground() {
         spot.style.opacity = (spotOn * 0.9).toFixed(3);
       }
 
-      animationFrame = requestAnimationFrame(tick);
     };
 
     const syncAnimation = () => {
+      if (isVisible && !hasInitialised) {
+        updateDimensions();
+
+        if (reducedMotion) {
+          placeStatic();
+        } else {
+          initialise();
+        }
+
+        hasInitialised = true;
+      }
+
       const shouldAnimate =
+        hasInitialised &&
         isVisible &&
         !reducedMotion &&
         document.visibilityState === "visible";
 
+      root.dataset.motionState = shouldAnimate
+        ? "running"
+        : reducedMotion && hasInitialised
+          ? "static"
+          : hasInitialised
+            ? "paused"
+            : "idle";
+
       if (!shouldAnimate) {
         stop();
 
-        if (reducedMotion) {
+        if (reducedMotion && hasInitialised && isVisible) {
           placeStatic();
         }
 
@@ -725,45 +900,59 @@ export function QuarBackground() {
 
       if (!animationFrame) {
         lastTime = 0;
+        lastRenderedAt = 0;
+        scraps.forEach((scrap) => {
+          scrap.style.willChange = "transform";
+        });
         animationFrame = requestAnimationFrame(tick);
       }
     };
-
-    if (reducedMotion) {
-      placeStatic();
-    } else {
-      initialise();
-    }
 
     const intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
         syncAnimation();
       },
-      { rootMargin: "180px 0px" },
+      { rootMargin: "0px" },
     );
     intersectionObserver.observe(root);
 
     const resizeObserver = new ResizeObserver(() => {
+      if (!hasInitialised) {
+        return;
+      }
+
+      updateDimensions();
+
       if (reducedMotion) {
         placeStatic();
+      } else {
+        states = [];
+        initialise();
       }
     });
     resizeObserver.observe(root);
 
     const onMotionChange = (event: MediaQueryListEvent) => {
       reducedMotion = event.matches;
+      stop();
       states = [];
 
-      if (!reducedMotion) {
-        initialise();
+      if (isVisible) {
+        updateDimensions();
+
+        if (reducedMotion) {
+          placeStatic();
+        } else {
+          initialise();
+        }
       }
 
       syncAnimation();
     };
     const onVisibilityChange = () => syncAnimation();
 
-    if (finePointerQuery.matches) {
+    if (finePointer) {
       window.addEventListener("pointermove", onPointerMove, {
         passive: true,
       });
@@ -796,6 +985,8 @@ export function QuarBackground() {
       ref={rootRef}
       className="flagship-backdrop quar-background"
       data-source-effect="quar-interactive-squares"
+      data-motion-state="idle"
+      data-target-fps="30-idle/60-interactive"
       aria-hidden="true"
     >
       <div ref={spotRef} className="quar-background-spot" />

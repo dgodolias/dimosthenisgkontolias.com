@@ -358,6 +358,11 @@ The user is never told their device is “weak”; the visual simply degrades gr
 - Stop rendering when the hero is offscreen or the tab is hidden.
 - Resize through `ResizeObserver`; avoid window-wide state rerenders.
 - Pointer/parallax values live in refs and are applied inside the render loop.
+- The below-fold flagship effects ship in a separate async chunk and are requested only when an effect sentinel enters a 500 px preload margin.
+- TalkToGreekData renders its slow blurred ribbons at 24fps with delta-time-corrected motion, a 0.75 internal scale on desktop, and 0.70 on constrained/mobile devices. Its source timing and wall-clock speed remain unchanged.
+- QuaR renders at 30fps while rising idly and promotes to 60fps only during fine-pointer interaction on capable desktops; constrained/touch devices remain at 30fps.
+- Both effects read section dimensions only during `ResizeObserver` updates, never inside the hot frame loop.
+- Canvas memory, requestAnimationFrame work, CSS orb animation, pointer geometry, and compositor `will-change` layers remain deferred or paused until the owning section is actually visible.
 - No post-processing pipeline, bloom stack, physics engine, environment-map download, or full-screen shader unless later evidence justifies it.
 - Core Web Vitals targets remain:
   - LCP ≤ 2.5s at p75 after deployment.

@@ -23,6 +23,7 @@ Redesign the existing English portfolio for recruiters and hiring managers evalu
 | Soften the previously strict visual tone | Pass | Rounded controls, soft glass proof layers, organic portrait framing, curved section transitions, eased motion, and softened evidence/experience/FAQ surfaces in `src/app/globals.css` |
 | Keep TalkToGreekData first and Quar strongest startup proof | Pass | Semantic and visual order in the hero selector and flagship stories; interaction test switches TalkToGreekData → Quar |
 | Responsive and motion-safe experience | Pass | Desktop full 3D, low-capability reduced tier, under-768 art-directed CSS fallback with no Three.js download, reduced-motion static mode, forced-colors path, offscreen/visibility suspension, and no horizontal overflow |
+| Flagship animation performance | Pass | Effects are deferred into a 9.6 KB raw async chunk, activate only near/inside their section, cache dimensions outside hot loops, cap canvas pixel density, use adaptive 24/30/60fps budgets, preserve wall-clock motion through delta time, and release compositor layers offscreen |
 | English-only interface | Pass | User-facing portfolio, navigation, metadata, error page, and project proof remain English |
 | Accessibility baseline | Pass | Semantic controls and fallback, keyboard-visible selection, skip link, named controls, motion pause, reduced-motion mode, target sizing, contrast corrections; Lighthouse Accessibility 100 |
 | Search/social/AI discovery | Pass | Canonical, Open Graph, Twitter, Person/ProfilePage/FAQ/ItemList JSON-LD, robots, sitemap, manifest, `profile.json`, and `llms.txt`; Lighthouse SEO 100 |
@@ -45,6 +46,11 @@ Redesign the existing English portfolio for recruiters and hiring managers evalu
   - TalkToGreekData source canvas changes between live frames and remains unchanged under reduced motion
   - QuaR source-square transforms rise between live frames and remain unchanged under reduced motion
   - QuaR renders the full 16-square desktop source ladder and the responsive 12-square live tier
+  - flagship effect chunk: 9,617 bytes raw and absent from the initial production resource waterfall
+  - Talk canvas production profile: 936 × 779 internal pixels for a 1248 × 1039 CSS surface (~44% fewer pixels than 1:1 rendering)
+  - only the visible flagship effect runs; the sibling stays `idle`/`paused`
+  - offscreen QuaR scraps return to `will-change: auto`
+  - no additional >50 ms long task appeared while activating TalkToGreekData, moving to QuaR, or suspending both in the isolated production profiling run
   - desktop/mobile console errors: none
   - desktop document width: 1440 at a 1440 viewport
   - mobile document width: 390 at a 390 viewport
