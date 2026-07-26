@@ -1,33 +1,33 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 import {
+  ArrowDownToLine,
+  ArrowRight,
   ArrowUpRight,
-  Award,
   BadgeCheck,
-  BriefcaseBusiness,
-  Download,
   ExternalLink,
   Github,
-  GraduationCap,
   Instagram,
   Linkedin,
   Mail,
   MapPin,
   MessageCircle,
   Play,
-  Radio,
   Sparkles,
-  Trophy,
-  Twitter,
 } from "lucide-react";
 
 import { MobileNavigation } from "@/components/MobileNavigation";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   achievements,
-  evidenceMap,
   experiences,
   faqs,
   featuredProjects,
-  focusAreas,
   operatingPrinciples,
   profile,
   projectShelf,
@@ -37,25 +37,8 @@ import {
   type Project,
 } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from "@/components/ui/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
+const siteUrl = "https://dimosthenisgkontolias.com";
 
 const navItems = [
   { label: "Work", href: "#work" },
@@ -65,8 +48,23 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
-const siteUrl = "https://dimosthenisgkontolias.com";
 const allProjects = [...featuredProjects, ...projectShelf];
+
+function projectById(id: string) {
+  const project = allProjects.find((item) => item.id === id);
+
+  if (!project) {
+    throw new Error(`Missing portfolio project: ${id}`);
+  }
+
+  return project;
+}
+
+const talkToGreekData = projectById("project-talktogreekdata");
+const quar = projectById("project-quar");
+const supportingProjects = allProjects.filter(
+  (project) => project.id !== talkToGreekData.id && project.id !== quar.id,
+);
 
 function absoluteUrl(href: string) {
   return href.startsWith("http") ? href : `${siteUrl}${href}`;
@@ -83,7 +81,7 @@ const jsonLd = {
       "@type": "Person",
       "@id": `${siteUrl}/#person`,
       name: profile.name,
-      jobTitle: ["Software Engineer", "AI Builder", "Content Creator"],
+      jobTitle: ["AI Software Engineer", "Software Engineer", "Product Engineer"],
       email: `mailto:${profile.email}`,
       contactPoint: [
         {
@@ -112,21 +110,22 @@ const jsonLd = {
         ...socialProfiles.map((social) => social.href),
       ],
       knowsAbout: [
+        "AI Software Engineering",
+        "Retrieval-Augmented Generation",
         "Software Engineering",
-        "AI Engineering",
         "Data Engineering",
         "React",
         "TypeScript",
         "Python",
-        "RAG applications",
-        "Content Creation",
+        "FastAPI",
+        "Product Engineering",
       ],
       knowsLanguage: ["Greek", "English", "German"],
     },
     {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
-      name: "Dimosthenis Gkontolias Portfolio",
+      name: "Dimosthenis Gkontolias — AI Software Engineer",
       url: siteUrl,
       inLanguage: "en",
       description: profile.headline,
@@ -135,7 +134,7 @@ const jsonLd = {
     {
       "@type": "ProfilePage",
       "@id": `${siteUrl}/#profile-page`,
-      name: `${profile.name} Portfolio`,
+      name: `${profile.name} — AI Software Engineer Portfolio`,
       url: siteUrl,
       inLanguage: "en",
       isPartOf: { "@id": `${siteUrl}/#website` },
@@ -157,7 +156,7 @@ const jsonLd = {
     {
       "@type": "ItemList",
       "@id": `${siteUrl}/#projects`,
-      name: "Selected software projects by Dimosthenis Gkontolias",
+      name: "Selected AI and software projects by Dimosthenis Gkontolias",
       itemListElement: allProjects.map((project, index) => ({
         "@type": "ListItem",
         position: index + 1,
@@ -176,11 +175,11 @@ const jsonLd = {
 };
 
 const accentStyles: Record<Project["accent"], string> = {
-  coral: "border-coral/35 bg-coral/10 text-coral",
-  leaf: "border-leaf/35 bg-leaf/10 text-leaf",
-  lilac: "border-[#7b61ff]/35 bg-lilac text-[#6047d7]",
-  sky: "border-sky/35 bg-sky/10 text-[#167084]",
-  sun: "border-sun/50 bg-sun/20 text-[#785b00]",
+  coral: "bg-coral text-ink",
+  leaf: "bg-signal text-ink",
+  lilac: "bg-lilac text-ink",
+  sky: "bg-ice text-ink",
+  sun: "bg-sun text-ink",
 };
 
 function externalRel(href: string) {
@@ -195,50 +194,54 @@ function externalTarget(href: string) {
     : "_blank";
 }
 
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
+function Eyebrow({
+  children,
+  dark = false,
 }: {
-  eyebrow: string;
-  title: string;
-  description: string;
+  children: ReactNode;
+  dark?: boolean;
 }) {
   return (
-    <div className="mx-auto mb-10 max-w-3xl text-center">
-      <p className="mb-3 font-mono text-xs font-semibold uppercase text-leaf">
-        {eyebrow}
-      </p>
-      <h2 className="text-balance font-display text-4xl leading-none text-ink sm:text-5xl">
-        {title}
-      </h2>
-      <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground">
-        {description}
-      </p>
-    </div>
+    <p
+      className={cn(
+        "flex items-center gap-3 font-mono text-[0.69rem] font-semibold uppercase tracking-[0.18em]",
+        dark ? "text-signal" : "text-forest",
+      )}
+    >
+      <span
+        aria-hidden="true"
+        className={cn("h-px w-7", dark ? "bg-signal" : "bg-forest")}
+      />
+      {children}
+    </p>
   );
 }
 
-function LinkButton({
+function ActionLink({
   href,
   children,
-  variant = "default",
+  variant = "primary",
   className,
+  download,
 }: {
   href: string;
-  children: React.ReactNode;
-  variant?: "default" | "outline" | "secondary" | "ghost";
+  children: ReactNode;
+  variant?: "primary" | "outline" | "dark" | "quiet";
   className?: string;
+  download?: boolean;
 }) {
   return (
     <a
       href={href}
       target={externalTarget(href)}
       rel={externalRel(href)}
+      download={download}
       className={cn(
-        buttonVariants({ variant, size: "lg" }),
-        "h-11 rounded-lg px-4",
-        variant === "default" && "magic-shimmer",
+        "action-link focus-ring",
+        variant === "primary" && "action-link-primary",
+        variant === "outline" && "action-link-outline",
+        variant === "dark" && "action-link-dark",
+        variant === "quiet" && "action-link-quiet",
         className,
       )}
     >
@@ -251,10 +254,12 @@ function IconLink({
   href,
   label,
   children,
+  inverse = false,
 }: {
   href: string;
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
+  inverse?: boolean;
 }) {
   return (
     <Tooltip>
@@ -265,7 +270,12 @@ function IconLink({
             target={externalTarget(href)}
             rel={externalRel(href)}
             aria-label={label}
-            className="inline-flex size-10 items-center justify-center rounded-lg border border-border bg-paper text-ink transition hover:-translate-y-0.5 hover:border-primary hover:text-primary focus-ring"
+            className={cn(
+              "inline-flex size-11 items-center justify-center border transition focus-ring",
+              inverse
+                ? "border-white/20 text-paper hover:border-signal hover:bg-signal hover:text-ink"
+                : "border-ink/15 bg-paper text-ink hover:border-forest hover:bg-forest hover:text-paper",
+            )}
           />
         }
       >
@@ -276,225 +286,159 @@ function IconLink({
   );
 }
 
-function ProjectCard({ project, featured = false }: { project: Project; featured?: boolean }) {
-  return (
-    <Card
-      id={project.id}
-      className={cn(
-        "magic-border h-full scroll-mt-28 rounded-lg border bg-paper/95 shadow-[0_20px_80px_rgb(23_35_28/0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_90px_rgb(23_35_28/0.12)]",
-        featured && "lg:grid lg:grid-cols-[0.88fr_1.12fr]",
-      )}
-    >
-      <CardHeader
-        className={cn(
-          "gap-5",
-          featured && "border-b border-border/80 lg:border-b-0 lg:border-r",
-        )}
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge className={cn("rounded-md border font-mono", accentStyles[project.accent])}>
-            {project.eyebrow}
-          </Badge>
-          <Badge variant="outline" className="rounded-md border-border/80 bg-white/70 font-mono">
-            {project.year}
-          </Badge>
-          <Badge variant="outline" className="rounded-md border-border/80 bg-white/70 font-mono text-muted-foreground">
-            {project.status}
-          </Badge>
-        </div>
-        <div>
-          <h3 className="font-display text-3xl leading-none text-ink">
-            {project.title}
-          </h3>
-          <CardDescription className="mt-3 text-base leading-7">
-            {project.summary}
-          </CardDescription>
-        </div>
-        <p className="rounded-lg border border-border/80 bg-white/75 p-4 text-sm leading-6 text-foreground">
-          <span className="font-semibold text-ink">Role: </span>
-          {project.role}
-        </p>
-        {project.image ? (
-          <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-border bg-muted">
-            <Image
-              src={project.image.src}
-              alt={project.image.alt}
-              fill
-              sizes={
-                featured
-                  ? "(min-width: 1024px) 42vw, (min-width: 640px) 92vw, 92vw"
-                  : "(min-width: 1024px) 48vw, (min-width: 640px) 92vw, 92vw"
-              }
-              loading={featured ? "eager" : "lazy"}
-              className="object-cover object-top"
-            />
-          </div>
-        ) : null}
-      </CardHeader>
-      <CardContent className="flex flex-col gap-6">
-        <div>
-          <p className="mb-3 font-mono text-xs font-semibold uppercase text-muted-foreground">
-            Why it matters
-          </p>
-          <ul className="space-y-3">
-            {project.impact.map((item) => (
-              <li key={item} className="flex gap-3 text-sm leading-6 text-foreground">
-                <BadgeCheck className="mt-0.5 size-4 shrink-0 text-leaf" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {project.stack.map((tech) => (
-            <Badge key={tech} variant="secondary" className="rounded-md bg-secondary/90">
-              {tech}
-            </Badge>
-          ))}
-        </div>
-        <div className="mt-auto flex flex-wrap gap-2">
-          {project.links.length > 0 ? (
-            project.links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target={externalTarget(link.href)}
-                rel={externalRel(link.href)}
-                aria-label={`${project.title}: ${link.label}`}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-2 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary focus-ring"
-              >
-                {link.label}
-                <ArrowUpRight className="size-4" />
-              </a>
-            ))
-          ) : (
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-2 text-sm font-semibold text-muted-foreground">
-              Case study available on request
-            </span>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
 function Header() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/86 backdrop-blur-xl">
-      <a
-        href="#work"
-        className="fixed left-4 top-4 z-[60] -translate-y-20 rounded-lg bg-sun px-4 py-2 font-bold text-ink opacity-0 transition focus:translate-y-0 focus:opacity-100 focus-ring"
-      >
-        Skip to work
+    <header className="site-header">
+      <a href="#main-content" className="skip-link focus-ring">
+        Skip to main content
       </a>
-      <div className="container-shell flex h-18 items-center justify-between gap-4">
-        <a href="#" className="flex items-center gap-3 focus-ring">
-          <Image
-            src="/images/logo.png"
-            alt="DG logo"
-            width={44}
-            height={36}
-            className="h-9 w-11 object-contain"
-            priority
-          />
-          <span className="hidden text-sm font-bold text-ink sm:inline">
-            Dimosthenis Gkontolias
+      <div className="container-shell flex h-[4.6rem] items-center justify-between gap-4">
+        <a
+          href="#"
+          aria-label="Dimosthenis Gkontolias — back to top"
+          className="group flex items-center gap-3 focus-ring"
+        >
+          <span className="brand-mark" aria-hidden="true">
+            DG
+          </span>
+          <span className="hidden sm:block">
+            <span className="block text-sm font-bold leading-none text-ink">
+              Dimosthenis Gkontolias
+            </span>
+            <span className="mt-1 block font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted-foreground">
+              AI Software Engineer
+            </span>
           </span>
         </a>
-        <nav aria-label="Primary navigation" className="hidden items-center gap-1 md:flex">
+
+        <nav aria-label="Primary navigation" className="hidden items-center gap-1 lg:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="rounded-lg px-3 py-2 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-ink focus-ring"
+              className="nav-link focus-ring"
             >
               {item.label}
             </a>
           ))}
         </nav>
+
         <div className="hidden items-center gap-2 sm:flex">
           <a
-            href={profile.resumeHref}
-            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 rounded-lg")}
+            href={profile.linkedinHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "lg" }),
+              "h-11 rounded-none px-3 font-semibold",
+            )}
           >
-            CV
-            <ExternalLink className="size-4" />
+            LinkedIn
+            <ExternalLink className="size-3.5" />
           </a>
           <a
-            href={`mailto:${profile.email}`}
-            className={cn(buttonVariants({ size: "lg" }), "magic-shimmer h-10 rounded-lg bg-primary px-4")}
+            href={profile.resumeHref}
+            download
+            className="header-cv focus-ring"
           >
-            <Mail className="size-4" />
-            Contact
+            Download CV
+            <ArrowDownToLine className="size-4" />
           </a>
         </div>
+
         <MobileNavigation items={navItems} resumeHref={profile.resumeHref} />
       </div>
     </header>
   );
 }
 
+function PortraitSignal() {
+  return (
+    <div className="portrait-stage" aria-label="Portrait of Dimosthenis Gkontolias">
+      <div aria-hidden="true" className="portrait-grid" />
+      <div aria-hidden="true" className="signal-ring signal-ring-one" />
+      <div aria-hidden="true" className="signal-ring signal-ring-two" />
+      <div aria-hidden="true" className="signal-axis signal-axis-x" />
+      <div aria-hidden="true" className="signal-axis signal-axis-y" />
+      <Image
+        src="/images/profile.webp"
+        alt="Dimosthenis Gkontolias standing outdoors in Athens"
+        fill
+        sizes="(min-width: 1280px) 42vw, (min-width: 1024px) 46vw, 92vw"
+        className="portrait-image"
+        priority
+      />
+      <div className="portrait-shade" aria-hidden="true" />
+      <div className="portrait-status">
+        <span className="status-dot" aria-hidden="true" />
+        Open to AI software roles
+      </div>
+      <div className="portrait-coordinate" aria-hidden="true">
+        ATH / 37.98°N
+      </div>
+      <div className="portrait-proof">
+        <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-paper/60">
+          Current signal
+        </span>
+        <strong>AI × product × data</strong>
+      </div>
+    </div>
+  );
+}
+
 function Hero() {
   return (
-    <section className="relative isolate overflow-hidden border-b border-border/80 pt-18">
-      <div className="absolute inset-y-0 right-0 -z-10 w-full overflow-hidden md:w-[58%]">
-        <Image
-          src="/images/profile.webp"
-          alt="Dimosthenis Gkontolias"
-          fill
-          sizes="(min-width: 768px) 58vw, 100vw"
-          className="object-cover object-[60%_32%] opacity-28 md:opacity-55"
-          priority
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,#fbfff7_0%,rgb(251_255_247/0.92)_30%,rgb(251_255_247/0.28)_72%,rgb(251_255_247/0.05)_100%)]" />
-      </div>
-      <div aria-hidden="true" className="magic-ambient -z-10" />
-      <div aria-hidden="true" className="magic-grid-shine -z-10" />
-      <div className="container-shell grid min-h-[82svh] content-center pb-16 pt-20">
-        <div className="magic-reveal max-w-4xl">
-          <div className="mb-6 flex flex-wrap items-center gap-2">
-            <Badge className="rounded-md bg-sun/30 text-ink hover:bg-sun/30">
-              <Sparkles className="size-3.5" />
-              Software engineer + AI builder
-            </Badge>
-            <Badge variant="outline" className="rounded-md bg-white/70">
-              <MapPin className="size-3.5" />
-              {profile.location}
-            </Badge>
+    <section className="hero-section" aria-labelledby="hero-title">
+      <div aria-hidden="true" className="hero-paper-grid" />
+      <div className="container-shell hero-grid">
+        <div className="hero-copy">
+          <div className="hero-availability">
+            <Sparkles className="size-3.5" />
+            AI Software Engineer
+            <span aria-hidden="true">/</span>
+            <MapPin className="size-3.5" />
+            Athens, EU
           </div>
-          <h1 className="text-balance font-display text-6xl leading-[0.9] text-ink sm:text-7xl lg:text-8xl">
-            Dimosthenis Gkontolias
+
+          <h1 id="hero-title" className="hero-title">
+            <span className="sr-only">Dimosthenis Gkontolias — </span>
+            <span className="hero-title-line">AI software,</span>
+            <span className="hero-title-line hero-title-outline">built beyond</span>
+            <span className="hero-title-line">the demo.</span>
           </h1>
-          <p className="mt-6 max-w-3xl text-balance text-xl leading-8 text-foreground sm:text-2xl">
-            {profile.headline}
-          </p>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">
-            {profile.intro}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <LinkButton href="#work">
-              See the work
-              <ArrowUpRight className="size-4" />
-            </LinkButton>
-            <LinkButton href={profile.resumeHref} variant="outline">
-              Download CV
-              <ExternalLink className="size-4" />
-            </LinkButton>
+
+          <p className="hero-deck">{profile.headline}</p>
+          <p className="hero-intro">{profile.intro}</p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <ActionLink href={profile.resumeHref} download>
+              Download my CV
+              <ArrowDownToLine className="size-4" />
+            </ActionLink>
+            <ActionLink href="#work" variant="outline">
+              See flagship work
+              <ArrowRight className="size-4" />
+            </ActionLink>
           </div>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+
+          <div className="mt-8 flex items-center gap-2">
             <IconLink href={profile.githubHref} label="GitHub">
-              <Github className="size-5" />
+              <Github className="size-4.5" />
             </IconLink>
             <IconLink href={profile.linkedinHref} label="LinkedIn">
-              <Linkedin className="size-5" />
+              <Linkedin className="size-4.5" />
             </IconLink>
-            <IconLink href="https://www.instagram.com/demos.vibes/" label="Demos Vibes on Instagram">
-              <Instagram className="size-5" />
+            <IconLink href="https://www.instagram.com/demos.vibes/" label="Instagram">
+              <Instagram className="size-4.5" />
             </IconLink>
-            <IconLink href="https://x.com/demosvibes" label="Demos Vibes on X">
-              <Twitter className="size-5" />
-            </IconLink>
+            <span className="ml-3 hidden max-w-48 text-xs leading-5 text-muted-foreground sm:block">
+              Code, product ownership, and the ability to explain what ships.
+            </span>
           </div>
+        </div>
+
+        <div className="hero-visual">
+          <PortraitSignal />
         </div>
       </div>
     </section>
@@ -503,305 +447,268 @@ function Hero() {
 
 function ProofStrip() {
   return (
-    <section aria-label="Proof metrics" className="border-b border-border/80 bg-paper/88">
-      <div className="container-shell grid gap-3 py-5 sm:grid-cols-2 lg:grid-cols-4">
-        {proofMetrics.map((metric) => (
-          <div
-            key={metric.label}
-            className="magic-border rounded-lg border border-border bg-white/80 p-4 shadow-sm"
-          >
-            <p className="font-display text-4xl leading-none text-ink">{metric.value}</p>
-            <p className="mt-2 text-sm font-bold text-ink">{metric.label}</p>
-            <p className="mt-1 text-sm leading-5 text-muted-foreground">{metric.detail}</p>
-          </div>
+    <section aria-label="Recruiter proof metrics" className="proof-strip">
+      <div className="container-shell grid sm:grid-cols-2 xl:grid-cols-4">
+        {proofMetrics.map((metric, index) => (
+          <article key={metric.label} className="proof-metric">
+            <span className="proof-index" aria-hidden="true">
+              0{index + 1}
+            </span>
+            <p className="proof-value">{metric.value}</p>
+            <p className="proof-label">{metric.label}</p>
+            <p className="proof-detail">{metric.detail}</p>
+          </article>
         ))}
       </div>
     </section>
   );
 }
 
-function RecruiterSnapshot() {
-  const items = [
+function PositioningSection() {
+  const signals = [
     {
-      title: "Best fit",
-      body: "Product-focused engineering roles, especially React/Next, backend/data work, and AI features that need a clean path from prototype to production.",
+      label: "AI product engineering",
+      body: "RAG, streaming responses, chart generation, and interfaces that make model output legible.",
     },
     {
-      title: "Proof",
-      body: "Quar.gr is used by cafes, TrackSights work touched real cloud data pipelines, and Demos Vibes makes me explain tools in plain Greek.",
+      label: "Production ownership",
+      body: "Quar.gr is used by real cafes, which means onboarding, content operations, reliability, and support matter.",
     },
     {
-      title: "Why me",
-      body: "I am still early, but I have already dealt with users, messy data, deploys, content, and the uncomfortable parts after a demo works.",
-    },
-    {
-      title: "Work setup",
-      body: "EU citizen based in Athens; Greek native, English C2/ECPE, and German B2/OSD.",
+      label: "Data depth",
+      body: "Provider pipelines, canonical schemas, BigQuery/Dataform, and model work over roughly 785k listings.",
     },
   ];
 
   return (
-    <section className="border-b border-border/80 bg-white/72">
-      <div className="container-shell grid gap-5 py-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch">
-        <div className="magic-border rounded-lg border border-primary/15 bg-primary p-6 text-primary-foreground">
-          <p className="font-mono text-xs font-semibold uppercase text-sun">
-            Recruiter snapshot
-          </p>
-          <h2 className="mt-5 font-display text-4xl leading-none">
-            What a recruiter can learn fast.
+    <section className="section-y bg-paper" aria-labelledby="positioning-title">
+      <div className="container-shell positioning-grid">
+        <div data-reveal="left">
+          <Eyebrow>Recruiter read</Eyebrow>
+          <h2 id="positioning-title" className="section-title mt-6 max-w-4xl">
+            A builder who can move from{" "}
+            <em>model behavior</em> to a product people can operate.
           </h2>
-          <p className="mt-4 text-sm leading-6 text-primary-foreground/78">
-            A quick read before the project cards.
-          </p>
         </div>
-        <div className="grid gap-3 md:grid-cols-2">
-          {items.map((item) => (
-            <div key={item.title} className="magic-border rounded-lg border border-border bg-paper p-5">
-              <p className="font-mono text-xs font-semibold uppercase text-leaf">
-                {item.title}
-              </p>
-              <p className="mt-4 text-sm leading-6 text-foreground">{item.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function EvidenceMapSection() {
-  return (
-    <section aria-label="Project evidence map" className="border-b border-border/80 bg-paper/86">
-      <div className="container-shell py-10">
-        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="mb-3 font-mono text-xs font-semibold uppercase text-leaf">
-              Evidence map
-            </p>
-            <h2 className="max-w-3xl font-display text-4xl leading-none text-ink sm:text-5xl">
-              What each project proves.
-            </h2>
-          </div>
-          <p className="max-w-md text-sm leading-6 text-muted-foreground">
-            A faster recruiter read: proof first, then the hiring signal behind it.
-          </p>
-        </div>
-        <div className="grid gap-3 md:hidden">
-          {evidenceMap.map((item) => (
-            <article key={item.project} className="magic-border rounded-lg border border-border bg-white/84 p-5 shadow-sm">
-              <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                <h3 className="text-xl font-bold text-ink">{item.project}</h3>
-                <Badge variant="secondary" className="rounded-md">
-                  {item.signal}
-                </Badge>
+        <div className="signal-list" data-reveal="right">
+          {signals.map((signal, index) => (
+            <article key={signal.label} className="signal-list-item">
+              <span className="signal-list-number">0{index + 1}</span>
+              <div>
+                <h3>{signal.label}</h3>
+                <p>{signal.body}</p>
               </div>
-              <p className="font-mono text-xs font-semibold uppercase text-leaf">Proof</p>
-              <p className="mt-2 text-sm leading-6 text-foreground">{item.proof}</p>
-              <p className="mt-5 font-mono text-xs font-semibold uppercase text-leaf">
-                Recruiter read
-              </p>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                {item.recruiterRead}
-              </p>
-              <a
-                href={item.href}
-                aria-label={`${item.project} project details`}
-                className="mt-5 inline-flex items-center gap-1.5 rounded-lg border border-border bg-paper px-3 py-2 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary focus-ring"
-              >
-                View project
-                <ArrowUpRight className="size-4" />
-              </a>
             </article>
           ))}
         </div>
-        <div className="magic-border hidden overflow-hidden rounded-lg border border-border bg-white/84 shadow-sm md:block">
-          <table className="w-full border-collapse text-left">
-            <thead className="border-b border-border bg-mint/70">
-              <tr>
-                {["Project", "Signal", "Proof", "Recruiter read"].map((header) => (
-                  <th
-                    key={header}
-                    scope="col"
-                    className="px-5 py-4 font-mono text-xs font-semibold uppercase text-leaf"
-                  >
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {evidenceMap.map((item) => (
-                <tr key={item.project} className="align-top">
-                  <th scope="row" className="w-[15%] px-5 py-5 text-base font-bold text-ink">
-                    <a
-                      href={item.href}
-                      aria-label={`${item.project} project details`}
-                      className="inline-flex items-center gap-1.5 transition hover:text-primary focus-ring"
-                    >
-                      {item.project}
-                      <ArrowUpRight className="size-4" />
-                    </a>
-                  </th>
-                  <td className="w-[18%] px-5 py-5">
-                    <Badge variant="secondary" className="rounded-md">
-                      {item.signal}
-                    </Badge>
-                  </td>
-                  <td className="w-[37%] px-5 py-5 text-sm leading-6 text-foreground">
-                    {item.proof}
-                  </td>
-                  <td className="w-[30%] px-5 py-5 text-sm leading-6 text-muted-foreground">
-                    {item.recruiterRead}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
     </section>
   );
 }
 
-function AchievementSection() {
-  const icons = [Trophy, GraduationCap, Award];
+function ProjectLinks({ project, inverse = false }: { project: Project; inverse?: boolean }) {
+  if (project.links.length === 0) {
+    return (
+      <span
+        className={cn(
+          "inline-flex min-h-11 items-center border px-4 py-2 text-sm font-semibold",
+          inverse ? "border-white/20 text-paper/65" : "border-ink/15 text-muted-foreground",
+        )}
+      >
+        Case study available on request
+      </span>
+    );
+  }
 
   return (
-    <section aria-label="Academic and competition signals" className="border-b border-border/80 bg-mint/55">
-      <div className="container-shell grid gap-5 py-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
-        <div className="magic-border rounded-lg border border-border bg-paper p-6">
-          <p className="font-mono text-xs font-semibold uppercase text-leaf">
-            Signal ledger
-          </p>
-          <h2 className="mt-5 max-w-xl font-display text-4xl leading-none text-ink">
-            Quiet proof that the work ethic is not new.
-          </h2>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
-            A compact layer for the academic and competition signals that recruiters often scan for after the projects.
-          </p>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-3">
-          {achievements.map((achievement, index) => {
-            const Icon = icons[index] ?? Award;
-
-            return (
-              <div
-                key={achievement.title}
-                className="magic-border rounded-lg border border-border bg-white/80 p-5 shadow-sm"
-              >
-                <div className="mb-8 flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <Icon className="size-5" />
-                </div>
-                <p className="font-mono text-xs font-semibold uppercase text-leaf">
-                  {achievement.title}
-                </p>
-                <p className="mt-3 font-display text-4xl leading-none text-ink">
-                  {achievement.value}
-                </p>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {achievement.detail}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+    <div className="flex flex-wrap gap-2">
+      {project.links.map((link) => (
+        <ActionLink
+          key={`${project.id}-${link.label}`}
+          href={link.href}
+          variant={inverse ? "dark" : "outline"}
+          className="min-w-0"
+        >
+          {link.label}
+          <ArrowUpRight className="size-4" />
+        </ActionLink>
+      ))}
+    </div>
   );
 }
 
-function FocusAreas() {
+function FlagshipStory({
+  project,
+  index,
+  thesis,
+  signal,
+  reverse = false,
+}: {
+  project: Project;
+  index: string;
+  thesis: string;
+  signal: string;
+  reverse?: boolean;
+}) {
   return (
-    <section className="section-y">
-      <div className="container-shell">
-        <SectionHeader
-          eyebrow="Role fit"
-          title="Where I can be useful fastest."
-          description="Three recruiter-readable paths, each backed by work already visible on the page."
-        />
-        <div className="grid gap-4 md:grid-cols-3">
-          {focusAreas.map((area, index) => (
-            <div key={area.title} className="magic-border rounded-lg border border-border bg-paper p-6">
-              <div className="mb-8 flex size-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                {index === 0 && <BriefcaseBusiness className="size-5" />}
-                {index === 1 && <Sparkles className="size-5" />}
-                {index === 2 && <Radio className="size-5" />}
-              </div>
-              <h2 className="text-xl font-bold text-ink">{area.title}</h2>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{area.detail}</p>
-              <ul className="mt-5 space-y-3">
-                {area.evidence.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-6 text-foreground">
-                    <BadgeCheck className="mt-0.5 size-4 shrink-0 text-leaf" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+    <article
+      id={project.id}
+      className={cn("flagship-story", reverse && "flagship-story-reverse")}
+      data-reveal={reverse ? "right" : "left"}
+    >
+      <div className="flagship-copy">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={cn("project-chip", accentStyles[project.accent])}>
+            {project.eyebrow}
+          </span>
+          <span className="project-meta">{project.status}</span>
+          <span className="project-meta">{project.year}</span>
+        </div>
+
+        <span className="flagship-number" aria-hidden="true">
+          {index}
+        </span>
+        <p className="flagship-signal">{signal}</p>
+        <h3>{project.title}</h3>
+        <p className="flagship-thesis">{thesis}</p>
+        <p className="flagship-role">
+          <strong>My role</strong>
+          {project.role}
+        </p>
+
+        <ul className="flagship-impact">
+          {project.impact.map((item) => (
+            <li key={item}>
+              <BadgeCheck className="mt-1 size-4 shrink-0 text-signal" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-7">
+          <ProjectLinks project={project} inverse />
+        </div>
+      </div>
+
+      <div className="flagship-visual">
+        <div className="project-browser">
+          <div className="project-browser-bar" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <p>{project.title.toLowerCase()}</p>
+          </div>
+          {project.image ? (
+            <div className="relative aspect-[16/10] overflow-hidden bg-night-2">
+              <Image
+                src={project.image.src}
+                alt={project.image.alt}
+                fill
+                sizes="(min-width: 1024px) 48vw, 92vw"
+                className="object-cover object-top"
+              />
             </div>
+          ) : null}
+        </div>
+        <div className="stack-line" aria-label={`${project.title} technology stack`}>
+          {project.stack.map((technology) => (
+            <span key={technology}>{technology}</span>
           ))}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function FlagshipWork() {
+  return (
+    <section id="work" className="dark-grid section-y scroll-mt-16" aria-labelledby="work-title">
+      <div className="container-shell">
+        <div className="flagship-heading" data-reveal="up">
+          <Eyebrow dark>Flagship proof</Eyebrow>
+          <div>
+            <h2 id="work-title">
+              Two systems.
+              <br />
+              <span>Two different kinds of proof.</span>
+            </h2>
+            <p>
+              TalkToGreekData demonstrates the AI role fit. Quar demonstrates the
+              product judgment and production ownership behind it.
+            </p>
+          </div>
+        </div>
+
+        <div className="flagship-stories">
+          <FlagshipStory
+            project={talkToGreekData}
+            index="01"
+            signal="AI engineering proof"
+            thesis="Natural-language exploration over Greek economic data, designed as a product rather than a model demo."
+          />
+          <FlagshipStory
+            project={quar}
+            index="02"
+            signal="Founder and production proof"
+            thesis="A live QR menu platform that has to work for non-technical operators after the launch post is forgotten."
+            reverse
+          />
         </div>
       </div>
     </section>
   );
 }
 
-function OperatingPrinciples() {
-  const icons = [BriefcaseBusiness, Sparkles, BadgeCheck, Radio];
-
+function SupportingWork() {
   return (
-    <section aria-label="Operating principles" className="border-y border-border/80 bg-paper/86">
-      <div className="container-shell grid gap-7 py-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
-        <div>
-          <p className="mb-3 font-mono text-xs font-semibold uppercase text-leaf">
-            Operating mode
-          </p>
-          <h2 className="text-balance font-display text-5xl leading-none text-ink">
-            How I ship when things are messy.
-          </h2>
-          <p className="mt-5 max-w-xl text-sm leading-6 text-muted-foreground">
-            The pattern behind the projects: make the work legible, test what can break, and keep the loop close to real users.
+    <section className="section-y bg-canvas" aria-labelledby="supporting-work-title">
+      <div className="container-shell">
+        <div className="editorial-heading">
+          <div data-reveal="left">
+            <Eyebrow>Selected systems</Eyebrow>
+            <h2 id="supporting-work-title" className="section-title mt-6">
+              The range behind
+              <br />
+              the positioning.
+            </h2>
+          </div>
+          <p data-reveal="right">
+            Cloud data, AI tooling, frontend delivery, discovery systems, and
+            technical communication. Curated for signal, not volume.
           </p>
         </div>
-        <div className="grid gap-3 md:grid-cols-2">
-          {operatingPrinciples.map((principle, index) => {
-            const Icon = icons[index] ?? BadgeCheck;
 
-            return (
-              <div key={principle.title} className="magic-border rounded-lg border border-border bg-white/82 p-5 shadow-sm">
-                <div className="mb-7 flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <Icon className="size-5" />
-                </div>
-                <h3 className="text-lg font-bold text-ink">{principle.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {principle.detail}
-                </p>
-                <p className="mt-4 border-l-2 border-sun pl-3 text-sm leading-6 text-foreground">
-                  {principle.proof}
-                </p>
+        <div className="project-index">
+          {supportingProjects.map((project, index) => (
+            <article
+              id={project.id}
+              key={project.id}
+              className="project-index-item"
+              data-reveal="up"
+            >
+              <div className="project-index-topline">
+                <span className="project-index-number">
+                  {String(index + 3).padStart(2, "0")}
+                </span>
+                <span className={cn("project-chip", accentStyles[project.accent])}>
+                  {project.eyebrow}
+                </span>
+                <span className="project-index-year">{project.year}</span>
               </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function WorkSection() {
-  const [leadProject, ...restProjects] = featuredProjects;
-
-  return (
-    <section id="work" className="section-y border-y border-border/80 bg-white/65">
-      <div className="container-shell">
-        <SectionHeader
-          eyebrow="Selected work"
-          title="Projects that shipped beyond the repo."
-          description="A recruiter should be able to see the role, stack, constraint, and result quickly. These are the clearest examples."
-        />
-        <ProjectCard project={leadProject} featured />
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
-          {restProjects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+              <h3>{project.title}</h3>
+              <p className="project-index-summary">{project.summary}</p>
+              <p className="project-index-role">
+                <strong>Role signal:</strong> {project.role}
+              </p>
+              <div className="project-index-footer">
+                <ul aria-label={`${project.title} technology stack`}>
+                  {project.stack.slice(0, 5).map((technology) => (
+                    <li key={technology}>{technology}</li>
+                  ))}
+                </ul>
+                <ProjectLinks project={project} />
+              </div>
+            </article>
           ))}
         </div>
       </div>
@@ -809,19 +716,53 @@ function WorkSection() {
   );
 }
 
-function MoreProjectsSection() {
+function CredibilitySection() {
   return (
-    <section className="section-y">
+    <section className="proof-ledger section-y" aria-labelledby="proof-ledger-title">
       <div className="container-shell">
-        <SectionHeader
-          eyebrow="Project shelf"
-          title="More shipped experiments."
-          description="Smaller or less public, but useful for range: AI review tools, hospitality frontends, game backends, and product experiments."
-        />
-        <div className="grid gap-5 lg:grid-cols-3">
-          {projectShelf.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+        <div className="editorial-heading">
+          <div data-reveal="left">
+            <Eyebrow>Proof ledger</Eyebrow>
+            <h2 id="proof-ledger-title" className="section-title mt-6">
+              High standards,
+              <br />
+              held for a while.
+            </h2>
+          </div>
+          <p data-reveal="right">
+            Academic and competition signals matter less than shipped work, but
+            they make the pattern easier to trust.
+          </p>
+        </div>
+
+        <div className="achievement-row">
+          {achievements.map((achievement, index) => (
+            <article key={achievement.title} data-reveal="up">
+              <span>0{index + 1}</span>
+              <p>{achievement.title}</p>
+              <strong>{achievement.value}</strong>
+              <small>{achievement.detail}</small>
+            </article>
           ))}
+        </div>
+
+        <div className="operating-grid">
+          <div>
+            <Eyebrow>Operating system</Eyebrow>
+            <h3>How I work when the path is unclear.</h3>
+          </div>
+          <ol>
+            {operatingPrinciples.map((principle, index) => (
+              <li key={principle.title} data-reveal="up">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h4>{principle.title}</h4>
+                  <p>{principle.detail}</p>
+                  <small>{principle.proof}</small>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>
@@ -830,159 +771,44 @@ function MoreProjectsSection() {
 
 function ExperienceSection() {
   return (
-    <section id="experience" className="section-y border-y border-border/80 bg-mint/70">
-      <div className="container-shell">
-        <SectionHeader
-          eyebrow="Experience"
-          title="Where the habits came from."
-          description="Across internships, Quar.gr, and freelance work, the pattern is the same: own the unclear part, make it reliable, and keep the product understandable."
-        />
-        <Tabs defaultValue={experiences[0].company} className="mx-auto max-w-5xl">
-          <TabsList className="mb-6 h-auto w-full flex-wrap justify-start rounded-lg bg-white/85 p-2">
-            {experiences.map((experience) => (
-              <TabsTrigger
-                key={experience.company}
-                value={experience.company}
-                className="min-h-10 flex-none px-3"
-              >
-                {experience.company}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          {experiences.map((experience) => (
-            <TabsContent key={experience.company} value={experience.company}>
-              <Card className="magic-border rounded-lg bg-paper">
-                <CardHeader>
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
-                      <h3 className="font-display text-3xl text-ink">
-                        {experience.role}
-                      </h3>
-                      <CardDescription className="mt-2 text-base">
-                        {experience.company} | {experience.location}
-                      </CardDescription>
-                    </div>
-                    <Badge className="rounded-md bg-primary text-primary-foreground">
-                      {experience.period}
-                    </Badge>
-                  </div>
-                  <p className="max-w-3xl text-base leading-7 text-foreground">
-                    {experience.summary}
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <ul className="grid gap-3 md:grid-cols-3">
-                    {experience.bullets.map((bullet) => (
-                      <li
-                        key={bullet}
-                        className="magic-border rounded-lg border border-border bg-white/75 p-4 text-sm leading-6 text-foreground"
-                      >
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          ))}
-        </Tabs>
-      </div>
-    </section>
-  );
-}
-
-function CreatorSection() {
-  return (
-    <section id="creator" className="section-y">
-      <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-        <div>
-          <p className="mb-3 font-mono text-xs font-semibold uppercase text-leaf">
-            Creator layer
-          </p>
-          <h2 className="text-balance font-display text-5xl leading-none text-ink">
-            I build the thing, then explain it in Greek.
+    <section id="experience" className="section-y bg-paper scroll-mt-16" aria-labelledby="experience-title">
+      <div className="container-shell experience-layout">
+        <div className="experience-intro" data-reveal="left">
+          <Eyebrow>Experience</Eyebrow>
+          <h2 id="experience-title" className="section-title mt-6">
+            From data teams
+            <br />
+            to founder work.
           </h2>
-          <p className="mt-5 text-base leading-7 text-muted-foreground">
-            Demos Vibes is my public lab for AI tools, workflows, and reusable resources. Every short demo points back to a resource page, so the content is not just a clip; it becomes something people can use again.
+          <p>
+            The common thread is ownership: understand the messy part, make it
+            reliable, and leave the system easier to operate.
           </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <LinkButton href="https://demosvibes.gr/" variant="outline">
-              Visit demosvibes.gr
-              <ArrowUpRight className="size-4" />
-            </LinkButton>
-            <LinkButton href="https://www.instagram.com/demos.vibes/" variant="secondary">
-              <Play className="size-4" />
-              Watch reels
-            </LinkButton>
-          </div>
+          <ActionLink href={profile.resumeHref} download variant="outline">
+            Full experience in CV
+            <ArrowDownToLine className="size-4" />
+          </ActionLink>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {socialProfiles.map((social) => (
-            <a
-              key={social.platform}
-              href={social.href}
-              target={externalTarget(social.href)}
-              rel={externalRel(social.href)}
-              className="magic-border rounded-lg border border-border bg-paper p-5 transition hover:-translate-y-1 hover:border-primary focus-ring"
-            >
-              <div className="mb-10 flex items-center justify-between">
-                <Badge variant="outline" className="rounded-md bg-white">
-                  {social.platform}
-                </Badge>
-                <ArrowUpRight className="size-4 text-muted-foreground" />
-              </div>
-              <p className="font-display text-3xl leading-none text-ink">{social.handle}</p>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{social.detail}</p>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-function SkillsSection() {
-  return (
-    <section id="skills" className="section-y border-y border-border/80 bg-white/65">
-      <div className="container-shell">
-        <SectionHeader
-          eyebrow="Stack"
-          title="The stack I actually use."
-          description="This is not keyword stuffing. It is the stack behind the projects above: product UI, APIs, scraping, ML/data work, cloud jobs, and the pieces needed to ship."
-        />
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-          {skillGroups.map((group) => (
-            <div key={group.title} className="magic-border rounded-lg border border-border bg-paper p-5">
-              <h3 className="mb-4 font-bold text-ink">{group.title}</h3>
-              <div className="flex flex-wrap gap-2">
-                {group.skills.map((skill) => (
-                  <Badge key={skill} variant="secondary" className="rounded-md">
-                    {skill}
-                  </Badge>
-                ))}
+        <div className="experience-list">
+          {experiences.map((experience, index) => (
+            <article key={experience.company} data-reveal="right">
+              <div className="experience-marker" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FaqSection() {
-  return (
-    <section id="faq" className="section-y border-y border-border/80 bg-mint/55">
-      <div className="container-shell">
-        <SectionHeader
-          eyebrow="Recruiter FAQ"
-          title="Quick answers without the scroll hunt."
-          description="The questions I would expect someone to ask after scanning the projects, answered directly."
-        />
-        <div className="mx-auto grid max-w-5xl gap-3 md:grid-cols-2">
-          {faqs.map((faq) => (
-            <article key={faq.question} className="magic-border rounded-lg border border-border bg-paper p-5 shadow-sm">
-              <h3 className="text-lg font-bold leading-6 text-ink">{faq.question}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{faq.answer}</p>
+              <div>
+                <p className="experience-period">{experience.period}</p>
+                <h3>{experience.role}</h3>
+                <p className="experience-company">
+                  {experience.company} · {experience.location}
+                </p>
+                <p className="experience-summary">{experience.summary}</p>
+                <ul>
+                  {experience.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </div>
             </article>
           ))}
         </div>
@@ -991,47 +817,154 @@ function FaqSection() {
   );
 }
 
+function CreatorSection() {
+  return (
+    <section id="creator" className="creator-section section-y scroll-mt-16" aria-labelledby="creator-title">
+      <div className="container-shell creator-layout">
+        <div className="creator-copy" data-reveal="left">
+          <Eyebrow dark>Creator layer</Eyebrow>
+          <h2 id="creator-title">
+            I build the thing.
+            <br />
+            Then I make it
+            <br />
+            <em>understandable.</em>
+          </h2>
+          <p>
+            Demos Vibes is my public lab for AI tools and workflows in Greek.
+            Every short demo points back to a reusable resource, so communication
+            becomes part of the engineering feedback loop.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ActionLink href="https://demosvibes.gr/" variant="dark">
+              Visit demosvibes.gr
+              <ArrowUpRight className="size-4" />
+            </ActionLink>
+            <ActionLink href="https://www.instagram.com/demos.vibes/" variant="quiet">
+              <Play className="size-4" />
+              Watch the demos
+            </ActionLink>
+          </div>
+        </div>
+
+        <div className="creator-channels" data-reveal="right">
+          {socialProfiles.map((social, index) => (
+            <a
+              key={social.platform}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="creator-channel focus-ring"
+            >
+              <span className="creator-channel-index">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <p>{social.platform}</p>
+                <strong>{social.handle}</strong>
+                <small>{social.detail}</small>
+              </div>
+              <ArrowUpRight className="size-4" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SkillsAndFaq() {
+  return (
+    <section id="skills" className="section-y bg-canvas scroll-mt-16" aria-labelledby="skills-title">
+      <div className="container-shell">
+        <div className="editorial-heading">
+          <div data-reveal="left">
+            <Eyebrow>Working stack</Eyebrow>
+            <h2 id="skills-title" className="section-title mt-6">
+              Tools in service
+              <br />
+              of shipped systems.
+            </h2>
+          </div>
+          <p data-reveal="right">
+            The stack behind the work above, organized by how I use it rather
+            than as an undifferentiated keyword cloud.
+          </p>
+        </div>
+
+        <div className="skill-matrix">
+          {skillGroups.map((group, index) => (
+            <article key={group.title} data-reveal="up">
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{group.title}</h3>
+              <ul>
+                {group.skills.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div id="faq" className="faq-layout">
+          <div data-reveal="left">
+            <Eyebrow>Recruiter FAQ</Eyebrow>
+            <h2>Answers without the scroll hunt.</h2>
+          </div>
+          <div className="faq-list" data-reveal="right">
+            {faqs.map((faq, index) => (
+              <details key={faq.question}>
+                <summary>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {faq.question}
+                </summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ContactSection() {
   return (
-    <section id="contact" className="section-y">
-      <div className="container-shell">
-        <div className="magic-border grid gap-8 rounded-lg border border-border bg-primary p-6 text-primary-foreground sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div>
-            <p className="font-mono text-xs font-semibold uppercase text-sun">
-              Next role
-            </p>
-            <h2 className="mt-4 max-w-3xl font-display text-5xl leading-none">
-              I am looking for a team where shipping matters.
-            </h2>
-            <p className="mt-5 max-w-2xl leading-7 text-primary-foreground/78">
-              {profile.availability}
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-            <a
-              href={`mailto:${profile.email}`}
-              className="magic-shimmer inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-sun px-4 font-bold text-ink transition hover:bg-sun/90 focus-ring"
-            >
+    <section id="contact" className="contact-section section-y scroll-mt-16" aria-labelledby="contact-title">
+      <div aria-hidden="true" className="contact-signal" />
+      <div className="container-shell contact-layout">
+        <div data-reveal="left">
+          <Eyebrow dark>Next role</Eyebrow>
+          <h2 id="contact-title">
+            The fastest way to
+            <br />
+            see the full picture.
+          </h2>
+          <p>{profile.availability}</p>
+        </div>
+
+        <div className="contact-actions" data-reveal="right">
+          <a href={profile.resumeHref} download className="cv-orbit focus-ring">
+            <span>
+              Download
+              <br />
+              my CV
+            </span>
+            <ArrowDownToLine className="size-7" />
+          </a>
+          <div className="contact-secondary">
+            <ActionLink href={`mailto:${profile.email}`} variant="dark">
               <Mail className="size-4" />
               Email me
-            </a>
-            <a
-              href={profile.linkedinHref}
-              target={externalTarget(profile.linkedinHref)}
-              rel={externalRel(profile.linkedinHref)}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-primary-foreground/25 px-4 font-bold transition hover:bg-primary-foreground/10 focus-ring"
-            >
+            </ActionLink>
+            <ActionLink href={profile.linkedinHref} variant="quiet">
               <Linkedin className="size-4" />
               LinkedIn
-            </a>
-            <a
-              href={profile.vcardHref}
-              download
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-primary-foreground/25 px-4 font-bold transition hover:bg-primary-foreground/10 focus-ring"
-            >
-              <Download className="size-4" />
+            </ActionLink>
+            <ActionLink href={profile.vcardHref} variant="quiet" download>
               Save contact
-            </a>
+              <ArrowDownToLine className="size-4" />
+            </ActionLink>
           </div>
         </div>
       </div>
@@ -1041,26 +974,26 @@ function ContactSection() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border bg-paper">
-      <div className="container-shell flex flex-col gap-5 py-8 sm:flex-row sm:items-center sm:justify-between">
+    <footer className="site-footer">
+      <div className="container-shell flex flex-col gap-6 py-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-bold text-ink">{profile.name}</p>
-          <p className="text-sm text-muted-foreground">
-            Software engineer | AI builder | Content creator
+          <p className="font-display text-2xl text-paper">{profile.name}</p>
+          <p className="mt-2 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-paper/55">
+            AI Software Engineer · Athens, Greece
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <IconLink href={profile.githubHref} label="GitHub">
-            <Github className="size-5" />
+          <IconLink href={profile.githubHref} label="GitHub" inverse>
+            <Github className="size-4.5" />
           </IconLink>
-          <IconLink href={profile.linkedinHref} label="LinkedIn">
-            <Linkedin className="size-5" />
+          <IconLink href={profile.linkedinHref} label="LinkedIn" inverse>
+            <Linkedin className="size-4.5" />
           </IconLink>
-          <IconLink href={`mailto:${profile.email}`} label="Email">
-            <Mail className="size-5" />
+          <IconLink href={`mailto:${profile.email}`} label="Email" inverse>
+            <Mail className="size-4.5" />
           </IconLink>
-          <IconLink href="https://www.threads.com/@demos.vibes" label="Threads">
-            <MessageCircle className="size-5" />
+          <IconLink href="https://www.threads.com/@demos.vibes" label="Threads" inverse>
+            <MessageCircle className="size-4.5" />
           </IconLink>
         </div>
       </div>
@@ -1070,27 +1003,25 @@ function Footer() {
 
 export default function Home() {
   return (
-    <main>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      <Hero />
-      <ProofStrip />
-      <RecruiterSnapshot />
-      <EvidenceMapSection />
-      <AchievementSection />
-      <FocusAreas />
-      <OperatingPrinciples />
-      <WorkSection />
-      <MoreProjectsSection />
-      <ExperienceSection />
-      <CreatorSection />
-      <SkillsSection />
-      <FaqSection />
-      <ContactSection />
+      <main id="main-content" tabIndex={-1}>
+        <Hero />
+        <ProofStrip />
+        <PositioningSection />
+        <FlagshipWork />
+        <SupportingWork />
+        <CredibilitySection />
+        <ExperienceSection />
+        <CreatorSection />
+        <SkillsAndFaq />
+        <ContactSection />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }

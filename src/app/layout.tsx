@@ -23,9 +23,9 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dimosthenis Gkontolias | Software Engineer, AI Builder & Creator",
+  title: "Dimosthenis Gkontolias | AI Software Engineer",
   description:
-    "AUEB Computer Science graduate, Quar.gr founder, former TrackSights data intern, and Demos Vibes creator building web apps, AI/data pipelines, and Greek AI content.",
+    "AI Software Engineer and AUEB valedictorian building RAG products, production software, and cloud data systems. Explore TalkToGreekData.gr, Quar.gr, and selected work.",
   metadataBase: new URL("https://dimosthenisgkontolias.com"),
   alternates: {
     canonical: "/",
@@ -33,8 +33,9 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   keywords: [
     "Dimosthenis Gkontolias",
-    "software engineer",
-    "AI engineer",
+    "AI Software Engineer",
+    "AI engineer Greece",
+    "software engineer Greece",
     "data engineering",
     "React developer",
     "AUEB Informatics",
@@ -55,9 +56,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Dimosthenis Gkontolias",
+    title: "Dimosthenis Gkontolias | AI Software Engineer",
     description:
-      "Software engineer behind Quar.gr, TrackSights data work, DataViz, and the Greek AI creator channel Demos Vibes.",
+      "AI Software Engineer behind TalkToGreekData.gr, Quar.gr, TrackSights data work, and Demos Vibes.",
     url: "https://dimosthenisgkontolias.com",
     siteName: "Dimosthenis Gkontolias",
     images: [
@@ -73,9 +74,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dimosthenis Gkontolias | Software Engineer, AI Builder & Creator",
+    title: "Dimosthenis Gkontolias | AI Software Engineer",
     description:
-      "Portfolio of Dimosthenis Gkontolias: Quar.gr, TrackSights data work, DataViz, Demos Vibes, and selected AI/data projects.",
+      "RAG products, production software, cloud data systems, and selected work by Dimosthenis Gkontolias.",
     creator: "@demosvibes",
     images: ["/images/og-card.png"],
   },
@@ -106,4 +107,3 @@ export default function RootLayout({
     </html>
   );
 }
-

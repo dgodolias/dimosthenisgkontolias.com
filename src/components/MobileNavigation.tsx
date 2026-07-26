@@ -30,31 +30,35 @@ export function MobileNavigation({ items, resumeHref }: MobileNavigationProps) {
         render={
           <button
             aria-label="Open navigation"
-            className="inline-flex size-10 items-center justify-center rounded-lg border border-border bg-paper text-ink md:hidden"
+            className="inline-flex size-11 items-center justify-center border border-ink/20 bg-paper text-ink transition hover:border-forest hover:bg-forest hover:text-paper focus-ring lg:hidden"
           />
         }
       >
         <Menu className="size-5" />
       </SheetTrigger>
-      <SheetContent className="w-[min(88vw,360px)] bg-paper">
+      <SheetContent className="w-[min(90vw,380px)] border-l border-ink/20 bg-paper">
         <SheetHeader>
-          <SheetTitle>Navigation</SheetTitle>
+          <SheetTitle className="font-display text-3xl font-normal">
+            Navigation
+          </SheetTitle>
         </SheetHeader>
-        <div className="flex flex-col gap-2 px-4">
+        <div className="flex flex-col border-t border-ink/20 px-4">
           {items.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="rounded-lg border border-border bg-white px-4 py-3 font-semibold text-ink"
+              className="flex min-h-13 items-center justify-between border-b border-ink/20 py-3 font-mono text-xs font-semibold uppercase tracking-[0.1em] text-ink transition hover:px-2 hover:text-forest focus-ring"
             >
               {item.label}
+              <span aria-hidden="true">↗</span>
             </a>
           ))}
           <a
             href={resumeHref}
+            download
             onClick={() => setOpen(false)}
-            className="mt-3 inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground"
+            className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 bg-ink px-4 py-3 font-semibold text-paper transition hover:bg-forest focus-ring"
           >
             Download CV
             <ExternalLink className="size-4" />

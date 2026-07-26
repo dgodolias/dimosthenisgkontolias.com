@@ -8,29 +8,50 @@ import { cn } from "@/lib/utils";
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-screen place-items-center px-6 py-12">
-      <section className="w-full max-w-2xl rounded-lg border border-border bg-paper/92 p-7 text-center shadow-[0_24px_90px_rgb(23_35_28/0.1)] sm:p-10">
-        <Image
-          src="/images/logo.png"
-          alt="DG logo"
-          width={72}
-          height={58}
-          className="mx-auto h-14 w-[72px] object-contain"
-          priority
-        />
-        <p className="mt-8 font-mono text-xs font-semibold uppercase text-leaf">
-          404
-        </p>
-        <h1 className="mt-4 font-display text-5xl leading-none text-ink sm:text-6xl">
-          Page not found.
-        </h1>
-        <p className="mx-auto mt-5 max-w-lg text-base leading-7 text-muted-foreground">
-          This route is not part of the portfolio. The strongest project evidence is on the main page.
-        </p>
-        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+    <main className="dark-grid relative grid min-h-screen place-items-center overflow-hidden px-5 py-12 text-paper">
+      <div
+        aria-hidden="true"
+        className="absolute -right-40 top-1/2 size-[34rem] -translate-y-1/2 rounded-full border border-signal/25 shadow-[0_0_0_6rem_rgb(217_237_117/0.03),0_0_0_12rem_rgb(169_220_212/0.02)]"
+      />
+      <section className="relative z-10 grid w-full max-w-6xl gap-10 border-y border-paper/20 py-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:py-16">
+        <div>
+          <Image
+            src="/images/logo.png"
+            alt="DG logo"
+            width={72}
+            height={58}
+            className="h-14 w-[72px] object-contain brightness-0 invert"
+            priority
+          />
+          <p className="mt-14 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-signal">
+            Lost signal / 404
+          </p>
+          <p className="mt-5 max-w-sm text-sm leading-7 text-paper/55">
+            This route is not part of the portfolio. The strongest project
+            evidence is on the main page.
+          </p>
+        </div>
+        <div>
+          <p
+            aria-hidden="true"
+            className="font-display text-[clamp(6rem,20vw,15rem)] leading-[0.55] text-paper/7"
+          >
+            404
+          </p>
+          <h1 className="mt-8 font-display text-6xl font-normal leading-[0.88] tracking-[-0.055em] text-paper sm:text-8xl">
+            Page not found.
+          </h1>
+          <p className="mt-6 max-w-xl text-base leading-7 text-paper/60">
+            The signal ends here. Return to the work or use the direct contact
+            route.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link
             href="/#work"
-            className={cn(buttonVariants({ size: "lg" }), "h-11 rounded-lg px-4")}
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "h-12 rounded-none bg-signal px-5 font-bold text-ink hover:bg-sun",
+            )}
           >
             <ArrowLeft className="size-4" />
             Back to work
@@ -39,12 +60,13 @@ export default function NotFound() {
             href={`mailto:${profile.email}`}
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),
-              "h-11 rounded-lg bg-white/75 px-4",
+              "h-12 rounded-none border-paper/25 bg-transparent px-5 font-bold text-paper hover:bg-paper/10 hover:text-paper",
             )}
           >
             <Mail className="size-4" />
             Email Dimosthenis
           </a>
+        </div>
         </div>
       </section>
     </main>

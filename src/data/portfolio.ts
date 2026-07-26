@@ -84,11 +84,11 @@ export const profile = {
   githubHref: "https://github.com/dgodolias",
   linkedinHref: "https://www.linkedin.com/in/dimosthenis-gkontolias-3024b9349/",
   headline:
-    "I build software that gets past the demo: QR menus in cafes, GCP data pipelines, RAG dashboards, and the content that helps people use them.",
+    "AI Software Engineer building production systems, data products, and interfaces that make complex technology useful.",
   intro:
-    "EU citizen and Computer Science graduate from AUEB (9.15/10, valedictorian), founder of Quar.gr, former Erasmus+ data intern at TrackSights, and creator behind Demos Vibes. My best work sits where code, product sense, data, and distribution meet.",
+    "AUEB valedictorian, Quar.gr founder, former TrackSights data intern, and creator behind Demos Vibes. I work across AI, product engineering, cloud data, and the last mile that turns a technical system into something people can actually use.",
   availability:
-    "Open to software engineering or AI/data engineering roles where I can ship, learn fast, and stay close to users.",
+    "Open to AI Software Engineer roles where I can ship production features, learn fast, and stay close to users.",
 };
 
 export const proofMetrics: ProofMetric[] = [
@@ -108,9 +108,9 @@ export const proofMetrics: ProofMetric[] = [
     detail: "TrackSights depreciation model over 71 features, R² = 0.946.",
   },
   {
-    value: "60+",
-    label: "projects shipped",
-    detail: "Web apps, data pipelines, AI tools, mobile apps, and games across 3+ years.",
+    value: "23k+",
+    label: "economic data points",
+    detail: "TalkToGreekData turns 207 metrics into conversational analysis.",
   },
 ];
 
@@ -130,7 +130,7 @@ export const focusAreas: FocusArea[] = [
       "Strongest when the work mixes messy data, model behavior, cloud jobs, and a frontend that makes the result understandable.",
     evidence: [
       "TrackSights: OEM providers, GCP pipeline, BigQuery/Dataform.",
-      "DataViz: RAG chatbot over 23,000 points and 207 metrics.",
+      "TalkToGreekData.gr: RAG over 23,000 points and 207 metrics.",
     ],
   },
   {
@@ -211,8 +211,8 @@ export const evidenceMap: EvidenceMapItem[] = [
       "Comfortable turning messy external data into warehouse-ready datasets and model features.",
   },
   {
-    href: "#project-dataviz",
-    project: "DataViz",
+    href: "#project-talktogreekdata",
+    project: "TalkToGreekData.gr",
     signal: "AI product UX",
     proof: "RAG over 23,000 data points and 207 metrics with streaming answers and generated chart output.",
     recruiterRead:
@@ -240,12 +240,12 @@ export const faqs: FaqItem[] = [
   {
     question: "What roles is Dimosthenis Gkontolias strongest for?",
     answer:
-      "Product-focused software engineering, AI/data engineering, and frontend-heavy roles where React, TypeScript, Python, FastAPI, GCP data work, and practical AI features meet real users.",
+      "AI Software Engineer roles where React, TypeScript, Python, FastAPI, RAG systems, cloud data work, and practical product engineering meet real users.",
   },
   {
     question: "Which projects should a recruiter inspect first?",
     answer:
-      "Start with Quar.gr for production ownership, TrackSights for data engineering depth, DataViz for AI product UX, Demos Vibes for distribution ability, and Nero Website for frontend polish with QA.",
+      "Start with TalkToGreekData.gr for AI product engineering, Quar.gr for production ownership, TrackSights for data depth, and Demos Vibes for the ability to explain and distribute technical work.",
   },
   {
     question: "Is Dimosthenis also a content creator?",
@@ -311,18 +311,18 @@ export const featuredProjects: Project[] = [
     accent: "sky",
   },
   {
-    id: "project-dataviz",
-    title: "DataViz",
-    eyebrow: "Gen AI economic insight platform",
+    id: "project-talktogreekdata",
+    title: "TalkToGreekData.gr",
+    eyebrow: "AI economic data copilot",
     year: "2026",
     status: "Live demo",
     summary:
-      "A full-stack RAG chatbot for economic data exploration with streaming answers and chart generation.",
+      "A full-stack RAG product that lets people interrogate Greek economic data in natural language and turn answers into visual evidence.",
     role:
       "Built the FastAPI + React/TypeScript application, connected Gemini 2.5 Pro, and designed the data-to-chart interaction model.",
     image: {
       src: "/images/projects/dataviz.webp",
-      alt: "DataViz Talk To Greek Data landing screen",
+      alt: "TalkToGreekData.gr conversational economic data interface",
     },
     impact: [
       "Works over 23,000 data points and 207 metrics.",
@@ -330,7 +330,7 @@ export const featuredProjects: Project[] = [
       "Turns static economic datasets into an interactive analysis surface.",
     ],
     stack: ["FastAPI", "React", "TypeScript", "Gemini", "RAG", "SSE"],
-    links: [{ label: "Live", href: "https://data-viz-one-kappa.vercel.app" }],
+    links: [{ label: "Live", href: "https://talktogreekdata.gr/" }],
     accent: "sun",
   },
   {

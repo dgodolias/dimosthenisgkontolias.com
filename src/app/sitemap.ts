@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: siteUrl,
-      lastModified: new Date("2026-06-27"),
+      lastModified: new Date("2026-07-26"),
       changeFrequency: "monthly",
       priority: 1,
     },
@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${siteUrl}/llms.txt`,
-      lastModified: new Date("2026-06-27"),
+      lastModified: new Date("2026-07-26"),
       changeFrequency: "monthly",
       priority: 0.7,
     },

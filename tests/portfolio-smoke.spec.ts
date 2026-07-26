@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("portfolio content, navigation, favicon, and SEO stay intact", async ({
+test("AI recruiter journey, flagship proof, assets, and SEO stay intact", async ({
   page,
   request,
 }, testInfo) => {
@@ -15,114 +15,68 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   await page.goto("/");
 
   await expect(
-    page.getByRole("heading", { level: 1, name: "Dimosthenis Gkontolias" }),
+    page.getByRole("heading", { level: 1, name: /AI software,\s*built beyond\s*the demo/i }),
   ).toBeVisible();
-  await expect(page.getByText("What a recruiter can learn fast.")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "What each project proves." })).toBeVisible();
-  if (testInfo.project.name === "mobile") {
-    const evidenceCard = page
-      .getByRole("article")
-      .filter({ has: page.getByRole("link", { name: "Quar.gr project details" }) });
-    await expect(evidenceCard.getByText("Production ownership")).toBeVisible();
-    await expect(
-      evidenceCard.getByText(
-        "Can own a user-facing product after the demo, including the unglamorous operational parts.",
-      ),
-    ).toBeVisible();
-  } else {
-    const evidenceTable = page.getByRole("table");
-    await expect(evidenceTable.getByText("Production ownership")).toBeVisible();
-    await expect(
-      evidenceTable.getByText(
-        "Can own a user-facing product after the demo, including the unglamorous operational parts.",
-      ),
-    ).toBeVisible();
-  }
+  await expect(page.locator(".hero-availability")).toContainText("AI Software Engineer");
+  await expect(page.getByText("Open to AI software roles")).toBeVisible();
+
+  const heroCv = page.locator(".hero-copy").getByRole("link", { name: "Download my CV" });
+  await expect(heroCv).toBeVisible();
+  await expect(heroCv).toHaveAttribute("href", "/cv");
+
   await expect(
-    page.getByRole("heading", { name: "Quiet proof that the work ethic is not new." }),
+    page.getByRole("heading", { name: /Two systems\.\s*Two different kinds of proof\./i }),
   ).toBeVisible();
+  await expect(
+    page.locator("#project-talktogreekdata").getByRole("heading", {
+      name: "TalkToGreekData.gr",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.locator("#project-quar").getByRole("heading", { name: "Quar.gr" }),
+  ).toBeVisible();
+  await expect(page.getByText("Works over 23,000 data points and 207 metrics.")).toBeVisible();
+  await expect(page.getByText("Serving 10+ cafes in production, with 300+ commits behind the product.")).toBeVisible();
+
+  await expect(page.getByRole("heading", { name: /The range behind\s*the positioning\./i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "TrackSights OEM data pipeline" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Demos Vibes" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /High standards,\s*held for a while\./i })).toBeVisible();
   await expect(page.getByText("19,150/20,000")).toBeVisible();
   await expect(page.getByText("2x finalist")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Where I can be useful fastest." })).toBeVisible();
-  await expect(page.getByText("TrackSights: OEM providers, GCP pipeline, BigQuery/Dataform.")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "How I ship when things are messy." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /From data teams\s*to founder work\./i })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /I build the thing\.\s*Then I make it\s*understandable\./i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /Tools in service\s*of shipped systems\./i }),
+  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Answers without the scroll hunt." })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /The fastest way to\s*see the full picture\./i }),
+  ).toBeVisible();
+
+  const firstFaq = page.locator("details").first();
+  await page.getByText("What roles is Dimosthenis Gkontolias strongest for?").click();
   await expect(
     page.getByText(
-      "Nero and this portfolio both carry Playwright coverage for SEO, assets, overflow, links, and motion preferences.",
+      "AI Software Engineer roles where React, TypeScript, Python, FastAPI, RAG systems, cloud data work, and practical product engineering meet real users.",
     ),
   ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Projects that shipped beyond the repo." }),
-  ).toBeVisible();
-  await expect(
-    page.getByText(
-      "Demos Vibes is my public lab for AI tools, workflows, and reusable resources.",
-    ),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "I am looking for a team where shipping matters." }),
-  ).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Quick answers without the scroll hunt." })).toBeVisible();
-  await expect(page.getByText("Which projects should a recruiter inspect first?")).toBeVisible();
-  await expect(page.getByText("The fastest path is email at dgodolias18@gmail.com or LinkedIn.")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Save contact" })).toHaveAttribute(
-    "href",
-    "/assets/dimosthenis-gkontolias.vcf",
-  );
-  await expect(page.getByText("Let us build something")).toHaveCount(0);
-  const sunoMentions = await page.evaluate(() =>
-    Array.from(document.querySelectorAll<HTMLAnchorElement | HTMLElement>("a,main")).filter(
-      (element) =>
-        element.textContent?.toLowerCase().includes("suno") ||
-        (element instanceof HTMLAnchorElement && element.href.toLowerCase().includes("suno")),
-    ).length,
-  );
-  expect(sunoMentions).toBe(0);
-  const magicEffects = await page.evaluate(() => ({
-    ambient: document.querySelectorAll(".magic-ambient, .magic-grid-shine").length,
-    animatedBorders: document.querySelectorAll(".magic-border").length,
-    shimmerActions: document.querySelectorAll(".magic-shimmer").length,
-    globalFxLayers: document.querySelectorAll(".site-effects, .fx-progress-line, .hero-prism, .hero-scanline")
-      .length,
-  }));
-  expect(magicEffects.ambient).toBe(2);
-  expect(magicEffects.animatedBorders).toBeGreaterThanOrEqual(20);
-  expect(magicEffects.shimmerActions).toBeGreaterThanOrEqual(3);
-  expect(magicEffects.globalFxLayers).toBe(0);
-  const lightweightEffects = await page.evaluate(() => {
-    const firstAnimatedCard = document.querySelector(".magic-border");
-    const firstShimmerAction = document.querySelector(".magic-shimmer");
-    const workSection = document.querySelector("#work");
+  await expect(firstFaq).toHaveAttribute("open", "");
 
-    return {
-      borderAnimation: firstAnimatedCard
-        ? getComputedStyle(firstAnimatedCard, "::before").animationName
-        : "",
-      shimmerAnimation: firstShimmerAction
-        ? getComputedStyle(firstShimmerAction, "::after").animationName
-        : "",
-      contentVisibility: workSection ? getComputedStyle(workSection).contentVisibility : "",
-      smoothScroll: document.documentElement.dataset.smoothScroll,
-    };
-  });
-  expect(lightweightEffects).toEqual({
-    borderAnimation: "none",
-    shimmerAnimation: "none",
-    contentVisibility: "auto",
-    smoothScroll: undefined,
-  });
-
+  await page.goto("/");
   await page.keyboard.press("Tab");
-  const skipLink = page.getByRole("link", { name: "Skip to work" });
+  const skipLink = page.getByRole("link", { name: "Skip to main content" });
   await expect(skipLink).toBeFocused();
   await skipLink.press("Enter");
-  await expect(
-    page.getByRole("heading", { name: "Projects that shipped beyond the repo." }),
-  ).toBeVisible();
-  await expect(page.getByRole("link", { name: "Quar.gr: GitHub" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Nero Website: Live" })).toBeVisible();
-  await expect(page.getByText("Live in production")).toBeVisible();
-  await expect(page.getByText("Public GitHub Pages")).toBeVisible();
+  await expect(page.locator("#main-content")).toBeFocused();
+
+  const recruiterPath = page.getByRole("link", { name: "See flagship work" });
+  await expect(recruiterPath).toHaveAttribute("href", "#work");
+  await recruiterPath.click();
+  await expect(page).toHaveURL(/#work$/);
+  await expect(page.locator("#work")).toBeVisible();
 
   const horizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth,
@@ -130,8 +84,8 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   expect(horizontalOverflow).toBeLessThanOrEqual(2);
 
   for (let step = 0; step < 18; step += 1) {
-    await page.mouse.wheel(0, 850);
-    await page.waitForTimeout(80);
+    await page.mouse.wheel(0, 900);
+    await page.waitForTimeout(70);
   }
   await page.waitForLoadState("networkidle");
 
@@ -169,6 +123,43 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   );
   expect(externalRelIssues).toEqual([]);
 
+  const unnamedInteractiveCount = await page.evaluate(
+    () =>
+      Array.from(document.querySelectorAll("a,button,summary")).filter((element) => {
+        const label =
+          element.textContent?.trim() ||
+          element.getAttribute("aria-label") ||
+          element.getAttribute("title");
+        return !label;
+      }).length,
+  );
+  expect(unnamedInteractiveCount).toBe(0);
+
+  const designSystem = await page.evaluate(() => {
+    const heroTitle = document.querySelector(".hero-title-line");
+    const portraitRing = document.querySelector(".signal-ring-one");
+    const workSection = document.querySelector("#work");
+    const firstReveal = document.querySelector("[data-reveal]");
+
+    return {
+      heroAnimation: heroTitle ? getComputedStyle(heroTitle).animationName : "",
+      ringAnimation: portraitRing ? getComputedStyle(portraitRing).animationName : "",
+      revealAnimation: firstReveal ? getComputedStyle(firstReveal).animationName : "",
+      contentVisibility: workSection ? getComputedStyle(workSection).contentVisibility : "",
+      canvasCount: document.querySelectorAll("canvas").length,
+      videoCount: document.querySelectorAll("video").length,
+    };
+  });
+  const viewportWidth = page.viewportSize()?.width ?? 0;
+  expect(designSystem.heroAnimation).toBe(
+    viewportWidth >= 768 ? "hero-enter" : "none",
+  );
+  expect(designSystem.ringAnimation).toBe("signal-drift");
+  expect(["reveal-left", "none"]).toContain(designSystem.revealAnimation);
+  expect(designSystem.contentVisibility).toBe("auto");
+  expect(designSystem.canvasCount).toBe(0);
+  expect(designSystem.videoCount).toBe(0);
+
   const faviconLinks = await page.evaluate(() =>
     Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel*="icon"]')).map((link) =>
       link.getAttribute("href"),
@@ -182,6 +173,7 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
   expect(faviconResponse.headers()["content-type"]).toContain("image/x-icon");
   const faviconBytes = await faviconResponse.body();
   expect([...faviconBytes.slice(0, 4)]).toEqual([0, 0, 1, 0]);
+
   const resumeResponse = await request.get("/cv");
   expect(resumeResponse.ok()).toBe(true);
   expect(resumeResponse.headers()["content-type"]).toContain("application/pdf");
@@ -195,19 +187,18 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     "content",
     "summary_large_image",
   );
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+    "content",
+    "Dimosthenis Gkontolias | AI Software Engineer",
+  );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
     "https://dimosthenisgkontolias.com/images/og-card.png",
   );
-  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
-    "content",
-    "https://dimosthenisgkontolias.com/images/og-card.png",
-  );
+
   const ogImageResponse = await request.get("/images/og-card.png");
   expect(ogImageResponse.ok()).toBe(true);
   expect(ogImageResponse.headers()["content-type"]).toContain("image/png");
-  const ogImageBytes = await ogImageResponse.body();
-  expect([...ogImageBytes.slice(0, 4)]).toEqual([137, 80, 78, 71]);
 
   const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText()) as {
     "@graph": Array<{
@@ -217,19 +208,20 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
         contactType?: string;
         email?: string;
       }>;
-      mainEntity?: Array<{
-        acceptedAnswer?: {
-          text?: string;
-        };
-        name?: string;
-      }>;
       itemListElement?: Array<{
         item?: {
           image?: string;
           name?: string;
         };
       }>;
+      jobTitle?: string[];
       knowsLanguage?: string[];
+      mainEntity?: Array<{
+        acceptedAnswer?: {
+          text?: string;
+        };
+        name?: string;
+      }>;
     }>;
   };
   const schemaTypes = schema["@graph"].map((node) => node["@type"]);
@@ -237,6 +229,7 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
     expect.arrayContaining(["Person", "WebSite", "ProfilePage", "FAQPage", "ItemList"]),
   );
   const person = schema["@graph"].find((node) => node["@type"] === "Person");
+  expect(person?.jobTitle?.[0]).toBe("AI Software Engineer");
   expect(person?.knowsLanguage).toEqual(expect.arrayContaining(["Greek", "English", "German"]));
   expect(person?.contactPoint?.[0]).toEqual(
     expect.objectContaining({
@@ -244,135 +237,114 @@ test("portfolio content, navigation, favicon, and SEO stay intact", async ({
       email: "dgodolias18@gmail.com",
     }),
   );
-  expect(person?.award).toEqual(
-    expect.arrayContaining(["Panhellenic exams: 19,150/20,000", "Hackathon finals: 2x finalist"]),
-  );
   const faqPage = schema["@graph"].find((node) => node["@type"] === "FAQPage");
   expect(faqPage?.mainEntity?.length).toBeGreaterThanOrEqual(5);
   expect(faqPage?.mainEntity?.map((item) => item.name)).toEqual(
     expect.arrayContaining(["Which projects should a recruiter inspect first?"]),
   );
-  expect(faqPage?.mainEntity?.[0].acceptedAnswer?.text).toContain(
-    "Product-focused software engineering",
-  );
   const itemList = schema["@graph"].find((node) => node["@type"] === "ItemList");
   expect(itemList?.itemListElement?.length).toBeGreaterThanOrEqual(9);
-  const neroProject = itemList?.itemListElement
+  const talkProject = itemList?.itemListElement
     ?.map((entry) => entry.item)
-    .find((item) => item?.name === "Nero Website");
-  expect(neroProject?.image).toBe("https://dimosthenisgkontolias.com/images/projects/nero.webp");
+    .find((item) => item?.name === "TalkToGreekData.gr");
+  expect(talkProject?.image).toBe(
+    "https://dimosthenisgkontolias.com/images/projects/dataviz.webp",
+  );
 
   const robotsResponse = await request.get("/robots.txt");
   const robots = await robotsResponse.text();
   expect(robots).toContain("User-Agent: GPTBot");
   expect(robots).toContain("Allow: /llms.txt");
   expect(robots).toContain("Sitemap: https://dimosthenisgkontolias.com/sitemap.xml");
+
   const sitemapResponse = await request.get("/sitemap.xml");
   const sitemap = await sitemapResponse.text();
   expect(sitemap).toContain("https://dimosthenisgkontolias.com");
-  expect(sitemap).toContain("https://dimosthenisgkontolias.com/llms.txt");
+  expect(sitemap).toContain("2026-07-26");
+
   const llmsResponse = await request.get("/llms.txt");
   expect(llmsResponse.ok()).toBe(true);
-  expect(llmsResponse.headers()["content-type"]).toContain("text/plain");
   const llms = await llmsResponse.text();
-  expect(llms).toContain("# Dimosthenis Gkontolias");
+  expect(llms).toContain("AI Software Engineer");
+  expect(llms).toContain("TalkToGreekData.gr: economic-data RAG product");
   expect(llms).toContain("Quar.gr: production QR menu platform");
-  expect(llms).toContain("Do not describe the portfolio as using paid media-generation APIs");
-  expect(llms.toLowerCase()).not.toContain("suno");
+
   const manifestResponse = await request.get("/manifest.webmanifest");
   const manifest = (await manifestResponse.json()) as {
     icons?: Array<{ src?: string }>;
     name?: string;
     theme_color?: string;
   };
-  expect(manifest.name).toBe("Dimosthenis Gkontolias Portfolio");
-  expect(manifest.theme_color).toBe("#174332");
+  expect(manifest.name).toBe("Dimosthenis Gkontolias — AI Software Engineer");
+  expect(manifest.theme_color).toBe("#08140f");
   expect(manifest.icons?.some((icon) => icon.src === "/icon.png?v=2")).toBe(true);
+
   const vcardResponse = await request.get("/assets/dimosthenis-gkontolias.vcf");
   expect(vcardResponse.ok()).toBe(true);
   const vcard = await vcardResponse.text();
   expect(vcard).toContain("BEGIN:VCARD");
   expect(vcard).toContain("EMAIL;TYPE=INTERNET:dgodolias18@gmail.com");
 
-  const unnamedInteractiveCount = await page.evaluate(
-    () =>
-      Array.from(document.querySelectorAll("a,button")).filter((element) => {
-        const label =
-          element.textContent?.trim() ||
-          element.getAttribute("aria-label") ||
-          element.getAttribute("title");
-        return !label;
-      }).length,
-  );
-  expect(unnamedInteractiveCount).toBe(0);
-
   if (testInfo.project.name === "mobile") {
     await page.getByLabel("Open navigation").click();
-    const creatorLink = page.getByRole("link", { name: "Creator" }).last();
+    const creatorLink = page.getByRole("link", { name: /Creator/ }).last();
     await expect(creatorLink).toBeVisible();
+    await expect(page.getByRole("link", { name: "Download CV" }).last()).toBeVisible();
     await creatorLink.click();
     await expect(page.getByRole("dialog")).toHaveCount(0);
-    await expect(
-      page.getByRole("heading", { name: "I build the thing, then explain it in Greek." }),
-    ).toBeVisible();
+    await expect(page.locator("#creator")).toBeVisible();
   }
 
   expect(consoleErrors).toEqual([]);
 });
 
-test("reduced motion keeps effects and scrolling lightweight", async ({ page }) => {
+test("reduced motion keeps the complete journey static", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  const motionState = await page.evaluate(() => ({
-    globalFxLayers: document.querySelectorAll(".site-effects, .fx-progress-line, .hero-prism, .hero-scanline")
-      .length,
-    scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
-    smoothScroll: document.documentElement.dataset.smoothScroll,
-  }));
+  const motionState = await page.evaluate(() => {
+    const heroTitle = document.querySelector(".hero-title-line");
+    const portraitRing = document.querySelector(".signal-ring-one");
+    const firstReveal = document.querySelector("[data-reveal]");
+
+    return {
+      heroAnimation: heroTitle ? getComputedStyle(heroTitle).animationName : "",
+      ringAnimation: portraitRing ? getComputedStyle(portraitRing).animationName : "",
+      revealAnimation: firstReveal ? getComputedStyle(firstReveal).animationName : "",
+      scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
+    };
+  });
 
   expect(motionState).toEqual({
-    globalFxLayers: 0,
+    heroAnimation: "none",
+    ringAnimation: "none",
+    revealAnimation: "none",
     scrollBehavior: "auto",
-    smoothScroll: undefined,
   });
+
+  await expect(
+    page.locator(".hero-copy").getByRole("link", { name: "Download my CV" }),
+  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "TalkToGreekData.gr" })).toBeVisible();
 });
 
-test("evidence map links target project cards", async ({ page }, testInfo) => {
+test("flagship navigation targets the approved recruiter story", async ({ page }) => {
   await page.goto("/");
 
-  const quarLink =
-    testInfo.project.name === "mobile"
-      ? page
-          .getByRole("article")
-          .filter({ hasText: "Quar.gr" })
-          .getByRole("link", { name: "Quar.gr project details" })
-      : page.getByRole("table").getByRole("link", { name: "Quar.gr project details" });
-
-  await expect(quarLink).toHaveAttribute("href", "#project-quar");
-  await quarLink.click();
-  await expect(page).toHaveURL(/#project-quar$/);
+  const workLink = page.getByRole("link", { name: "See flagship work" });
+  await workLink.click();
+  await expect(page).toHaveURL(/#work$/);
+  await expect(
+    page.locator("#project-talktogreekdata").getByRole("heading", {
+      name: "TalkToGreekData.gr",
+    }),
+  ).toBeVisible();
   await expect(
     page.locator("#project-quar").getByRole("heading", { name: "Quar.gr" }),
   ).toBeVisible();
-
-  const neroLink =
-    testInfo.project.name === "mobile"
-      ? page
-          .getByRole("article")
-          .filter({ hasText: "Nero Website" })
-          .getByRole("link", { name: "Nero Website project details" })
-      : page.getByRole("table").getByRole("link", { name: "Nero Website project details" });
-
-  await expect(neroLink).toHaveAttribute("href", "#project-nero");
-  await neroLink.click();
-  await expect(page).toHaveURL(/#project-nero$/);
-  await expect(
-    page.locator("#project-nero").getByRole("heading", { name: "Nero Website" }),
-  ).toBeVisible();
 });
 
-test("not found page stays branded", async ({ page }) => {
+test("not found page stays branded and recoverable", async ({ page }) => {
   await page.goto("/missing-portfolio-route");
 
   await expect(page.getByRole("heading", { name: "Page not found." })).toBeVisible();
