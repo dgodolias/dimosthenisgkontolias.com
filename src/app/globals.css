@@ -3710,6 +3710,14 @@
   border-radius: clamp(1.8rem, 4vw, 3.25rem);
 }
 
+.flagship-story-talk > .flagship-copy {
+  padding-inline-start: clamp(2rem, 3.3vw, 3.75rem);
+}
+
+.flagship-story-quar > .flagship-copy {
+  padding-inline-end: clamp(2rem, 3.3vw, 3.75rem);
+}
+
 .project-index {
   gap: 1rem;
   border-top: 0;
@@ -3805,6 +3813,11 @@
 }
 
 @media (max-width: 1023px) {
+  .flagship-story-talk > .flagship-copy,
+  .flagship-story-quar > .flagship-copy {
+    padding-inline: clamp(1.15rem, 4vw, 2rem);
+  }
+
   .orbit-person {
     width: clamp(10.5rem, 24vw, 14rem);
     right: 2rem;

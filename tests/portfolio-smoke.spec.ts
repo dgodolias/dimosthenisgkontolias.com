@@ -504,6 +504,34 @@ test("flagship navigation targets the recruiter story", async ({ page }) => {
   await expect(
     page.locator("#project-quar").getByRole("heading", { name: "Quar.gr" }),
   ).toBeVisible();
+
+  const flagshipGutters = await page.evaluate(() => {
+    const measure = (selector: string) => {
+      const story = document.querySelector<HTMLElement>(selector);
+      const copy = story?.querySelector<HTMLElement>(".flagship-copy");
+
+      if (!story || !copy) {
+        return null;
+      }
+
+      const styles = getComputedStyle(copy);
+
+      return {
+        left: Number.parseFloat(styles.paddingLeft),
+        right: Number.parseFloat(styles.paddingRight),
+      };
+    };
+
+    return {
+      talk: measure("#project-talktogreekdata"),
+      quar: measure("#project-quar"),
+    };
+  });
+
+  expect(flagshipGutters.talk).not.toBeNull();
+  expect(flagshipGutters.quar).not.toBeNull();
+  expect(flagshipGutters.talk!.left).toBeGreaterThanOrEqual(18);
+  expect(flagshipGutters.quar!.right).toBeGreaterThanOrEqual(18);
 });
 
 test("not found page stays branded and recoverable", async ({ page }) => {
