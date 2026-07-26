@@ -2693,14 +2693,150 @@
   border-top: 1px solid rgb(244 242 232 / 0.14);
 }
 
-.flagship-story-talk::before {
+.flagship-story-talk {
+  background: #f8fafc;
+}
+
+.flagship-story-quar {
+  background: #efdecd;
+}
+
+.flagship-backdrop {
   position: absolute;
   z-index: -1;
-  inset: 0 50%;
-  width: 100vw;
-  content: "";
-  translate: -50% 0;
-  background: url("/images/projects/dataviz.webp") center / cover no-repeat;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  contain: strict;
+  transform: translateZ(0);
+}
+
+.talk-data-background {
+  background: #f8fafc;
+}
+
+.talk-data-waves,
+.talk-data-dot-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.talk-data-waves {
+  z-index: 1;
+}
+
+.talk-data-dot-grid {
+  z-index: 3;
+  background-image: radial-gradient(
+    circle,
+    rgb(71 85 105 / 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+.talk-data-orb {
+  position: absolute;
+  z-index: 2;
+  border-radius: 50%;
+  opacity: 0.08;
+  filter: blur(80px);
+  will-change: transform;
+  animation: talk-data-float 20s ease-in-out infinite;
+}
+
+.talk-data-orb-1 {
+  top: -10%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+}
+
+.talk-data-orb-2 {
+  right: -10%;
+  bottom: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+  animation-delay: -7s;
+  animation-duration: 25s;
+}
+
+.talk-data-orb-3 {
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+  animation-delay: -14s;
+  animation-duration: 30s;
+}
+
+@keyframes talk-data-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(30px, -40px) scale(1.05);
+  }
+
+  50% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+
+  75% {
+    transform: translate(40px, 30px) scale(1.02);
+  }
+}
+
+.quar-background {
+  background: #efdecd;
+}
+
+.quar-background-scrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  background-color: rgb(159 154 154 / 0.15);
+  box-shadow:
+    5px 0 10px rgb(0 0 0 / 0.3),
+    -5px 0 10px rgb(0 0 0 / 0.3);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.quar-background-scrap-glow {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(245 158 11 / 0.55);
+  opacity: 0;
+  box-shadow:
+    0 0 28px rgb(245 158 11 / 0.22),
+    inset 0 0 14px rgb(245 158 11 / 0.14);
+}
+
+.quar-background-spot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 520px;
+  height: 520px;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgb(245 158 11 / 0.09) 0%,
+    rgb(254 243 199 / 0.07) 35%,
+    transparent 70%
+  );
+  opacity: 0;
+  will-change: transform, opacity;
 }
 
 .flagship-story-talk .flagship-meta-line > span,
@@ -2759,18 +2895,6 @@
   color: white;
 }
 
-.flagship-story-quar::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0 50%;
-  width: 100vw;
-  content: "";
-  translate: -50% 0;
-  background:
-    radial-gradient(circle at 22% 35%, rgb(240 161 35 / 0.22), transparent 25rem),
-    #ead9c8;
-}
-
 .flagship-meta-line {
   display: flex;
   flex-wrap: wrap;
@@ -2817,7 +2941,7 @@
 
 .flagship-story-quar .flagship-copy h3,
 .flagship-story-quar .flagship-role strong {
-  color: var(--ink);
+  color: #101c17;
 }
 
 .flagship-story-quar .flagship-thesis,
@@ -2874,12 +2998,12 @@
 
 .flagship-story-quar .action-link-dark {
   border-color: rgb(16 28 23 / 0.28);
-  background: var(--ink);
-  color: var(--card);
+  background: #101c17;
+  color: #fffdf4;
 }
 
 .flagship-story-quar .action-link-dark:hover {
-  border-color: var(--ink);
+  border-color: #101c17;
   background: #b76a00;
   color: white;
 }
@@ -3253,6 +3377,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .talk-data-orb {
+    animation: none;
+  }
+
+  .quar-background-spot {
+    display: none;
+  }
+
   .orbit-fallback-stack {
     transition: none;
   }

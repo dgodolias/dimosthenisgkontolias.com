@@ -248,17 +248,21 @@ It must not look like an error state or a pile of ordinary cards.
 
 ### TalkToGreekData
 
-- Dark/cool data field.
+- Light/cool data field using the source project’s actual `AmbientWaves` canvas.
+- Two blurred indigo/cyan Catmull-Rom ribbons retain the source breathing, orbit, random direction reversal, and timing logic.
+- The source light-theme orbs and 24 px dot grid complete the background layer.
 - Screenshot transitions from orbit angle to a stable inspection plane.
 - Recruiter signal, role, verified metrics, architecture, and live action appear around the interface.
-- Optional CSS/SVG data line responds to section progress; it is not presented as live product output.
+- The source canvas is decorative, section-scoped, visibility-suspended, and static under reduced motion; it is not presented as live product output.
 
 ### Quar
 
 - Warm paper/orange material field.
+- The source project’s actual `InteractiveSquares` implementation supplies the rising “ice” squares: the 16 production sizes, four-column distribution, 100 px/s ascent, 0.5-degree frame-normalized rotation, and below-fold respawn are preserved.
+- Fine pointers retain the source depth parallax, proximity glow, warm spotlight, and radiating pointer-down pulse.
 - Screenshot resolves into a dimensional phone/menu composition.
 - Founder responsibilities, production usage, admin capabilities, and live/GitHub actions remain inspectable.
-- Motion resembles a menu surface unfolding, not another orbit.
+- The animation pauses offscreen/when the tab is hidden; reduced motion uses the source deterministic calm scatter with no spotlight.
 
 ### Supporting proof
 
@@ -275,6 +279,8 @@ Recommended stable hooks:
 - `[data-orbit-mode="full|reduced|static"]`
 - `[data-orbit-state]`
 - `[data-orbit-project]`
+- `[data-source-effect="dataviz-ambient-waves"]`
+- `[data-source-effect="quar-interactive-squares"]`
 - `[data-orbit-selector]`
 - `[data-orbit-pause]`
 - `[data-orbit-fallback]`

@@ -90,11 +90,13 @@ The scene uses four canonical recruiter-proof project bodies:
 1. **TalkToGreekData.gr**
    - Signal: AI product engineering.
    - Proof: RAG over 23,000 data points and 207 metrics, streaming answers, 12 chart types.
-   - Visual source: `/images/projects/dataviz.webp`.
+   - Interface visual source: `/images/projects/dataviz.webp`.
+   - Background source: the real `AmbientWaves.tsx` implementation from `PROJECTS/DataViz`, including its two Catmull-Rom gradient ribbons, breathing width, blurred indigo/cyan material, orbit reversals, light-theme orbs, and dot grid.
 2. **Quar.gr**
    - Signal: Founder ownership and production product work.
    - Proof: 10+ cafes in production, 300+ commits, admin editing, multilingual content, analytics, support.
-   - Visual source: `/images/projects/quar.webp`.
+   - Interface visual source: `/images/projects/quar.webp`.
+   - Background source: the real `InteractiveSquares.tsx` implementation from `PROJECTS/QuaR`, including its 16-item size ladder, four-column spawn, 100 px/s rise, rotation, respawn, depth parallax, amber proximity glow, pointer spotlight, and click ripple.
 3. **TrackSights**
    - Signal: Data engineering and modeling depth.
    - Proof: 785k listings, 71 features, 8 European markets, held-out R² 0.946.
@@ -369,13 +371,14 @@ The orbit is a grammar, not a one-off:
 
 - Section numbers use orbital coordinates rather than generic boxed eyebrows.
 - Lines connect proof to the project that owns it.
-- TalkToGreekData uses a focused data/answer plane.
-- Quar uses a dimensional phone/menu plane with its own warm material world.
+- TalkToGreekData uses its source-product light data field with the original moving indigo/cyan ribbons, ambient orbs, and dot grid.
+- Quar uses a dimensional menu plane inside the source-product beige field with the original rising squares and pointer-reactive amber light.
 - Supporting work moves along a horizontal evidence rail rather than a repeated card grid.
 - Experience becomes a build log with dates, roles, and inspectable outcomes.
 - The portrait is framed as the human anchor inside the hero, not a generic “about me” card.
 - The final CV action echoes the orbit with a soft circular form while remaining an action, never a project body.
 - Motion uses the same “orbit → magnetize → inspect → release” sequence throughout.
+- Both flagship source effects are section-local, pause outside the viewport or in a hidden tab, and resolve to a complete static composition under reduced motion.
 
 ## 19. Expressive contract
 

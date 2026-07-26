@@ -19,6 +19,10 @@ import {
   type OrbitProject,
 } from "@/components/ProjectOrbit";
 import {
+  QuarBackground,
+  TalkToGreekDataBackground,
+} from "@/components/FlagshipBackgrounds";
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -552,6 +556,12 @@ function FlagshipStory({
       )}
       data-reveal={reverse ? "right" : "left"}
     >
+      {project.id === "project-talktogreekdata" ? (
+        <TalkToGreekDataBackground />
+      ) : (
+        <QuarBackground />
+      )}
+
       <div className="flagship-copy">
         <div className="flagship-meta-line">
           <span>{project.eyebrow}</span>

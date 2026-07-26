@@ -19,7 +19,7 @@ Redesign the existing English portfolio for recruiters and hiring managers evalu
 | Show Dimosthenis in the opening composition | Pass | New user-provided `public/images/profile-hero.jpeg` appears as an organic layered hero portrait and is referenced in Person JSON-LD |
 | Remove the CV from the project orbit | Pass | Orbit has exactly four verified project controls; smoke suite asserts no Curriculum Vitae orbit item |
 | Replace forced CV downloads with a preview journey | Pass | Header, hero, mobile menu, experience, and closing CTA use `Check CV`, open `/cv` in a new tab, include `noopener noreferrer`, and omit the `download` attribute; `/cv` serves an inline PDF |
-| TalkToGreekData and Quar have distinct brand worlds | Pass | TalkToGreekData uses the authentic `dataviz.webp` background and blue interaction palette; Quar retains its warm full-bleed world; production screenshots cover both |
+| TalkToGreekData and Quar have their real source backgrounds | Pass | `src/components/FlagshipBackgrounds.tsx` ports DataViz `AmbientWaves.tsx` and QuaR `InteractiveSquares.tsx`: moving indigo/cyan ribbons plus orbs/grid for TalkToGreekData, and the original rising/rotating squares, cursor parallax, amber glow, spotlight, and ripple for QuaR |
 | Soften the previously strict visual tone | Pass | Rounded controls, soft glass proof layers, organic portrait framing, curved section transitions, eased motion, and softened evidence/experience/FAQ surfaces in `src/app/globals.css` |
 | Keep TalkToGreekData first and Quar strongest startup proof | Pass | Semantic and visual order in the hero selector and flagship stories; interaction test switches TalkToGreekData → Quar |
 | Responsive and motion-safe experience | Pass | Desktop full 3D, low-capability reduced tier, under-768 art-directed CSS fallback with no Three.js download, reduced-motion static mode, forced-colors path, offscreen/visibility suspension, and no horizontal overflow |
@@ -42,6 +42,9 @@ Redesign the existing English portfolio for recruiters and hiring managers evalu
   - pause/resume state: verified
   - mobile orbit mode: `static`, canvas removed from layout, CSS-layered fallback retained
   - reduced-motion orbit mode: `static`
+  - TalkToGreekData source canvas changes between live frames and remains unchanged under reduced motion
+  - QuaR source-square transforms rise between live frames and remain unchanged under reduced motion
+  - QuaR renders the full 16-square desktop source ladder and the responsive 12-square live tier
   - desktop/mobile console errors: none
   - desktop document width: 1440 at a 1440 viewport
   - mobile document width: 390 at a 390 viewport
@@ -62,6 +65,8 @@ Redesign the existing English portfolio for recruiters and hiring managers evalu
   - `.codex-qa/orbit-reduced-motion.png`
   - `.codex-qa/orbit-desktop-talk-case.png`
   - `.codex-qa/orbit-desktop-quar-case.png`
+  - `.codex-qa/orbit-mobile-talk-case.png`
+  - `.codex-qa/orbit-mobile-quar-case.png`
   - `.codex-qa/orbit-desktop-evidence-rail.png`
   - `.codex-qa/orbit-desktop-contact.png`
 

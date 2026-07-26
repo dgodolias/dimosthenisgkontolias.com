@@ -82,6 +82,60 @@ test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", asyn
     ),
   ).toBeVisible();
 
+  const talkBackground = page.locator(
+    '[data-source-effect="dataviz-ambient-waves"]',
+  );
+  const quarBackground = page.locator(
+    '[data-source-effect="quar-interactive-squares"]',
+  );
+  await expect(talkBackground).toBeVisible();
+  await expect(quarBackground).toBeVisible();
+  await expect(talkBackground.locator("canvas")).toHaveCount(1);
+  await expect(quarBackground.locator(".quar-background-scrap")).toHaveCount(16);
+
+  await talkBackground.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(150);
+  const talkFrameBefore = await talkBackground
+    .locator("canvas")
+    .evaluate((canvas) => (canvas as HTMLCanvasElement).toDataURL());
+  await page.waitForTimeout(250);
+  const talkFrameAfter = await talkBackground
+    .locator("canvas")
+    .evaluate((canvas) => (canvas as HTMLCanvasElement).toDataURL());
+  expect(talkFrameAfter).not.toBe(talkFrameBefore);
+
+  await quarBackground.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(150);
+  const quarTransformBefore = await quarBackground
+    .locator(".quar-background-scrap")
+    .first()
+    .evaluate((element) => element.style.transform);
+  await page.waitForTimeout(250);
+  const quarTransformAfter = await quarBackground
+    .locator(".quar-background-scrap")
+    .first()
+    .evaluate((element) => element.style.transform);
+  expect(quarTransformAfter).not.toBe(quarTransformBefore);
+
+  if (testInfo.project.name === "desktop") {
+    const quarBounds = await quarBackground.boundingBox();
+    expect(quarBounds).not.toBeNull();
+
+    if (quarBounds) {
+      await page.mouse.move(
+        quarBounds.x + quarBounds.width * 0.72,
+        quarBounds.y + quarBounds.height * 0.38,
+      );
+      await expect
+        .poll(() =>
+          quarBackground
+            .locator(".quar-background-spot")
+            .evaluate((element) => Number.parseFloat(element.style.opacity || "0")),
+        )
+        .toBeGreaterThan(0.1);
+    }
+  }
+
   await expect(
     page.getByRole("heading", { name: /The range behind\s*the positioning\./i }),
   ).toBeVisible();
@@ -195,7 +249,7 @@ test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", asyn
     };
   });
   expect(["full", "reduced", "static"]).toContain(runtime.orbitMode);
-  expect(runtime.canvasCount).toBe(1);
+  expect(runtime.canvasCount).toBe(2);
   expect(runtime.videoCount).toBe(0);
   expect(["auto", "visible"]).toContain(runtime.contentVisibility);
   if (runtime.orbitMode === "static") {
@@ -304,6 +358,41 @@ test("reduced motion uses the complete static Project Orbit", async ({ page }) =
   await orbit.locator("[data-orbit-project='project-quar']").click();
   await expect(orbit.getByRole("heading", { name: "Quar.gr" })).toBeVisible();
   await expect(page.locator(".orbit-person img")).toBeVisible();
+
+  const talkBackground = page.locator(
+    '[data-source-effect="dataviz-ambient-waves"]',
+  );
+  const quarBackground = page.locator(
+    '[data-source-effect="quar-interactive-squares"]',
+  );
+  await talkBackground.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(250);
+  const talkFrameBefore = await talkBackground
+    .locator("canvas")
+    .evaluate((canvas) => (canvas as HTMLCanvasElement).toDataURL());
+  const quarTransformBefore = await quarBackground
+    .locator(".quar-background-scrap")
+    .first()
+    .evaluate((element) => element.style.transform);
+  await page.waitForTimeout(250);
+  const talkFrameAfter = await talkBackground
+    .locator("canvas")
+    .evaluate((canvas) => (canvas as HTMLCanvasElement).toDataURL());
+  const quarTransformAfter = await quarBackground
+    .locator(".quar-background-scrap")
+    .first()
+    .evaluate((element) => element.style.transform);
+
+  expect(talkFrameAfter).toBe(talkFrameBefore);
+  expect(quarTransformAfter).toBe(quarTransformBefore);
+  await expect(talkBackground.locator(".talk-data-orb").first()).toHaveCSS(
+    "animation-name",
+    "none",
+  );
+  await expect(quarBackground.locator(".quar-background-spot")).toHaveCSS(
+    "display",
+    "none",
+  );
 
   const motionState = await page.evaluate(() => {
     const firstReveal = document.querySelector("[data-reveal]");
