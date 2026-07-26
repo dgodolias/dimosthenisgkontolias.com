@@ -1,55 +1,72 @@
-# Completion Audit — Portfolio Redesign v1
-
-> Superseded on 2026-07-26. The owner rejected the v1 visual direction as insufficiently distinctive and requested the Project Orbit redesign documented in `FRONTEND_DESIGN_BRIEF.md` v2.0. This file remains historical evidence only and is not a current release decision.
+# Completion Audit — Project Orbit Redesign
 
 Date: 2026-07-26  
-Decision: Superseded by the Project Orbit revision. Deployment was not requested or performed.
+Decision: Complete for local implementation and review. Deployment was not requested or performed.
 
 ## Objective
 
-Redesign the existing portfolio into an English-only, high-impact showcase for recruiters and hiring managers evaluating Dimosthenis Gkontolias for AI Software Engineer roles. Preserve the strongest existing content and assets, make CV download the primary conversion, lead with TalkToGreekData.gr and Quar.gr, and avoid both excessive cyberpunk styling and generic corporate-portfolio patterns.
+Redesign the existing English portfolio for recruiters and hiring managers evaluating Dimosthenis Gkontolias for AI Software Engineer roles. Preserve the factual content base, create a distinctive “wow” interaction without neon/cyberpunk or generic corporate styling, foreground TalkToGreekData and Quar, show the person behind the work, and make the CV easy to inspect without forcing a download.
 
 ## Prompt-to-artifact checklist
 
 | Requirement | Status | Direct evidence |
 | --- | --- | --- |
-| Recruiter-first AI Software Engineer positioning | Pass | `src/app/page.tsx`, `src/data/portfolio.ts`, and the AI-focused hero/positioning assertions in `tests/portfolio-smoke.spec.ts` |
-| CV download as primary conversion | Pass | Header, hero, and closing CV actions in `src/app/page.tsx`; download-attribute and asset-response checks in the smoke suite |
-| TalkToGreekData.gr as strongest AI proof | Pass | First flagship case study and live link in `src/app/page.tsx` and `src/data/portfolio.ts`; flagship-order smoke assertion |
-| Quar.gr as strongest startup/product proof | Pass | Second flagship case study with founder/product framing; project-link smoke assertion |
-| Hybrid visual direction with controlled motion | Pass | Light editorial hero and content sections, dark cinematic proof/work/contact sections, CSS signal system, desktop entrance motion, mobile-immediate hero, view reveals, and reduced-motion fallback in `src/app/globals.css` |
-| Avoid excessive neon/cyberpunk and generic corporate cards | Pass | Restricted signal palette, editorial typography, asymmetric portrait composition, proof strip, narrative flagship layouts, project index, and experience timeline verified in section screenshots |
-| English-only interface | Pass | User-facing copy and metadata are English; smoke suite checks the document language |
-| Responsive recruiter journey | Pass | Desktop and Pixel 5 Playwright coverage; no horizontal overflow; mobile navigation, anchor navigation, images, and CTAs verified |
-| Accessibility baseline | Pass | Skip link, semantic sections, named controls, keyboard-visible focus, target sizing, reduced motion, forced-colors fallback; Lighthouse Accessibility 100 on isolated mobile and desktop production runs |
-| Search/social metadata | Pass | AI-focused metadata, canonical, Open Graph, Twitter, structured data, robots, sitemap, manifest, and `llms.txt`; Lighthouse SEO 100 and smoke assertions |
-| Static-first performance discipline | Pass | All routes statically pre-rendered; no canvas, video, WebGL, 3D, or particle runtime; production Lighthouse desktop Performance 99, observed mobile LCP 1.51 s, CLS 0, and TBT 36 ms |
-| Branded recovery path | Pass | Redesigned `src/app/not-found.tsx`; desktop and mobile 404 smoke checks |
-| Approved design contract retained | Pass | `FRONTEND_DESIGN_BRIEF.md` records the approved Design Map, scope, evidence plan, and boundaries |
+| Work on a new branch and establish a commit before implementation | Pass | Branch `feat/project-orbit-redesign`; baseline commit `11102f2 design: establish Project Orbit portfolio direction` |
+| Recruiter-first AI Software Engineer positioning | Pass | Opening role, recruiter copy, proof hierarchy, and contact journey in `src/app/page.tsx`; desktop/mobile smoke assertions |
+| Remove the rejected square `DG` mark and boxed role/location badge | Pass | Full-name wordmark in the global header and 404; plain hero kicker; no rendered `DG` mark or badge |
+| Deliver a non-generic “wow” moment with animation and 3D | Pass | Direct Three.js Project Orbit in `src/components/ProjectOrbit.tsx`; real project planes, depth, drag/raycast selection, magnetic focus, pointer parallax, pause/resume, and scroll continuity |
+| Use the frontend-design addons and map the concept in detail | Pass | Approved Design Map v2 in `FRONTEND_DESIGN_BRIEF.md`, brand system in `docs/brand-guidelines.md`, and spatial/interaction detail in `docs/PROJECT_ORBIT_SPEC.md` |
+| Show Dimosthenis in the opening composition | Pass | New user-provided `public/images/profile-hero.jpeg` appears as an organic layered hero portrait and is referenced in Person JSON-LD |
+| Remove the CV from the project orbit | Pass | Orbit has exactly four verified project controls; smoke suite asserts no Curriculum Vitae orbit item |
+| Replace forced CV downloads with a preview journey | Pass | Header, hero, mobile menu, experience, and closing CTA use `Check CV`, open `/cv` in a new tab, include `noopener noreferrer`, and omit the `download` attribute; `/cv` serves an inline PDF |
+| TalkToGreekData and Quar have distinct brand worlds | Pass | TalkToGreekData uses the authentic `dataviz.webp` background and blue interaction palette; Quar retains its warm full-bleed world; production screenshots cover both |
+| Soften the previously strict visual tone | Pass | Rounded controls, soft glass proof layers, organic portrait framing, curved section transitions, eased motion, and softened evidence/experience/FAQ surfaces in `src/app/globals.css` |
+| Keep TalkToGreekData first and Quar strongest startup proof | Pass | Semantic and visual order in the hero selector and flagship stories; interaction test switches TalkToGreekData → Quar |
+| Responsive and motion-safe experience | Pass | Desktop full 3D, low-capability reduced tier, under-768 art-directed CSS fallback with no Three.js download, reduced-motion static mode, forced-colors path, offscreen/visibility suspension, and no horizontal overflow |
+| English-only interface | Pass | User-facing portfolio, navigation, metadata, error page, and project proof remain English |
+| Accessibility baseline | Pass | Semantic controls and fallback, keyboard-visible selection, skip link, named controls, motion pause, reduced-motion mode, target sizing, contrast corrections; Lighthouse Accessibility 100 |
+| Search/social/AI discovery | Pass | Canonical, Open Graph, Twitter, Person/ProfilePage/FAQ/ItemList JSON-LD, robots, sitemap, manifest, `profile.json`, and `llms.txt`; Lighthouse SEO 100 |
+| Security and production dependency health | Pass | Next.js updated to 16.2.12; secure Sharp/PostCSS overrides; unused runtime shadcn CLI removed; `npm audit --omit=dev` reports 0 vulnerabilities |
+| Branded recovery path | Pass | 404 uses the full-name identity and rounded recovery actions; desktop/mobile smoke coverage |
 
 ## Verification evidence
 
 - `npm run lint` — pass
-- `npm run build` — pass; 9/9 static pages generated
+- `npm run build` — pass with the production Webpack builder; 9/9 static routes generated
 - `npm run test:smoke` — 8/8 pass across desktop and mobile
+- `npm audit --omit=dev --json` — 0 production vulnerabilities
 - `git diff --check` — pass
-- Isolated production Lighthouse:
-  - Desktop: Performance 99, Accessibility 100, Best Practices 100, SEO 100; LCP 0.96 s, CLS 0, TBT 0 ms
-  - Mobile: Performance 86, Accessibility 100, Best Practices 100, SEO 100; observed LCP 1.51 s, CLS 0, TBT 36 ms
-  - Lighthouse's simulated mobile model reports LCP 4.22 s; this is recorded as a lab-model caveat rather than represented as field performance.
-- Visual QA screenshots:
-  - `.codex-qa/redesign-desktop-hero.png`
-  - `.codex-qa/redesign-desktop-work.png`
-  - `.codex-qa/redesign-desktop-experience.png`
-  - `.codex-qa/redesign-desktop-creator.png`
-  - `.codex-qa/redesign-desktop-skills.png`
-  - `.codex-qa/redesign-desktop-contact.png`
-  - `.codex-qa/redesign-mobile-hero.png`
-  - `.codex-qa/redesign-mobile-work.png`
-  - `.codex-qa/redesign-mobile-contact.png`
+- Production browser replay:
+  - desktop orbit mode: `full`
+  - desktop selection: Quar state verified
+  - pause/resume state: verified
+  - mobile orbit mode: `static`, canvas removed from layout, CSS-layered fallback retained
+  - reduced-motion orbit mode: `static`
+  - desktop/mobile console errors: none
+  - desktop document width: 1440 at a 1440 viewport
+  - mobile document width: 390 at a 390 viewport
+- Final isolated mobile Lighthouse:
+  - Performance 69
+  - Accessibility 100
+  - Best Practices 100
+  - SEO 100
+  - FCP 1.7 s
+  - LCP 4.3 s
+  - TBT 590 ms
+  - CLS 0.001
+  - repeated local performance range: 64–81 after the Webpack/mobile-static optimization
+- Visual QA:
+  - `.codex-qa/orbit-desktop-hero.png`
+  - `.codex-qa/orbit-desktop-quar.png`
+  - `.codex-qa/orbit-mobile-hero.png`
+  - `.codex-qa/orbit-reduced-motion.png`
+  - `.codex-qa/orbit-desktop-talk-case.png`
+  - `.codex-qa/orbit-desktop-quar-case.png`
+  - `.codex-qa/orbit-desktop-evidence-rail.png`
+  - `.codex-qa/orbit-desktop-contact.png`
 
 ## External follow-up, not an implementation blocker
 
-- Production INP and p75 Core Web Vitals require deployment traffic or real-user monitoring.
-- Recruiter usability validation requires sessions with actual recruiters or hiring managers.
-- No deploy, commit, or push was requested, so the work remains as reviewed local changes.
+- Production p75 Core Web Vitals and INP require real traffic or RUM after deployment.
+- Recruiter perception and task success require sessions with actual recruiters/hiring managers.
+- No push or deployment was requested.

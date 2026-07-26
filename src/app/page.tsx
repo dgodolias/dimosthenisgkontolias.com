@@ -7,17 +7,17 @@ import {
   BadgeCheck,
   ExternalLink,
   Github,
-  Instagram,
   Linkedin,
   Mail,
-  MapPin,
   MessageCircle,
   Play,
-  Sparkles,
 } from "lucide-react";
 
 import { MobileNavigation } from "@/components/MobileNavigation";
-import { buttonVariants } from "@/components/ui/button";
+import {
+  ProjectOrbit,
+  type OrbitProject,
+} from "@/components/ProjectOrbit";
 import {
   Tooltip,
   TooltipContent,
@@ -66,6 +66,60 @@ const supportingProjects = allProjects.filter(
   (project) => project.id !== talkToGreekData.id && project.id !== quar.id,
 );
 
+const orbitProjects: OrbitProject[] = [
+  {
+    id: "project-talktogreekdata",
+    title: "TalkToGreekData",
+    signal: "AI product",
+    proof:
+      "A conversational analysis surface that turns Greek economic datasets into streamed answers and visual evidence.",
+    metrics: ["23k+ data points", "207 metrics", "12 chart types"],
+    href: "#project-talktogreekdata",
+    action: "Inspect AI proof",
+    accent: "#78d8e8",
+    texture: "/images/projects/dataviz.webp",
+    kind: "screen",
+  },
+  {
+    id: "project-quar",
+    title: "Quar.gr",
+    signal: "Production SaaS",
+    proof:
+      "A founder-built QR menu platform that has to keep working for real cafes after the demo ends.",
+    metrics: ["10+ cafes live", "300+ commits", "Founder-built"],
+    href: "#project-quar",
+    action: "Inspect product proof",
+    accent: "#f0a123",
+    texture: "/images/projects/quar.webp",
+    kind: "screen",
+  },
+  {
+    id: "project-tracksights",
+    title: "TrackSights",
+    signal: "Data engineering",
+    proof:
+      "Provider pipelines, canonical schemas, cloud warehouse work, and modeling over European automotive data.",
+    metrics: ["785k listings", "71 features", "R² 0.946"],
+    href: "#project-tracksights",
+    action: "Inspect data proof",
+    accent: "#83aef5",
+    kind: "data",
+  },
+  {
+    id: "project-demos-vibes",
+    title: "Demos Vibes",
+    signal: "Distribution",
+    proof:
+      "A public AI education loop where every short demo leads to a reusable, searchable technical resource.",
+    metrics: ["Greek AI demos", "Resource hub", "Build + explain"],
+    href: "#project-demos-vibes",
+    action: "Inspect creator proof",
+    accent: "#e77c5d",
+    texture: "/images/projects/demosvibes.webp",
+    kind: "screen",
+  },
+];
+
 function absoluteUrl(href: string) {
   return href.startsWith("http") ? href : `${siteUrl}${href}`;
 }
@@ -93,7 +147,7 @@ const jsonLd = {
         },
       ],
       url: siteUrl,
-      image: `${siteUrl}/images/profile.png`,
+      image: `${siteUrl}/images/profile-hero.jpeg`,
       address: {
         "@type": "PostalAddress",
         addressLocality: "Athens",
@@ -223,18 +277,20 @@ function ActionLink({
   variant = "primary",
   className,
   download,
+  newTab = false,
 }: {
   href: string;
   children: ReactNode;
   variant?: "primary" | "outline" | "dark" | "quiet";
   className?: string;
   download?: boolean;
+  newTab?: boolean;
 }) {
   return (
     <a
       href={href}
-      target={externalTarget(href)}
-      rel={externalRel(href)}
+      target={newTab ? "_blank" : externalTarget(href)}
+      rel={newTab ? "noopener noreferrer" : externalRel(href)}
       download={download}
       className={cn(
         "action-link focus-ring",
@@ -292,23 +348,14 @@ function Header() {
       <a href="#main-content" className="skip-link focus-ring">
         Skip to main content
       </a>
-      <div className="container-shell flex h-[4.6rem] items-center justify-between gap-4">
+      <div className="container-shell flex h-[4.8rem] items-center justify-between gap-4">
         <a
           href="#"
           aria-label="Dimosthenis Gkontolias — back to top"
-          className="group flex items-center gap-3 focus-ring"
+          className="site-wordmark focus-ring"
         >
-          <span className="brand-mark" aria-hidden="true">
-            DG
-          </span>
-          <span className="hidden sm:block">
-            <span className="block text-sm font-bold leading-none text-ink">
-              Dimosthenis Gkontolias
-            </span>
-            <span className="mt-1 block font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted-foreground">
-              AI Software Engineer
-            </span>
-          </span>
+          <span>Dimosthenis Gkontolias</span>
+          <small>AI Software Engineer</small>
         </a>
 
         <nav aria-label="Primary navigation" className="hidden items-center gap-1 lg:flex">
@@ -323,26 +370,24 @@ function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 sm:flex">
+        <div className="hidden items-center gap-5 sm:flex">
           <a
             href={profile.linkedinHref}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ variant: "ghost", size: "lg" }),
-              "h-11 rounded-none px-3 font-semibold",
-            )}
+            className="header-text-link focus-ring"
           >
             LinkedIn
             <ExternalLink className="size-3.5" />
           </a>
           <a
             href={profile.resumeHref}
-            download
+            target="_blank"
+            rel="noopener noreferrer"
             className="header-cv focus-ring"
           >
-            Download CV
-            <ArrowDownToLine className="size-4" />
+            Check CV
+            <ArrowUpRight className="size-4" />
           </a>
         </div>
 
@@ -352,93 +397,80 @@ function Header() {
   );
 }
 
-function PortraitSignal() {
-  return (
-    <div className="portrait-stage" aria-label="Portrait of Dimosthenis Gkontolias">
-      <div aria-hidden="true" className="portrait-grid" />
-      <div aria-hidden="true" className="signal-ring signal-ring-one" />
-      <div aria-hidden="true" className="signal-ring signal-ring-two" />
-      <div aria-hidden="true" className="signal-axis signal-axis-x" />
-      <div aria-hidden="true" className="signal-axis signal-axis-y" />
-      <Image
-        src="/images/profile.webp"
-        alt="Dimosthenis Gkontolias standing outdoors in Athens"
-        fill
-        sizes="(min-width: 1280px) 42vw, (min-width: 1024px) 46vw, 92vw"
-        className="portrait-image"
-        priority
-      />
-      <div className="portrait-shade" aria-hidden="true" />
-      <div className="portrait-status">
-        <span className="status-dot" aria-hidden="true" />
-        Open to AI software roles
-      </div>
-      <div className="portrait-coordinate" aria-hidden="true">
-        ATH / 37.98°N
-      </div>
-      <div className="portrait-proof">
-        <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-paper/60">
-          Current signal
-        </span>
-        <strong>AI × product × data</strong>
-      </div>
-    </div>
-  );
-}
-
 function Hero() {
   return (
-    <section className="hero-section" aria-labelledby="hero-title">
-      <div aria-hidden="true" className="hero-paper-grid" />
-      <div className="container-shell hero-grid">
-        <div className="hero-copy">
-          <div className="hero-availability">
-            <Sparkles className="size-3.5" />
-            AI Software Engineer
-            <span aria-hidden="true">/</span>
-            <MapPin className="size-3.5" />
-            Athens, EU
+    <section className="orbit-hero" aria-labelledby="hero-title">
+      <div className="orbit-hero-sticky">
+        <div aria-hidden="true" className="orbit-hero-field" />
+        <div className="container-shell orbit-hero-layout">
+          <div className="orbit-hero-copy">
+            <div className="orbit-kicker">
+              <span>AI Software Engineer</span>
+              <span>Athens / EU</span>
+            </div>
+
+            <h1 id="hero-title" className="orbit-hero-title">
+              <span className="sr-only">Dimosthenis Gkontolias — </span>
+              <span>I build software</span>
+              <span>that makes complex</span>
+              <span>
+                things feel <em>obvious.</em>
+              </span>
+            </h1>
+
+            <p className="orbit-hero-deck">
+              AUEB valedictorian, Quar.gr founder, and AI product engineer
+              working across retrieval, cloud data, and interfaces people can
+              actually operate.
+            </p>
+
+            <div className="orbit-hero-actions">
+              <ActionLink href={profile.resumeHref} newTab>
+                Check CV
+                <ArrowUpRight className="size-4" />
+              </ActionLink>
+              <ActionLink href="#work" variant="dark">
+                Inspect the work
+                <ArrowRight className="size-4" />
+              </ActionLink>
+            </div>
+
+            <div className="orbit-socials" aria-label="Professional profiles">
+              <a href={profile.githubHref} target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+              <a href={profile.linkedinHref} target="_blank" rel="noopener noreferrer">
+                LinkedIn
+              </a>
+              <a
+                href="https://www.instagram.com/demos.vibes/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Demos Vibes
+              </a>
+            </div>
           </div>
 
-          <h1 id="hero-title" className="hero-title">
-            <span className="sr-only">Dimosthenis Gkontolias — </span>
-            <span className="hero-title-line">AI software,</span>
-            <span className="hero-title-line hero-title-outline">built beyond</span>
-            <span className="hero-title-line">the demo.</span>
-          </h1>
-
-          <p className="hero-deck">{profile.headline}</p>
-          <p className="hero-intro">{profile.intro}</p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ActionLink href={profile.resumeHref} download>
-              Download my CV
-              <ArrowDownToLine className="size-4" />
-            </ActionLink>
-            <ActionLink href="#work" variant="outline">
-              See flagship work
-              <ArrowRight className="size-4" />
-            </ActionLink>
+          <div className="orbit-hero-visual">
+            <figure className="orbit-person">
+              <div className="orbit-person-image">
+                <Image
+                  src="/images/profile-hero.jpeg"
+                  alt="Dimosthenis Gkontolias smiling outdoors"
+                  fill
+                  priority
+                  sizes="(max-width: 767px) 44vw, 20vw"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption>
+                <strong>Dimosthenis</strong>
+                <span>The person behind the systems</span>
+              </figcaption>
+            </figure>
+            <ProjectOrbit projects={orbitProjects} />
           </div>
-
-          <div className="mt-8 flex items-center gap-2">
-            <IconLink href={profile.githubHref} label="GitHub">
-              <Github className="size-4.5" />
-            </IconLink>
-            <IconLink href={profile.linkedinHref} label="LinkedIn">
-              <Linkedin className="size-4.5" />
-            </IconLink>
-            <IconLink href="https://www.instagram.com/demos.vibes/" label="Instagram">
-              <Instagram className="size-4.5" />
-            </IconLink>
-            <span className="ml-3 hidden max-w-48 text-xs leading-5 text-muted-foreground sm:block">
-              Code, product ownership, and the ability to explain what ships.
-            </span>
-          </div>
-        </div>
-
-        <div className="hero-visual">
-          <PortraitSignal />
         </div>
       </div>
     </section>
@@ -459,48 +491,6 @@ function ProofStrip() {
             <p className="proof-detail">{metric.detail}</p>
           </article>
         ))}
-      </div>
-    </section>
-  );
-}
-
-function PositioningSection() {
-  const signals = [
-    {
-      label: "AI product engineering",
-      body: "RAG, streaming responses, chart generation, and interfaces that make model output legible.",
-    },
-    {
-      label: "Production ownership",
-      body: "Quar.gr is used by real cafes, which means onboarding, content operations, reliability, and support matter.",
-    },
-    {
-      label: "Data depth",
-      body: "Provider pipelines, canonical schemas, BigQuery/Dataform, and model work over roughly 785k listings.",
-    },
-  ];
-
-  return (
-    <section className="section-y bg-paper" aria-labelledby="positioning-title">
-      <div className="container-shell positioning-grid">
-        <div data-reveal="left">
-          <Eyebrow>Recruiter read</Eyebrow>
-          <h2 id="positioning-title" className="section-title mt-6 max-w-4xl">
-            A builder who can move from{" "}
-            <em>model behavior</em> to a product people can operate.
-          </h2>
-        </div>
-        <div className="signal-list" data-reveal="right">
-          {signals.map((signal, index) => (
-            <article key={signal.label} className="signal-list-item">
-              <span className="signal-list-number">0{index + 1}</span>
-              <div>
-                <h3>{signal.label}</h3>
-                <p>{signal.body}</p>
-              </div>
-            </article>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -553,14 +543,18 @@ function FlagshipStory({
   return (
     <article
       id={project.id}
-      className={cn("flagship-story", reverse && "flagship-story-reverse")}
+      className={cn(
+        "flagship-story",
+        project.id === "project-talktogreekdata"
+          ? "flagship-story-talk"
+          : "flagship-story-quar",
+        reverse && "flagship-story-reverse",
+      )}
       data-reveal={reverse ? "right" : "left"}
     >
       <div className="flagship-copy">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className={cn("project-chip", accentStyles[project.accent])}>
-            {project.eyebrow}
-          </span>
+        <div className="flagship-meta-line">
+          <span>{project.eyebrow}</span>
           <span className="project-meta">{project.status}</span>
           <span className="project-meta">{project.year}</span>
         </div>
@@ -784,9 +778,9 @@ function ExperienceSection() {
             The common thread is ownership: understand the messy part, make it
             reliable, and leave the system easier to operate.
           </p>
-          <ActionLink href={profile.resumeHref} download variant="outline">
-            Full experience in CV
-            <ArrowDownToLine className="size-4" />
+          <ActionLink href={profile.resumeHref} newTab variant="outline">
+            Check full CV
+            <ArrowUpRight className="size-4" />
           </ActionLink>
         </div>
 
@@ -944,13 +938,18 @@ function ContactSection() {
         </div>
 
         <div className="contact-actions" data-reveal="right">
-          <a href={profile.resumeHref} download className="cv-orbit focus-ring">
+          <a
+            href={profile.resumeHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cv-orbit focus-ring"
+          >
             <span>
-              Download
+              Check
               <br />
               my CV
             </span>
-            <ArrowDownToLine className="size-7" />
+            <ArrowUpRight className="size-7" />
           </a>
           <div className="contact-secondary">
             <ActionLink href={`mailto:${profile.email}`} variant="dark">
@@ -1012,7 +1011,6 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <Hero />
         <ProofStrip />
-        <PositioningSection />
         <FlagshipWork />
         <SupportingWork />
         <CredibilitySection />

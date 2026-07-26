@@ -30,7 +30,7 @@ export function MobileNavigation({ items, resumeHref }: MobileNavigationProps) {
         render={
           <button
             aria-label="Open navigation"
-            className="inline-flex size-11 items-center justify-center border border-ink/20 bg-paper text-ink transition hover:border-forest hover:bg-forest hover:text-paper focus-ring lg:hidden"
+            className="inline-flex size-11 items-center justify-center border border-paper/25 bg-night text-paper transition hover:border-signal hover:bg-signal hover:text-ink focus-ring lg:hidden"
           />
         }
       >
@@ -56,11 +56,12 @@ export function MobileNavigation({ items, resumeHref }: MobileNavigationProps) {
           ))}
           <a
             href={resumeHref}
-            download
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
             className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 bg-ink px-4 py-3 font-semibold text-paper transition hover:bg-forest focus-ring"
           >
-            Download CV
+            Check CV
             <ExternalLink className="size-4" />
           </a>
         </div>

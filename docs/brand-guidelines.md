@@ -2,9 +2,9 @@
 
 ## Status
 
-- Version: 1.0 candidate
+- Version: 1.0 approved
 - Parent direction: Frontend Design Brief 2.0 — Project Orbit
-- Approval: Pending owner approval with the parent Design Map
+- Approval: Approved with the parent Design Map and subsequent human-led softening pass
 
 ## Brand idea
 
@@ -94,7 +94,7 @@ Rules:
 - Use real product interfaces and authentic photography.
 - Never substitute an abstract AI brain, robot, stock network globe, or generated fake dashboard for proof.
 - Screens may be cropped, layered, lit, and placed in 3D, but their identity must remain recognizable.
-- The portrait appears in a human/context section, not as a generic hero headshot card.
+- The portrait appears as a warm, layered human anchor inside the hero, not as a generic boxed headshot card.
 
 ## Spatial identity
 

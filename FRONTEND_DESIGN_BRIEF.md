@@ -2,12 +2,13 @@
 
 ## 1. Status, version, ownership
 
-- Status: Awaiting approval
+- Status: Approved and implemented
 - Version: 2.0 — Project Orbit
 - Date: 2026-07-26
 - Product/content owner and final approver: Dimosthenis Gkontolias
 - Design and engineering owner: Codex
 - Supersedes: Version 1.0 after explicit owner rejection of its generic hero, improvised `DG` mark, boxed role/location badge, and insufficiently visible motion.
+- Approval notes: Owner approved Project Orbit, then refined the direction to four real projects, a visible human portrait in the opening composition, CV as a recruiter action rather than an orbit body, and a softer editorial interface.
 
 ## 2. Decision delta
 
@@ -36,7 +37,7 @@ The following decisions are now explicit:
 - Target position: AI Software Engineer.
 - Primary conversion: Download the CV.
 - Primary perception target: “This engineer can combine AI/data depth, product judgment, and unusually strong execution.”
-- Primary behavioral success: A recruiter understands the role in the opening viewport, recognizes two credible flagship projects, can inspect proof, and can download the CV without hunting.
+- Primary behavioral success: A recruiter understands the role in the opening viewport, recognizes two credible flagship projects, can inspect proof, and can open the CV without a forced download.
 - Memorability target: A visitor can later describe the portfolio as “the one where his real projects orbit in 3D.”
 - Guardrails:
   - The 3D scene must reveal proof rather than cover it.
@@ -84,7 +85,7 @@ The following decisions are now explicit:
 
 ## 7. Core content and proof model
 
-The scene and page use five canonical recruiter-proof bodies:
+The scene uses four canonical recruiter-proof project bodies:
 
 1. **TalkToGreekData.gr**
    - Signal: AI product engineering.
@@ -102,12 +103,7 @@ The scene and page use five canonical recruiter-proof bodies:
    - Signal: Distribution and technical communication.
    - Proof: practical Greek AI content paired with reusable resource pages.
    - Visual source: `/images/projects/demosvibes.webp`.
-5. **CV**
-   - Signal: Full recruiter handoff.
-   - Proof: the existing PDF.
-   - Visual source: a generated document panel; activation downloads `/cv`.
-
-The portrait remains an authentic identity asset but moves out of the opening 3D cluster into a dedicated “operator behind the systems” section.
+The CV remains a clear recruiter action in the header, hero, experience, and closing contact section; it is not presented as project evidence. An authentic portrait is layered into the opening composition as the human anchor behind the systems.
 
 ## 8. Brand and messaging
 
@@ -130,7 +126,7 @@ AI Software Engineer, AUEB valedictorian, Quar.gr founder, and former TrackSight
 3. Quar establishes production ownership.
 4. TrackSights establishes technical depth.
 5. Demos Vibes establishes communication and distribution.
-6. CV closes the handoff.
+6. The dedicated CV action closes the handoff without pretending to be a project.
 
 ### Voice
 
@@ -159,7 +155,7 @@ The work is not arranged as interchangeable cards. Each project has mass, color,
 
 ### Memorability device
 
-A real-time 3D orbit containing the actual projects and CV. Its interaction language continues into each case study and the closing CV moment.
+A real-time 3D orbit containing four actual projects, with the portrait establishing who built them. Its interaction language continues into each case study and the closing CV moment.
 
 ### Style coordinates
 
@@ -202,7 +198,7 @@ The current generic positioning split, equal-weight card treatments, boxed hero 
 - Secondary line: `AI Software Engineer`.
 - No monogram square.
 - No role/location capsule.
-- Desktop actions: Work, Experience, Contact, Download CV.
+- Desktop actions: Work, Experience, Contact, Check CV.
 - Mobile: full-name wordmark plus accessible menu trigger.
 - Initial header uses a transparent/dark spatial treatment; it becomes a compact solid navigation surface after leaving the hero.
 
@@ -211,7 +207,7 @@ The current generic positioning split, equal-weight card treatments, boxed hero 
 - Eyebrow: `AI SOFTWARE ENGINEER / ATHENS`.
 - H1: `I build software that makes complex things feel obvious.`
 - Supporting sentence: concise positioning and verified identity signals.
-- Primary CTA: `Download CV`.
+- Primary CTA: `Check CV`, opening the inline `/cv` preview in a new tab.
 - Secondary CTA: `Inspect the work`.
 - Instructional cue: `Drag to orbit · select a project · scroll to enter`.
 - No bordered badge, chip cloud, or decorative location pin.
@@ -220,7 +216,7 @@ The current generic positioning split, equal-weight card treatments, boxed hero 
 
 - Occupies roughly 58–64% of desktop visual width.
 - Extends behind and beside the copy without reducing text contrast.
-- Uses five bounded project bodies with readable selected-state labels.
+- Uses four bounded project bodies with readable selected-state labels.
 - TalkToGreekData begins nearest the front; Quar is visibly next in the orbit.
 - A low-density orbit trail and proof coordinates create depth without becoming a star-field effect.
 
@@ -232,7 +228,7 @@ The current generic positioning split, equal-weight card treatments, boxed hero 
 2. Role and positioning are immediately readable.
 3. The CV link is present before 3D initialization.
 4. The scene assembles without blocking interaction.
-5. Recruiter downloads the CV from hero, navigation, or final scene.
+5. Recruiter opens the CV preview from the hero, navigation, experience, or final contact section and may save it from the browser viewer if desired.
 
 Recovery: If JavaScript, WebGL, textures, or motion are unavailable, the fallback composition and direct CV link remain complete.
 
@@ -251,7 +247,7 @@ Recovery: Visible DOM project controls provide the same route if canvas selectio
 1. Recruiter ignores the 3D scene.
 2. Headline, summary, CTA, selected-project label, and proof remain understandable.
 3. Standard scrolling enters the case studies.
-4. No interaction is required to discover TalkToGreekData, Quar, or the CV.
+4. No interaction is required to discover TalkToGreekData, Quar, or the separate CV action.
 
 ## 13. Interaction and motion contract
 
@@ -352,7 +348,7 @@ The user is never told their device is “weak”; the visual simply degrades gr
   - TalkToGreekData: ~28KB.
   - Quar: ~54KB.
   - Demos Vibes: ~62KB.
-  - TrackSights and CV panels: generated locally from verified text, no network image.
+  - TrackSights panel: generated locally from verified text, no network image.
 - Dynamic 3D JavaScript target: at or below approximately 220KB gzip.
 - Initial orbit asset target: at or below approximately 250KB transferred.
 - DPR cap: 1.5 desktop, 1.25 mobile; Tier B uses 1.0.
@@ -377,8 +373,8 @@ The orbit is a grammar, not a one-off:
 - Quar uses a dimensional phone/menu plane with its own warm material world.
 - Supporting work moves along a horizontal evidence rail rather than a repeated card grid.
 - Experience becomes a build log with dates, roles, and inspectable outcomes.
-- The portrait section is framed as the operator behind the systems, not a generic “about me” card.
-- The final CV action returns as the fifth orbit body coming into focus.
+- The portrait is framed as the human anchor inside the hero, not a generic “about me” card.
+- The final CV action echoes the orbit with a soft circular form while remaining an action, never a project body.
 - Motion uses the same “orbit → magnetize → inspect → release” sequence throughout.
 
 ## 19. Expressive contract
@@ -405,7 +401,7 @@ Removal criteria:
 
 - Static semantic journey with JavaScript disabled.
 - Full 3D journey on desktop Chromium.
-- Reduced 3D on representative mobile Chromium.
+- Art-directed mobile fallback with lightweight CSS motion and no Three.js download below 768px.
 - Static fallback through reduced motion and forced-colors modes.
 - Simulated WebGL initialization failure and context loss.
 - Keyboard selection, visible focus, and project/CV activation.
@@ -436,10 +432,10 @@ Removal criteria:
 1. Remove rejected header mark, boxed hero badge, and obsolete portrait signal composition.
 2. Establish Project Orbit tokens, wordmark header, message hierarchy, and semantic fallback.
 3. Build the isolated orbit client component and capability tiers.
-4. Add real project textures, generated TrackSights/CV panels, camera, lighting, orbit geometry, and selection state.
+4. Add real project textures, the generated TrackSights panel, camera, lighting, orbit geometry, and selection state.
 5. Add pointer, drag, keyboard, pause, visibility, scroll continuity, context-loss, and reduced-motion behavior.
 6. Recompose TalkToGreekData and Quar case studies around their own spatial interaction.
-7. Replace generic supporting grids with evidence rail, build log, operator section, and final CV return.
+7. Replace generic supporting grids with an evidence rail, build log, human-led hero, and final CV return.
 8. Update tests, metadata wording where needed, and completion documentation.
 9. Run functional, visual, accessibility, motion, WebGL fallback, performance, and cross-viewport QA.
 10. Present representative screenshots and measured evidence for final owner review.

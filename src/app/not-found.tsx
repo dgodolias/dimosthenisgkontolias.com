@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Mail } from "lucide-react";
 
@@ -15,14 +14,12 @@ export default function NotFound() {
       />
       <section className="relative z-10 grid w-full max-w-6xl gap-10 border-y border-paper/20 py-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:py-16">
         <div>
-          <Image
-            src="/images/logo.png"
-            alt="DG logo"
-            width={72}
-            height={58}
-            className="h-14 w-[72px] object-contain brightness-0 invert"
-            priority
-          />
+          <Link
+            href="/"
+            className="focus-ring font-display text-2xl font-normal tracking-[-0.04em] text-paper"
+          >
+            Dimosthenis Gkontolias
+          </Link>
           <p className="mt-14 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-signal">
             Lost signal / 404
           </p>
@@ -50,7 +47,7 @@ export default function NotFound() {
             href="/#work"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "h-12 rounded-none bg-signal px-5 font-bold text-ink hover:bg-sun",
+              "h-12 rounded-full bg-signal px-5 font-bold text-ink hover:bg-sun",
             )}
           >
             <ArrowLeft className="size-4" />
@@ -60,7 +57,7 @@ export default function NotFound() {
             href={`mailto:${profile.email}`}
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),
-              "h-12 rounded-none border-paper/25 bg-transparent px-5 font-bold text-paper hover:bg-paper/10 hover:text-paper",
+              "h-12 rounded-full border-paper/25 bg-transparent px-5 font-bold text-paper hover:bg-paper/10 hover:text-paper",
             )}
           >
             <Mail className="size-4" />

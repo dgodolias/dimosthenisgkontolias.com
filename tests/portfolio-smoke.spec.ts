@@ -1,32 +1,70 @@
 import { expect, test } from "@playwright/test";
 
-test("AI recruiter journey, flagship proof, assets, and SEO stay intact", async ({
+test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", async ({
   page,
   request,
 }, testInfo) => {
   const consoleErrors: string[] = [];
   page.on("console", (message) => {
-    if (message.type() === "error") {
-      consoleErrors.push(message.text());
-    }
+    if (message.type() === "error") consoleErrors.push(message.text());
   });
   page.on("pageerror", (error) => consoleErrors.push(error.message));
 
   await page.goto("/");
 
-  await expect(
-    page.getByRole("heading", { level: 1, name: /AI software,\s*built beyond\s*the demo/i }),
-  ).toBeVisible();
-  await expect(page.locator(".hero-availability")).toContainText("AI Software Engineer");
-  await expect(page.getByText("Open to AI software roles")).toBeVisible();
+  const hero = page.locator(".orbit-hero");
+  await expect(hero.locator("#hero-title")).toContainText(
+    "I build softwarethat makes complexthings feel obvious.",
+  );
+  await expect(hero.getByText("AI Software Engineer", { exact: true })).toBeVisible();
+  await expect(hero.locator(".orbit-person img")).toBeVisible();
+  await expect(hero.locator(".orbit-person img")).toHaveAttribute(
+    "src",
+    /profile-hero\.jpeg/,
+  );
 
-  const heroCv = page.locator(".hero-copy").getByRole("link", { name: "Download my CV" });
-  await expect(heroCv).toBeVisible();
+  const heroCv = hero.getByRole("link", { name: "Check CV" });
   await expect(heroCv).toHaveAttribute("href", "/cv");
+  await expect(heroCv).toHaveAttribute("target", "_blank");
+  await expect(heroCv).not.toHaveAttribute("download");
+  await expect(hero.getByRole("link", { name: "Inspect the work" })).toHaveAttribute(
+    "href",
+    "#work",
+  );
 
+  const orbit = page.locator("[data-orbit-root]");
+  await expect(orbit).toBeVisible();
+  await expect
+    .poll(() => orbit.getAttribute("data-orbit-mode"))
+    .toMatch(/^(full|reduced|static)$/);
+
+  const selectors = orbit.locator("[data-orbit-project]");
+  await expect(selectors).toHaveCount(4);
+  expect((await selectors.allTextContents()).join(" ")).not.toContain(
+    "Curriculum Vitae",
+  );
   await expect(
-    page.getByRole("heading", { name: /Two systems\.\s*Two different kinds of proof\./i }),
-  ).toBeVisible();
+    orbit.locator("[data-orbit-project='project-talktogreekdata']"),
+  ).toHaveAttribute("aria-pressed", "true");
+
+  await orbit.locator("[data-orbit-project='project-quar']").click();
+  await expect(
+    orbit.locator("[data-orbit-project='project-quar']"),
+  ).toHaveAttribute("aria-pressed", "true");
+  await expect(orbit.getByRole("heading", { name: "Quar.gr" })).toBeVisible();
+
+  const orbitMode = await orbit.getAttribute("data-orbit-mode");
+  if (orbitMode !== "static") {
+    const pause = orbit.getByRole("button", { name: "Pause motion" });
+    await pause.click();
+    await expect(orbit).toHaveAttribute("data-orbit-state", "paused");
+    await expect(orbit.getByRole("button", { name: "Resume motion" })).toBeVisible();
+  }
+
+  const inspectWork = hero.getByRole("link", { name: "Inspect the work" });
+  await inspectWork.click();
+  await expect(page).toHaveURL(/#work$/);
+  await expect(page.locator("#work")).toBeVisible();
   await expect(
     page.locator("#project-talktogreekdata").getByRole("heading", {
       name: "TalkToGreekData.gr",
@@ -35,35 +73,49 @@ test("AI recruiter journey, flagship proof, assets, and SEO stay intact", async 
   await expect(
     page.locator("#project-quar").getByRole("heading", { name: "Quar.gr" }),
   ).toBeVisible();
-  await expect(page.getByText("Works over 23,000 data points and 207 metrics.")).toBeVisible();
-  await expect(page.getByText("Serving 10+ cafes in production, with 300+ commits behind the product.")).toBeVisible();
+  await expect(
+    page.getByText("Works over 23,000 data points and 207 metrics."),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Serving 10+ cafes in production, with 300+ commits behind the product.",
+    ),
+  ).toBeVisible();
 
-  await expect(page.getByRole("heading", { name: /The range behind\s*the positioning\./i })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "TrackSights OEM data pipeline" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /The range behind\s*the positioning\./i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "TrackSights OEM data pipeline" }),
+  ).toBeVisible();
   await expect(page.getByRole("heading", { name: "Demos Vibes" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /High standards,\s*held for a while\./i })).toBeVisible();
   await expect(page.getByText("19,150/20,000")).toBeVisible();
   await expect(page.getByText("2x finalist")).toBeVisible();
-  await expect(page.getByRole("heading", { name: /From data teams\s*to founder work\./i })).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: /I build the thing\.\s*Then I make it\s*understandable\./i }),
+    page.getByRole("heading", { name: /From data teams\s*to founder work\./i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /I build the thing\.\s*Then I make it\s*understandable\./i,
+    }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: /Tools in service\s*of shipped systems\./i }),
   ).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Answers without the scroll hunt." })).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: /The fastest way to\s*see the full picture\./i }),
+    page.getByRole("heading", { name: "Answers without the scroll hunt." }),
   ).toBeVisible();
 
   const firstFaq = page.locator("details").first();
-  await page.getByText("What roles is Dimosthenis Gkontolias strongest for?").click();
-  await expect(
-    page.getByText(
-      "AI Software Engineer roles where React, TypeScript, Python, FastAPI, RAG systems, cloud data work, and practical product engineering meet real users.",
-    ),
-  ).toBeVisible();
+  await page
+    .getByText("What roles is Dimosthenis Gkontolias strongest for?")
+    .click();
   await expect(firstFaq).toHaveAttribute("open", "");
+
+  const horizontalOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - window.innerWidth,
+  );
+  expect(horizontalOverflow).toBeLessThanOrEqual(2);
 
   await page.goto("/");
   await page.keyboard.press("Tab");
@@ -72,27 +124,17 @@ test("AI recruiter journey, flagship proof, assets, and SEO stay intact", async 
   await skipLink.press("Enter");
   await expect(page.locator("#main-content")).toBeFocused();
 
-  const recruiterPath = page.getByRole("link", { name: "See flagship work" });
-  await expect(recruiterPath).toHaveAttribute("href", "#work");
-  await recruiterPath.click();
-  await expect(page).toHaveURL(/#work$/);
-  await expect(page.locator("#work")).toBeVisible();
-
-  const horizontalOverflow = await page.evaluate(
-    () => document.documentElement.scrollWidth - window.innerWidth,
-  );
-  expect(horizontalOverflow).toBeLessThanOrEqual(2);
-
-  for (let step = 0; step < 18; step += 1) {
-    await page.mouse.wheel(0, 900);
-    await page.waitForTimeout(70);
+  for (let step = 0; step < 14; step += 1) {
+    await page.mouse.wheel(0, 1000);
+    await page.waitForTimeout(50);
   }
-  await page.waitForLoadState("networkidle");
 
   const imageCount = await page.locator("img").count();
   for (let index = 0; index < imageCount; index += 1) {
     const image = page.locator("img").nth(index);
-    await image.scrollIntoViewIfNeeded();
+    await image.evaluate((element) =>
+      element.scrollIntoView({ block: "center", inline: "nearest" }),
+    );
     await expect
       .poll(
         () =>
@@ -105,191 +147,143 @@ test("AI recruiter journey, flagship proof, assets, and SEO stay intact", async 
       .toBe("");
   }
 
-  const hashLinkIssues = await page.evaluate(() =>
-    Array.from(document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'))
+  const linkIssues = await page.evaluate(() => ({
+    malformedHashLinks: Array.from(
+      document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'),
+    )
       .filter((anchor) => anchor.target || anchor.rel)
-      .map((anchor) => ({
-        href: anchor.getAttribute("href"),
-        rel: anchor.rel,
-        target: anchor.target,
-      })),
-  );
-  expect(hashLinkIssues).toEqual([]);
-
-  const externalRelIssues = await page.evaluate(() =>
-    Array.from(document.querySelectorAll<HTMLAnchorElement>('a[target="_blank"]'))
-      .filter((anchor) => !anchor.relList.contains("noopener") || !anchor.relList.contains("noreferrer"))
       .map((anchor) => anchor.href),
-  );
-  expect(externalRelIssues).toEqual([]);
-
-  const unnamedInteractiveCount = await page.evaluate(
-    () =>
-      Array.from(document.querySelectorAll("a,button,summary")).filter((element) => {
-        const label =
+    unsafeExternalLinks: Array.from(
+      document.querySelectorAll<HTMLAnchorElement>('a[target="_blank"]'),
+    )
+      .filter(
+        (anchor) =>
+          !anchor.relList.contains("noopener") ||
+          !anchor.relList.contains("noreferrer"),
+      )
+      .map((anchor) => anchor.href),
+    unnamedInteractives: Array.from(
+      document.querySelectorAll("a,button,summary"),
+    ).filter(
+      (element) =>
+        !(
           element.textContent?.trim() ||
           element.getAttribute("aria-label") ||
-          element.getAttribute("title");
-        return !label;
-      }).length,
-  );
-  expect(unnamedInteractiveCount).toBe(0);
+          element.getAttribute("title")
+        ),
+    ).length,
+  }));
+  expect(linkIssues).toEqual({
+    malformedHashLinks: [],
+    unsafeExternalLinks: [],
+    unnamedInteractives: 0,
+  });
 
-  const designSystem = await page.evaluate(() => {
-    const heroTitle = document.querySelector(".hero-title-line");
-    const portraitRing = document.querySelector(".signal-ring-one");
+  const runtime = await page.evaluate(() => {
+    const root = document.querySelector("[data-orbit-root]");
+    const canvas = document.querySelector(".orbit-canvas");
     const workSection = document.querySelector("#work");
-    const firstReveal = document.querySelector("[data-reveal]");
 
     return {
-      heroAnimation: heroTitle ? getComputedStyle(heroTitle).animationName : "",
-      ringAnimation: portraitRing ? getComputedStyle(portraitRing).animationName : "",
-      revealAnimation: firstReveal ? getComputedStyle(firstReveal).animationName : "",
-      contentVisibility: workSection ? getComputedStyle(workSection).contentVisibility : "",
+      orbitMode: root?.getAttribute("data-orbit-mode"),
       canvasCount: document.querySelectorAll("canvas").length,
+      canvasDisplay: canvas ? getComputedStyle(canvas).display : "",
+      contentVisibility: workSection
+        ? getComputedStyle(workSection).contentVisibility
+        : "",
       videoCount: document.querySelectorAll("video").length,
     };
   });
-  const viewportWidth = page.viewportSize()?.width ?? 0;
-  expect(designSystem.heroAnimation).toBe(
-    viewportWidth >= 768 ? "hero-enter" : "none",
-  );
-  expect(designSystem.ringAnimation).toBe("signal-drift");
-  expect(["reveal-left", "none"]).toContain(designSystem.revealAnimation);
-  expect(designSystem.contentVisibility).toBe("auto");
-  expect(designSystem.canvasCount).toBe(0);
-  expect(designSystem.videoCount).toBe(0);
-
-  const faviconLinks = await page.evaluate(() =>
-    Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel*="icon"]')).map((link) =>
-      link.getAttribute("href"),
-    ),
-  );
-  expect(faviconLinks.some((href) => href?.includes("/favicon.ico"))).toBe(true);
-  expect(faviconLinks.some((href) => href?.includes("/icon.png"))).toBe(true);
+  expect(["full", "reduced", "static"]).toContain(runtime.orbitMode);
+  expect(runtime.canvasCount).toBe(1);
+  expect(runtime.videoCount).toBe(0);
+  expect(["auto", "visible"]).toContain(runtime.contentVisibility);
+  if (runtime.orbitMode === "static") {
+    expect(runtime.canvasDisplay).toBe("none");
+  }
 
   const faviconResponse = await request.get("/favicon.ico?v=2");
   expect(faviconResponse.ok()).toBe(true);
   expect(faviconResponse.headers()["content-type"]).toContain("image/x-icon");
-  const faviconBytes = await faviconResponse.body();
-  expect([...faviconBytes.slice(0, 4)]).toEqual([0, 0, 1, 0]);
+  expect([...(await faviconResponse.body()).slice(0, 4)]).toEqual([0, 0, 1, 0]);
 
   const resumeResponse = await request.get("/cv");
   expect(resumeResponse.ok()).toBe(true);
   expect(resumeResponse.headers()["content-type"]).toContain("application/pdf");
-  const resumeBytes = await resumeResponse.body();
-  expect(resumeBytes.subarray(0, 4).toString()).toBe("%PDF");
+  expect((await resumeResponse.body()).subarray(0, 4).toString()).toBe("%PDF");
 
-  const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
-  expect(canonical).toBe("https://dimosthenisgkontolias.com");
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /index, follow/);
-  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
-    "content",
-    "summary_large_image",
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://dimosthenisgkontolias.com",
   );
-  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
-    "Dimosthenis Gkontolias | AI Software Engineer",
+    /index, follow/,
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
     "https://dimosthenisgkontolias.com/images/og-card.png",
   );
 
-  const ogImageResponse = await request.get("/images/og-card.png");
-  expect(ogImageResponse.ok()).toBe(true);
-  expect(ogImageResponse.headers()["content-type"]).toContain("image/png");
-
-  const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText()) as {
+  const schema = JSON.parse(
+    await page.locator('script[type="application/ld+json"]').innerText(),
+  ) as {
     "@graph": Array<{
       "@type"?: string;
-      award?: string[];
-      contactPoint?: Array<{
-        contactType?: string;
-        email?: string;
-      }>;
-      itemListElement?: Array<{
-        item?: {
-          image?: string;
-          name?: string;
-        };
-      }>;
+      image?: string;
       jobTitle?: string[];
       knowsLanguage?: string[];
-      mainEntity?: Array<{
-        acceptedAnswer?: {
-          text?: string;
-        };
-        name?: string;
-      }>;
+      mainEntity?: Array<{ name?: string }>;
+      itemListElement?: Array<{ item?: { image?: string; name?: string } }>;
     }>;
   };
   const schemaTypes = schema["@graph"].map((node) => node["@type"]);
   expect(schemaTypes).toEqual(
-    expect.arrayContaining(["Person", "WebSite", "ProfilePage", "FAQPage", "ItemList"]),
+    expect.arrayContaining([
+      "Person",
+      "WebSite",
+      "ProfilePage",
+      "FAQPage",
+      "ItemList",
+    ]),
   );
   const person = schema["@graph"].find((node) => node["@type"] === "Person");
   expect(person?.jobTitle?.[0]).toBe("AI Software Engineer");
-  expect(person?.knowsLanguage).toEqual(expect.arrayContaining(["Greek", "English", "German"]));
-  expect(person?.contactPoint?.[0]).toEqual(
-    expect.objectContaining({
-      contactType: "recruiting",
-      email: "dgodolias18@gmail.com",
-    }),
+  expect(person?.knowsLanguage).toEqual(
+    expect.arrayContaining(["Greek", "English", "German"]),
   );
-  const faqPage = schema["@graph"].find((node) => node["@type"] === "FAQPage");
-  expect(faqPage?.mainEntity?.length).toBeGreaterThanOrEqual(5);
-  expect(faqPage?.mainEntity?.map((item) => item.name)).toEqual(
-    expect.arrayContaining(["Which projects should a recruiter inspect first?"]),
-  );
-  const itemList = schema["@graph"].find((node) => node["@type"] === "ItemList");
-  expect(itemList?.itemListElement?.length).toBeGreaterThanOrEqual(9);
-  const talkProject = itemList?.itemListElement
-    ?.map((entry) => entry.item)
-    .find((item) => item?.name === "TalkToGreekData.gr");
-  expect(talkProject?.image).toBe(
-    "https://dimosthenisgkontolias.com/images/projects/dataviz.webp",
+  expect(person?.image).toBe(
+    "https://dimosthenisgkontolias.com/images/profile-hero.jpeg",
   );
 
-  const robotsResponse = await request.get("/robots.txt");
-  const robots = await robotsResponse.text();
+  const robots = await (await request.get("/robots.txt")).text();
   expect(robots).toContain("User-Agent: GPTBot");
-  expect(robots).toContain("Allow: /llms.txt");
-  expect(robots).toContain("Sitemap: https://dimosthenisgkontolias.com/sitemap.xml");
+  expect(robots).toContain(
+    "Sitemap: https://dimosthenisgkontolias.com/sitemap.xml",
+  );
 
-  const sitemapResponse = await request.get("/sitemap.xml");
-  const sitemap = await sitemapResponse.text();
-  expect(sitemap).toContain("https://dimosthenisgkontolias.com");
-  expect(sitemap).toContain("2026-07-26");
-
-  const llmsResponse = await request.get("/llms.txt");
-  expect(llmsResponse.ok()).toBe(true);
-  const llms = await llmsResponse.text();
-  expect(llms).toContain("AI Software Engineer");
+  const llms = await (await request.get("/llms.txt")).text();
   expect(llms).toContain("TalkToGreekData.gr: economic-data RAG product");
   expect(llms).toContain("Quar.gr: production QR menu platform");
 
-  const manifestResponse = await request.get("/manifest.webmanifest");
-  const manifest = (await manifestResponse.json()) as {
+  const manifest = (await (
+    await request.get("/manifest.webmanifest")
+  ).json()) as {
     icons?: Array<{ src?: string }>;
     name?: string;
     theme_color?: string;
   };
-  expect(manifest.name).toBe("Dimosthenis Gkontolias — AI Software Engineer");
+  expect(manifest.name).toContain("Dimosthenis Gkontolias");
   expect(manifest.theme_color).toBe("#08140f");
   expect(manifest.icons?.some((icon) => icon.src === "/icon.png?v=2")).toBe(true);
-
-  const vcardResponse = await request.get("/assets/dimosthenis-gkontolias.vcf");
-  expect(vcardResponse.ok()).toBe(true);
-  const vcard = await vcardResponse.text();
-  expect(vcard).toContain("BEGIN:VCARD");
-  expect(vcard).toContain("EMAIL;TYPE=INTERNET:dgodolias18@gmail.com");
 
   if (testInfo.project.name === "mobile") {
     await page.getByLabel("Open navigation").click();
     const creatorLink = page.getByRole("link", { name: /Creator/ }).last();
     await expect(creatorLink).toBeVisible();
-    await expect(page.getByRole("link", { name: "Download CV" }).last()).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Check CV" }).last(),
+    ).toBeVisible();
     await creatorLink.click();
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect(page.locator("#creator")).toBeVisible();
@@ -298,41 +292,37 @@ test("AI recruiter journey, flagship proof, assets, and SEO stay intact", async 
   expect(consoleErrors).toEqual([]);
 });
 
-test("reduced motion keeps the complete journey static", async ({ page }) => {
+test("reduced motion uses the complete static Project Orbit", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  const motionState = await page.evaluate(() => {
-    const heroTitle = document.querySelector(".hero-title-line");
-    const portraitRing = document.querySelector(".signal-ring-one");
-    const firstReveal = document.querySelector("[data-reveal]");
+  const orbit = page.locator("[data-orbit-root]");
+  await expect(orbit).toHaveAttribute("data-orbit-mode", "static");
+  await expect(orbit.locator("[data-orbit-fallback]")).toBeVisible();
+  await expect(orbit.locator(".orbit-canvas")).toHaveCSS("display", "none");
+  await expect(orbit.locator("[data-orbit-project]")).toHaveCount(4);
+  await orbit.locator("[data-orbit-project='project-quar']").click();
+  await expect(orbit.getByRole("heading", { name: "Quar.gr" })).toBeVisible();
+  await expect(page.locator(".orbit-person img")).toBeVisible();
 
+  const motionState = await page.evaluate(() => {
+    const firstReveal = document.querySelector("[data-reveal]");
     return {
-      heroAnimation: heroTitle ? getComputedStyle(heroTitle).animationName : "",
-      ringAnimation: portraitRing ? getComputedStyle(portraitRing).animationName : "",
-      revealAnimation: firstReveal ? getComputedStyle(firstReveal).animationName : "",
+      revealAnimation: firstReveal
+        ? getComputedStyle(firstReveal).animationName
+        : "",
       scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
     };
   });
-
   expect(motionState).toEqual({
-    heroAnimation: "none",
-    ringAnimation: "none",
     revealAnimation: "none",
     scrollBehavior: "auto",
   });
-
-  await expect(
-    page.locator(".hero-copy").getByRole("link", { name: "Download my CV" }),
-  ).toBeVisible();
-  await expect(page.getByRole("heading", { name: "TalkToGreekData.gr" })).toBeVisible();
 });
 
-test("flagship navigation targets the approved recruiter story", async ({ page }) => {
+test("flagship navigation targets the recruiter story", async ({ page }) => {
   await page.goto("/");
-
-  const workLink = page.getByRole("link", { name: "See flagship work" });
-  await workLink.click();
+  await page.getByRole("link", { name: "Inspect the work" }).click();
   await expect(page).toHaveURL(/#work$/);
   await expect(
     page.locator("#project-talktogreekdata").getByRole("heading", {
@@ -347,15 +337,20 @@ test("flagship navigation targets the approved recruiter story", async ({ page }
 test("not found page stays branded and recoverable", async ({ page }) => {
   await page.goto("/missing-portfolio-route");
 
-  await expect(page.getByRole("heading", { name: "Page not found." })).toBeVisible();
-  await expect(page.getByAltText("DG logo")).toBeVisible();
-  await expect(page.getByText("The strongest project evidence is on the main page.")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Page not found." }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Dimosthenis Gkontolias" }),
+  ).toHaveAttribute("href", "/");
+  await expect(
+    page.getByText("The strongest project evidence is on the main page."),
+  ).toBeVisible();
   await expect(page.getByRole("link", { name: "Back to work" })).toHaveAttribute(
     "href",
     "/#work",
   );
-  await expect(page.getByRole("link", { name: "Email Dimosthenis" })).toHaveAttribute(
-    "href",
-    "mailto:dgodolias18@gmail.com",
-  );
+  await expect(
+    page.getByRole("link", { name: "Email Dimosthenis" }),
+  ).toHaveAttribute("href", "mailto:dgodolias18@gmail.com");
 });

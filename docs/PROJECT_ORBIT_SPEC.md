@@ -14,7 +14,7 @@ Project Orbit is the signature interaction of the portfolio. It transforms real 
 - primary and secondary actions;
 - semantic project selector and proof panel;
 - static fallback markup;
-- all project links and CV download;
+- all project links and the inline CV preview;
 - structured content passed as minimal serializable objects.
 
 ### Client layer
@@ -39,7 +39,7 @@ Project Orbit is the signature interaction of the portfolio. It transforms real 
 - resize and DPR updates;
 - disposal of geometry, materials, textures, listeners, and animation frames.
 
-Three.js is imported dynamically only inside the client enhancement path. React does not rerender per frame.
+Three.js is imported dynamically only inside the desktop/tablet client enhancement path. Viewports below 768px use the art-directed fallback and do not download the runtime. React does not rerender per frame.
 
 ## 3. Scene graph
 
@@ -53,8 +53,7 @@ Scene
 │   ├── TalkToGreekDataBody
 │   ├── QuarBody
 │   ├── TrackSightsBody
-│   ├── DemosVibesBody
-│   └── CVBody
+│   └── DemosVibesBody
 ├── SparseDepthMarkers
 ├── KeyLight
 ├── FillLight
@@ -80,7 +79,6 @@ Suggested initial dimensions:
 - Quar: 3.4 × 2.125 units.
 - TrackSights: 3.1 × 1.94 units.
 - Demos Vibes: 3.0 × 1.875 units.
-- CV: 2.2 × 2.9 units.
 
 The difference in size communicates hierarchy without removing any route.
 
@@ -92,7 +90,7 @@ The difference in size communicates hierarchy without removing any route.
 - Orbit rig tilt X: approximately -7 degrees.
 - Initial front project: TalkToGreekData.
 - Initial second-visible project: Quar.
-- Project order: TalkToGreekData → Quar → TrackSights → Demos Vibes → CV.
+- Project order: TalkToGreekData → Quar → TrackSights → Demos Vibes.
 - Bodies face generally toward the camera while retaining a small orbital tangent angle.
 - Back bodies reduce apparent contrast and scale through real perspective, not opacity disappearance.
 
@@ -128,15 +126,6 @@ A local `CanvasTexture` presents:
 - `8 European markets`
 - `R² 0.946`
 - a restrained schematic of provider → schema → GCS → BigQuery/Dataform → model
-
-### CV
-
-A local `CanvasTexture` presents:
-
-- Dimosthenis Gkontolias
-- AI Software Engineer
-- concise project/experience index
-- `PDF / DOWNLOAD`
 
 Generated texture typography must use safe loaded/fallback fonts and be redrawn only when required, not per frame.
 
@@ -250,7 +239,7 @@ The static composition is intentionally art-directed:
 - Quar offset behind it on the opposite angle.
 - TrackSights proof panel as a narrow technical plane.
 - Demos Vibes as a cropped background plane.
-- CV as a vertical exit plane.
+- The real portrait as a separate soft-edged HTML layer above the project field.
 - DOM project selector remains identical.
 
 It must not look like an error state or a pile of ordinary cards.
