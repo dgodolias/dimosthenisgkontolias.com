@@ -2,13 +2,13 @@
 
 ## 1. Status, version, ownership
 
-- Status: Approved and implemented
-- Version: 2.0 — Project Orbit
+- Status: Approved and in refinement
+- Version: 2.1 — Daylight Project Orbit
 - Date: 2026-07-26
 - Product/content owner and final approver: Dimosthenis Gkontolias
 - Design and engineering owner: Codex
 - Supersedes: Version 1.0 after explicit owner rejection of its generic hero, improvised `DG` mark, boxed role/location badge, and insufficiently visible motion.
-- Approval notes: Owner approved Project Orbit, then refined the direction to four real projects, a visible human portrait in the opening composition, CV as a recruiter action rather than an orbit body, and a softer editorial interface.
+- Approval notes: Owner approved Project Orbit, then refined the direction to four real projects, a visible human portrait in the opening composition, CV as a recruiter action rather than an orbit body, and a softer editorial interface. On 2026-07-26 the owner explicitly retained the Orbit concept while rejecting its dark, visually dense hero treatment in favor of the calm, light-toned character of the earlier master hero.
 
 ## 2. Decision delta
 
@@ -20,6 +20,9 @@ The following decisions are now explicit:
 - Increase S08 from “showcase with controlled CSS motion” to **Showcase with a signature spatial moment**.
 - Activate runtime graphics and spatial presentation instead of treating 3D as excluded.
 - Redesign the rest of the page around the same visual and motion grammar so the hero does not sit above a generic template.
+- Replace the dark-space hero palette with a light warm-ivory daylight field; dark forest becomes ink and structure rather than the dominant surface.
+- Reduce simultaneous visual density: fewer visible orbit traces and markers, quieter supporting project bodies, lighter selector/proof treatment, and more whitespace around the copy and selected project.
+- Preserve the signature 3D inspection, real project planes, portrait, tactile selection, and memorable spatial depth. Calmness must come from editing and hierarchy, not from removing the core idea.
 - Keep the existing recruiter audience, AI Software Engineer positioning, CV conversion, English-only content, truthful proof, accessibility, and performance guardrails.
 
 ## 3. Scope and release boundary
@@ -148,9 +151,9 @@ The work is not arranged as interchangeable cards. Each project has mass, color,
 ### Visual philosophy
 
 - Matte editorial materials rather than glass panels.
-- Deep ink space rather than a generic graph-paper hero.
+- A light, warm editorial gallery field rather than deep space or a generic graph-paper hero.
 - Real product screens rather than abstract AI decoration.
-- Directional shadows, depth, occlusion, and controlled perspective rather than glow.
+- Soft daylight shadows, depth, occlusion, and controlled perspective rather than glow.
 - Monumental type paired with small engineering labels.
 - One acid signal color used for focus and interaction, not as ambient neon.
 - Project-native colors remain visible inside their own screens.
@@ -161,18 +164,18 @@ A real-time 3D orbit containing four actual projects, with the portrait establis
 
 ### Style coordinates
 
-1. Density: Airy text field with concentrated spatial detail.
-2. Complexity: High at the orbit, intentionally edited elsewhere.
+1. Density: Airy throughout; the selected project receives space and secondary bodies recede.
+2. Complexity: Medium in the hero, with one concentrated spatial idea instead of multiple competing layers.
 3. Familiarity: Conventional recruiter actions inside an experimental composition.
 4. Composition: Strongly asymmetric and layered.
 5. Geometry: Precise orbital curves and planar project surfaces.
 6. Dimensionality: True real-time 3D in the hero; layered 2.5D continuation below.
-7. Materiality: Matte paper, ink, screen light, restrained texture.
-8. Color: Deep neutral field, warm bone text, controlled acid focus, project-native accents.
+7. Materiality: Warm paper, pale glass only where functionally useful, soft shadow, restrained texture.
+8. Color: Warm ivory and misted sage field, dark forest ink, controlled acid focus, project-native accents.
 9. Typography: Monumental editorial display plus compact technical sans/mono.
 10. Imagery: Authentic project screens and portrait.
-11. Motion: Reactive, physical, cinematic, and interruptible.
-12. Character: Serious, surprising, and engineered rather than playful.
+11. Motion: Reactive, slow, physical, and interruptible.
+12. Character: Calm, serious, surprising, and engineered rather than theatrical.
 13. Finish: High craft, with no placeholder identity device.
 14. Rhythm: Immediate proof, slow inspection, decisive handoff.
 
@@ -202,7 +205,7 @@ The current generic positioning split, equal-weight card treatments, boxed hero 
 - No role/location capsule.
 - Desktop actions: Work, Experience, Contact, Check CV.
 - Mobile: full-name wordmark plus accessible menu trigger.
-- Initial header uses a transparent/dark spatial treatment; it becomes a compact solid navigation surface after leaving the hero.
+- Header uses a translucent warm-light editorial treatment with dark ink from the first frame and remains visually calm over the page.
 
 ### Copy plane
 
@@ -220,7 +223,9 @@ The current generic positioning split, equal-weight card treatments, boxed hero 
 - Extends behind and beside the copy without reducing text contrast.
 - Uses four bounded project bodies with readable selected-state labels.
 - TalkToGreekData begins nearest the front; Quar is visibly next in the orbit.
-- A low-density orbit trail and proof coordinates create depth without becoming a star-field effect.
+- One low-density primary orbit and a small number of proof coordinates create depth without becoming a star-field effect.
+- Secondary project bodies remain present but quieter and farther apart; the selected screen, portrait, and headline are the only first-scan focal points.
+- The selector and selected-project proof use open, line-based structure instead of stacked dark glass cards.
 
 ## 12. Critical journeys
 
@@ -402,6 +407,8 @@ Removal criteria:
 
 - Remove any effect that obscures the role or CV CTA.
 - Remove any layer that does not connect to a real project or recruiter proof.
+- Remove or fade any simultaneous layer that makes the first screen feel crowded, dark, or visually restless.
+- The hero must remain recognizably light-toned at first glance while preserving readable contrast.
 - Reduce or disable the scene if it materially harms LCP, INP, battery, thermal behavior, keyboard use, or motion comfort.
 - Do not compensate for weak content with more particles, glow, blur, or camera movement.
 
@@ -427,6 +434,8 @@ Removal criteria:
 - The rejected `DG` square and boxed role/location capsule are absent.
 - The opening screen clearly communicates the AI Software Engineer role and includes a functional CV link.
 - The Project Orbit contains real, correctly labeled project evidence.
+- The hero reads as a light, calm editorial gallery rather than a dark-space interface.
+- The first scan has three dominant anchors only: headline, selected project plane, and portrait; controls and secondary projects remain subordinate.
 - TalkToGreekData and Quar are the first two visual and semantic project priorities.
 - Pointer, touch, keyboard, reduced-motion, no-WebGL, and static paths are complete.
 - The orbit does not block normal scroll or essential content.

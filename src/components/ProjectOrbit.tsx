@@ -85,11 +85,11 @@ function createProofTexture(
   }
 
   const isDocument = project.kind === "document";
-  context.fillStyle = isDocument ? "#f2efe4" : "#0b1511";
+  context.fillStyle = isDocument ? "#f2efe4" : "#f4f6ef";
   context.fillRect(0, 0, width, height);
 
   if (!isDocument) {
-    context.strokeStyle = "rgba(235, 238, 224, 0.09)";
+    context.strokeStyle = "rgba(16, 28, 23, 0.055)";
     context.lineWidth = 1;
 
     for (let x = 48; x < width; x += 72) {
@@ -112,7 +112,7 @@ function createProofTexture(
 
   context.font = `700 ${isDocument ? 22 : 20}px ui-monospace, SFMono-Regular, Menlo, monospace`;
   context.letterSpacing = "3px";
-  context.fillStyle = isDocument ? "#536057" : "rgba(244, 242, 232, 0.6)";
+  context.fillStyle = isDocument ? "#536057" : "#66736a";
   context.fillText(
     isDocument ? "CURRICULUM VITAE / 2026" : project.signal.toUpperCase(),
     isDocument ? 92 : 54,
@@ -121,7 +121,7 @@ function createProofTexture(
 
   context.letterSpacing = "0px";
   context.font = `400 ${isDocument ? 58 : 72}px Georgia, "Times New Roman", serif`;
-  context.fillStyle = isDocument ? "#101c17" : "#f4f2e8";
+  context.fillStyle = "#101c17";
 
   const titleLines =
     project.title === "TrackSights"
@@ -145,11 +145,11 @@ function createProofTexture(
     context.fillStyle = project.accent;
     context.fillText(String(index + 1).padStart(2, "0"), x, y);
     context.font = `650 ${isDocument ? 23 : 26}px Arial, sans-serif`;
-    context.fillStyle = isDocument ? "#24332b" : "#f4f2e8";
+    context.fillStyle = "#24332b";
     context.fillText(metric, x + 52, y);
   });
 
-  context.strokeStyle = isDocument ? "rgba(16, 28, 23, 0.2)" : "rgba(244, 242, 232, 0.18)";
+  context.strokeStyle = "rgba(16, 28, 23, 0.16)";
   context.beginPath();
   context.moveTo(isDocument ? 92 : 54, height - 108);
   context.lineTo(width - (isDocument ? 92 : 54), height - 108);
@@ -157,7 +157,7 @@ function createProofTexture(
 
   context.font = `700 ${isDocument ? 18 : 17}px ui-monospace, SFMono-Regular, Menlo, monospace`;
   context.letterSpacing = "2px";
-  context.fillStyle = isDocument ? "#536057" : "rgba(244, 242, 232, 0.55)";
+  context.fillStyle = "#657269";
   context.fillText(
     isDocument ? "AI SOFTWARE ENGINEER · ATHENS" : "PROOF / INSPECTABLE SYSTEM",
     isDocument ? 92 : 54,
@@ -226,9 +226,9 @@ async function createScene({
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 60);
   const orbitRig = new THREE.Group();
-  const radiusX = tier === "full" ? 3.7 : 3.25;
-  const radiusY = tier === "full" ? 1.06 : 0.82;
-  const radiusZ = tier === "full" ? 2.45 : 2.05;
+  const radiusX = tier === "full" ? 4.05 : 3.55;
+  const radiusY = tier === "full" ? 0.88 : 0.72;
+  const radiusZ = tier === "full" ? 2.3 : 1.95;
   const step = TAU / projects.length;
   const maxDpr = tier === "full" ? 1.5 : 1;
   const targetFrameDuration = tier === "full" ? 1000 / 60 : 1000 / 36;
@@ -260,15 +260,15 @@ async function createScene({
 
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.06;
-  renderer.setClearColor(0x08110d, 0);
+  renderer.toneMappingExposure = 1;
+  renderer.setClearColor(0xf8f9f1, 0);
   scene.add(orbitRig);
-  camera.position.set(0, 0.12, 9.2);
+  camera.position.set(0, 0.1, 9.55);
 
-  const ambient = new THREE.AmbientLight(0xf1ead9, 1.55);
-  const key = new THREE.DirectionalLight(0xffedc4, 3.2);
-  const fill = new THREE.PointLight(0x6ec9dc, 7.5, 13);
-  const rim = new THREE.PointLight(0xd8ed75, 5.5, 11);
+  const ambient = new THREE.AmbientLight(0xfffdf4, 2.1);
+  const key = new THREE.DirectionalLight(0xfff4dc, 2.45);
+  const fill = new THREE.PointLight(0xa9dcd4, 3.8, 13);
+  const rim = new THREE.PointLight(0xd8ed75, 2.5, 11);
   key.position.set(-4, 5, 6);
   fill.position.set(4.5, -1, 4);
   rim.position.set(-3.5, 1.5, -3);
@@ -279,16 +279,16 @@ async function createScene({
     radiusX,
     radiusY,
     radiusZ,
-    0xd8ed75,
-    0.34,
+    0x66796c,
+    0.18,
   );
   const orbitSecondary = createOrbitLine(
     THREE,
     radiusX * 1.08,
     radiusY * 0.82,
     radiusZ * 1.08,
-    0xf2efe4,
-    0.1,
+    0x8ca28f,
+    0.045,
   );
   orbitSecondary.line.rotation.z = 0.13;
   orbitRig.add(orbitPrimary.line, orbitSecondary.line);
@@ -296,8 +296,8 @@ async function createScene({
   if (tier === "full") {
     const markerPositions: number[] = [];
 
-    for (let index = 0; index < 42; index += 1) {
-      const angle = (index / 42) * TAU;
+    for (let index = 0; index < 18; index += 1) {
+      const angle = (index / 18) * TAU;
       markerPositions.push(
         Math.sin(angle) * (radiusX + Math.sin(index * 1.7) * 0.45),
         Math.sin(angle * 2) * (radiusY + 0.18),
@@ -311,9 +311,9 @@ async function createScene({
       new THREE.Float32BufferAttribute(markerPositions, 3),
     );
     const markerMaterial = new THREE.PointsMaterial({
-      color: 0xf4f2e8,
-      opacity: 0.28,
-      size: 0.027,
+      color: 0x536a5d,
+      opacity: 0.12,
+      size: 0.021,
       sizeAttenuation: true,
       transparent: true,
     });
@@ -337,7 +337,9 @@ async function createScene({
     const edgeMaterial = new THREE.MeshStandardMaterial({
       color: 0x17231d,
       metalness: 0.08,
+      opacity: index === initialIndex ? 0.9 : 0.42,
       roughness: 0.55,
+      transparent: true,
     });
     const frontMaterial = new THREE.MeshStandardMaterial({
       color: 0xffffff,
@@ -345,14 +347,18 @@ async function createScene({
       emissiveIntensity: project.kind === "screen" ? 0.055 : 0.025,
       map: baseTexture,
       metalness: 0.02,
+      opacity: index === initialIndex ? 1 : 0.58,
       roughness: 0.7,
+      transparent: true,
     });
     const backMaterial = new THREE.MeshStandardMaterial({
       color: accent.clone().multiplyScalar(0.37),
       emissive: accent,
       emissiveIntensity: 0.045,
       metalness: 0.06,
+      opacity: index === initialIndex ? 0.82 : 0.34,
       roughness: 0.72,
+      transparent: true,
     });
     const materials = [
       edgeMaterial,
@@ -366,7 +372,7 @@ async function createScene({
     const outlineGeometry = new THREE.EdgesGeometry(geometry);
     const outlineMaterial = new THREE.LineBasicMaterial({
       color: accent,
-      opacity: index === initialIndex ? 0.86 : 0.2,
+      opacity: index === initialIndex ? 0.72 : 0.12,
       transparent: true,
     });
     const outline = new THREE.LineSegments(outlineGeometry, outlineMaterial);
@@ -446,14 +452,14 @@ async function createScene({
     lastFrame = time;
     lastRenderedAt = time;
 
-    const ambientDrift = paused ? 0 : Math.sin(time * 0.00022) * 0.075;
+    const ambientDrift = paused ? 0 : Math.sin(time * 0.00018) * 0.045;
     phase = damp(phase, targetPhase + ambientDrift, 4.6, delta);
     pointerCurrent.x = damp(pointerCurrent.x, paused ? 0 : pointerTarget.x, 3.8, delta);
     pointerCurrent.y = damp(pointerCurrent.y, paused ? 0 : pointerTarget.y, 3.8, delta);
 
-    camera.position.x = pointerCurrent.x * 0.46;
-    camera.position.y = 0.12 + pointerCurrent.y * 0.3 - scrollProgress * 0.08;
-    camera.position.z = 9.2 - scrollProgress * 0.62;
+    camera.position.x = pointerCurrent.x * 0.34;
+    camera.position.y = 0.1 + pointerCurrent.y * 0.22 - scrollProgress * 0.06;
+    camera.position.z = 9.55 - scrollProgress * 0.52;
     camera.lookAt(0, 0, 0);
 
     orbitRig.rotation.x = -0.115 + pointerCurrent.y * 0.025;
@@ -463,9 +469,9 @@ async function createScene({
       const angle = phase + index * step;
       const isActive = index === activeIndex;
       const depth = Math.cos(angle);
-      const bob = paused ? 0 : Math.sin(time * 0.0008 + index * 1.73) * 0.055;
+      const bob = paused ? 0 : Math.sin(time * 0.00065 + index * 1.73) * 0.03;
       const focusLift = isActive ? scrollProgress * 0.22 : 0;
-      const targetScale = isActive ? 1.08 + scrollProgress * 0.035 : 0.91 + (depth + 1) * 0.035;
+      const targetScale = isActive ? 1.045 + scrollProgress * 0.025 : 0.77 + (depth + 1) * 0.025;
 
       body.mesh.position.set(
         Math.sin(angle) * radiusX,
@@ -479,15 +485,33 @@ async function createScene({
       body.mesh.scale.setScalar(scale);
       body.edgeMaterial.opacity = damp(
         body.edgeMaterial.opacity,
-        isActive ? 0.9 : 0.16 + Math.max(depth, 0) * 0.14,
+        isActive ? 0.76 : 0.08 + Math.max(depth, 0) * 0.08,
         6,
         delta,
       );
       body.edgeMaterial.needsUpdate = true;
 
+      body.materials[0].opacity = damp(
+        body.materials[0].opacity,
+        isActive ? 0.9 : 0.28 + Math.max(depth, 0) * 0.14,
+        5,
+        delta,
+      );
+      body.materials[4].opacity = damp(
+        body.materials[4].opacity,
+        isActive ? 1 : 0.36 + Math.max(depth, 0) * 0.2,
+        5,
+        delta,
+      );
+      body.materials[5].opacity = damp(
+        body.materials[5].opacity,
+        isActive ? 0.82 : 0.28 + Math.max(depth, 0) * 0.12,
+        5,
+        delta,
+      );
       body.materials[4].emissiveIntensity = damp(
         body.materials[4].emissiveIntensity,
-        isActive ? 0.085 : 0.035,
+        isActive ? 0.065 : 0.018,
         5,
         delta,
       );
@@ -816,6 +840,7 @@ export function ProjectOrbit({ projects }: { projects: OrbitProject[] }) {
       data-orbit-root
       data-orbit-mode={mode}
       data-orbit-state={paused ? "paused" : "active"}
+      data-orbit-theme="daylight"
     >
       <div className="orbit-stage" aria-hidden="true">
         <div className="orbit-fallback-stack" data-orbit-fallback>

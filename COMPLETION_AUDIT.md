@@ -84,3 +84,26 @@ Redesign the existing English portfolio for recruiters and hiring managers evalu
 - Production p75 Core Web Vitals and INP require real traffic or RUM after deployment.
 - Recruiter perception and task success require sessions with actual recruiters/hiring managers.
 - No push or deployment was requested.
+
+## Daylight Orbit refinement — 2026-07-26
+
+Decision: Pass for local implementation and review.
+
+| Owner requirement | Status | Direct evidence |
+| --- | --- | --- |
+| Bring the calm, light character of the master hero into Orbit | Pass | `.orbit-hero` now uses a warm-ivory `#f8f9f1` field, dark-forest ink, misted sage depth, and a translucent daylight header; the smoke suite asserts the rendered hero and title colors exactly |
+| Reduce visual chaos and density | Pass | Visible 3D markers were reduced from 42 to 18, orbit traces were muted, secondary planes were scaled and faded, the stage gained breathing room, and the selector/proof surfaces became open line-based structures |
+| Keep the impressive Project Orbit idea | Pass | The real Three.js project orbit, authentic project textures, selected-plane depth, portrait composition, project switching, parallax, pause control, and CSS fallback remain intact |
+| Keep first-scan hierarchy controlled | Pass | Design Map v2.1 limits the first scan to three anchors: headline, selected project plane, and portrait; desktop and reduced-motion captures confirm subordinate controls and project bodies |
+| Keep the site light-toned on mobile | Pass | Current 390px capture shows the warm daylight surface, readable role/location, monumental editorial headline, full-width recruiter actions, and the Orbit reveal without horizontal overflow |
+| Preserve reduced-motion and no-WebGL equivalents | Pass | Reduced-motion remains static with no canvas; the edited fallback retains the selected project and portrait while fading secondary layers |
+
+### Refinement evidence
+
+- Design decision record: `FRONTEND_DESIGN_BRIEF.md`, version 2.1 — Daylight Project Orbit
+- Runtime theme contract: `[data-orbit-theme="daylight"]`
+- Desktop visual QA: `.codex-qa/orbit-desktop-hero.png`, `.codex-qa/orbit-desktop-quar.png`
+- Mobile visual QA: `.codex-qa/orbit-mobile-hero.png`
+- Reduced-motion visual QA: `.codex-qa/orbit-reduced-motion.png`
+- Automated regression: desktop/mobile smoke coverage for the theme attribute, exact light palette, project selection, CV journey, responsiveness, and static fallback
+- Open P0/P1 findings: 0

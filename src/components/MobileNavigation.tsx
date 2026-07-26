@@ -30,7 +30,7 @@ export function MobileNavigation({ items, resumeHref }: MobileNavigationProps) {
         render={
           <button
             aria-label="Open navigation"
-            className="inline-flex size-11 items-center justify-center border border-paper/25 bg-night text-paper transition hover:border-signal hover:bg-signal hover:text-ink focus-ring lg:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-full border border-ink/15 bg-white/65 text-ink shadow-sm backdrop-blur-md transition hover:border-forest/30 hover:bg-white focus-ring lg:hidden"
           />
         }
       >

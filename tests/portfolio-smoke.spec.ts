@@ -34,9 +34,26 @@ test("Project Orbit recruiter journey, proof, assets, and SEO stay intact", asyn
 
   const orbit = page.locator("[data-orbit-root]");
   await expect(orbit).toBeVisible();
+  await expect(orbit).toHaveAttribute("data-orbit-theme", "daylight");
   await expect
     .poll(() => orbit.getAttribute("data-orbit-mode"))
     .toMatch(/^(full|reduced|static)$/);
+
+  const heroPalette = await page.locator(".orbit-hero").evaluate((hero) => {
+    const heroStyles = getComputedStyle(hero);
+    const titleStyles = getComputedStyle(
+      hero.querySelector<HTMLElement>(".orbit-hero-title")!,
+    );
+
+    return {
+      background: heroStyles.backgroundColor,
+      color: titleStyles.color,
+    };
+  });
+  expect(heroPalette).toEqual({
+    background: "rgb(248, 249, 241)",
+    color: "rgb(16, 28, 23)",
+  });
 
   const talkBackground = page.locator(
     '[data-source-effect="dataviz-ambient-waves"]',
